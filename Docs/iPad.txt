@@ -1,0 +1,183 @@
+iPad
+- System spec
+	- Mobile app (iOS) (frontend) / Web (backend)
+	- Thai digits
+	- Buddhist Era
+	- Font = Thai Sarabun PSK
+	- Able to note overlay on content page
+	- Session timeout on backend (OAuth2)
+	- Footer on backend and frontend to show copy rights and version
+	- Implement logging on backend by using file-based (NLog)
+	- All deletions use mark flag IsRemoved
+- Backend
+	- User Management
+		- CRUD users
+			- Permission
+				- Administrator (CRUD)
+			- User fields:
+				- Firstname
+				- Lastname
+				- Position
+				- Department
+				- Email (username)
+				- Password (hash)
+				- Telephone
+				- Level
+				- IsActive
+				- IsRemoved
+			- User levels:
+				- Administrator (system admin) can do anything on system
+				- Contributor (backend user)
+				- User (frontend user)
+		- Login
+			- Permission
+				- Any
+		- Logout
+			- Permission
+				- Any
+		- Forgot password
+			- Permission
+				- Any
+			- Features:
+				- Send temp. token via email then click link for redirecting to change password page.
+		- Change password
+			- Permission
+				- Any
+	- Meeting management
+		- Meeting hierarchy:
+			- Meeting type
+			-- Meeting topic
+			--- Meeting time
+			---- Meeting agenda
+			----- Meeting content
+			------ Meeting note
+		- CRUD meeting types (e.g. board meeting, project meeting)
+			- Permission:
+				- Administrator (CRUD)
+				- Contributor (CRUD)
+			- Meeting type fields:
+				- Id (pk)
+				- Name
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+		- CRUD Meeting topic
+			- Permission:
+				- Administrator (CRUD)
+				- Contributor (CRUD)
+			- Meeting topic fields:
+				- Id (pk)
+				- Name
+				- Type (fk) (refer to meeting type Id)
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+		- CRUD Meeting time
+			- Permission:
+				- Administrator (CRUD)
+				- Contributor (CRUD)
+			- Meeting time fields:
+				- Id (pk)
+				- Topic (uk) (fk) (refer to meeting topic Id)
+				- Count (uk)
+				- FiscalYear (uk)
+				- MeetingDateTime
+				- Place
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+		- CRUD Meeting agenda
+			- Permission:
+				- Administrator (CRUD)
+				- Contributor (CRUD)
+			- Meting agenda fields:
+				- Id (pk)
+				- Time (uk) (fk) (refer to meeting time Id)
+				- Number (uk) (always be sequential number per meeting time)
+				- Name
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+			- Meeting attendee:
+				- Features:
+					- Only attendee in list can access agenda
+					- Attendee can be only user level = user
+					- Allow to delete really
+				- Meeting attendee fields:
+					- Agenda (pk) (fk) (refer to meeting agenda Id)
+					- Email (pk) (fk) (refer to user)
+		- CRUD Meeting content
+			- Permission:
+				- Administrator (CRUD)
+				- Contributor (CRUD)
+			- Features:
+				- Picture based document 1 picture per page (jpg only)
+				- Save as base-64 string
+				- Sortable picture by click move up / down
+				- Supports multiple upload files
+			- Meeting content fields:
+				- Id (pk)
+				- FileName
+				- Base64
+				- Ordinal
+				- Agenda (fk) (refer to meeting agenda Id)
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+			- Meeting note fields:
+				- Email (pk) (fk) (refer to user)
+				- Content (pk) (fk) (refer to meeting content)
+				- DrawingData (check on html 5)
+				- IsRemoved
+				- CreatedBy
+				- CreatedDateTime
+				- LastUpdatedBy
+				- LastUpdatedDateTime
+- Frontend / iOS app
+	- Login
+		- Permission
+			- Any
+	- Forgot password
+		- Permission
+			- Any
+	- Change password
+		- Permission
+			- Any
+	- Meeting scheduler (per user)
+		- Features:
+			- Show all by pagination
+			- Sorting by MeetingDateTime desc
+		- Meeting scheduler table fields:
+			- Meeting type
+			- Meeting topic
+			- Meeting time:
+				- Count
+				- FiscalYear
+				- MeetingDateTime
+				- Place
+			- Actions
+				- View details
+	- Reading meeting document
+		- Features:
+			- Show topic and agenda as footer on all content page of frontend
+			- Show navigator as <<  <  current page (drop down list) of total pages  >  >>
+			- Show list of agendas on left pane to navigate to other agendas
+	- Note overlay on content
+		- Feeatrues:
+			- Html 5 drawing (webview)
+				- https://www.codicode.com/art/how_to_draw_on_a_html5_canvas_with_a_mouse.aspx
+			- Pencil color picker
+			- Pencil thickness picker
+			- Able to wipe, clear all
+			- Able to save
+			- Able to share content page including note via email and printer (per content page)
