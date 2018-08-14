@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MeetingDoc.Api.Loggers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -10,6 +12,13 @@ namespace MeetingDoc.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly ILogger _logger;
+
+        public ValuesController (ILogger logger)
+        {
+            _logger = logger;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -21,6 +30,7 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+            _logger.LogInformation(LoggingEvents.GetItem, "Getting item {ID}", id);
             return "value";
         }
 
