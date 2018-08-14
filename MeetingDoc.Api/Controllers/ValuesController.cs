@@ -14,7 +14,7 @@ namespace MeetingDoc.Api.Controllers
     {
         private readonly ILogger _logger;
 
-        public ValuesController (ILogger logger)
+        public ValuesController (ILogger<ValuesController> logger)
         {
             _logger = logger;
         }

@@ -52,7 +52,8 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-**/Properties/launchSettings.json
+# remove this file if your lacal machine already have one
+# **/Properties/launchSettings.json
 
 # StyleCop
 StyleCopReport.xml
