@@ -39,9 +39,19 @@ namespace MeetingDoc.Api.Data
             return query;
         }
 
+        public virtual async Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> condition)
+        {
+            return await _dbSet.AnyAsync(condition);
+        }
+
         public virtual async Task<TEntity> GetAsync(object id)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> condition)
+        {
+            return await _dbSet.FirstOrDefaultAsync(condition);
         }
 
         public virtual async Task InsertAsync(TEntity entity)

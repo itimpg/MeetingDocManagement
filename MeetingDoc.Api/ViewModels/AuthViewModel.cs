@@ -1,6 +1,6 @@
 namespace MeetingDoc.Api.ViewModels
 {
-    public class UserViewModel : BaseViewModel
+    public class AuthViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

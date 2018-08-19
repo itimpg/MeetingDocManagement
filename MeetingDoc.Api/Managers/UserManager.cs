@@ -27,8 +27,7 @@ namespace MeetingDoc.Api.Managers
                 FirstName = viewModel.FirstName,
                 LastName = viewModel.LastName,
                 Position = viewModel.Position,
-                Email = viewModel.Email,
-                Password = viewModel.Password,
+                Email = viewModel.Email, 
                 PhoneNo = viewModel.PhoneNo,
                 Level = (UserLevel)viewModel.Level,
                 IsActive = viewModel.IsActive
