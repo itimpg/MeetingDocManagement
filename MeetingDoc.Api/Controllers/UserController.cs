@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingDoc.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -22,16 +22,17 @@ namespace MeetingDoc.Api.Managers
             return await _repository.IsExistsAsync(x => x.Email == username);
         }
 
-        public async Task<AuthViewModel> LoginAsync(string username, string password)
-        {
+        public async Task<UserViewModel> LoginAsync(string username, string password)
+        { 
             var user = await _repository.GetAsync(x => x.Email == username);
             if (user == null || !VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
             {
                 return null;
             }
 
-            return new AuthViewModel
+            return new UserViewModel
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Position = user.Position,
