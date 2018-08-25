@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace MeetingDoc.Api
 {
@@ -29,7 +30,9 @@ namespace MeetingDoc.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<DataContext>(x => x.UseMySQL(Configuration.GetConnectionString("Default")));
+            var connectionString  = Configuration.GetConnectionString("Default");
+
+            services.AddDbContextPool<DataContext>(options => options.UseMySql(connectionString));
             services.AddLogging(lb =>
             {
                 lb.AddConfiguration(Configuration.GetSection("Logging"));

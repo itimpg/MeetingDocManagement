@@ -33,7 +33,18 @@ namespace MeetingDoc.Api.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpGet("Get")]
+        public async Task<IActionResult> Get()
+        {
+            var user = await _authManager.LoginAsync("root", "P@ssw0rd");
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             var user = await _authManager.LoginAsync(
@@ -70,13 +81,7 @@ namespace MeetingDoc.Api.Controllers
             });
         }
 
-[HttpGet]
-public IActionResult Ping(){
-    return Ok("Pong");
-}
-
-
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(UserViewModel userViewModel, string password)
         {
             if (await _authManager.IsUserExistsAsync(userViewModel.Email))
