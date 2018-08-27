@@ -1,0 +1,19 @@
+<div class="m-4">
+  <img class="col-8 offset-2 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4 col-md-4 offset-md-4 pt-5 py-5" src="./assets/ico_logo.svg"
+  />
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+
+    <h5 class="card-header info-color white-text border py-3">
+      <strong>iPad Meeting System</strong>
+    </h5>
+
+    <form #loginForm="ngForm" class="border p-5" (ngSubmit)="login()">
+      <input type="email" class="form-control mb-4" id="username" name="username" #username required placeholder="Email" [(ngModel)]="model.username">
+      <input type="password" class="form-control mb-4" id="password" name="password" #password required placeholder="Password"
+        [(ngModel)]="model.password">
+      <a href="#" >Forgot your password?</a>
+      <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary btn-block my-4" type="submit">Login</button>
+    </form> 
+
+  </div>
+</div>

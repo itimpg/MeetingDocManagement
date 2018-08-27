@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using Karambolo.Extensions.Logging.File;
 using MeetingDoc.Api.Data;
 using MeetingDoc.Api.Data.Interfaces;
+using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers;
 using MeetingDoc.Api.Managers.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +34,7 @@ namespace MeetingDoc.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString  = Configuration.GetConnectionString("Default");
+            var connectionString = Configuration.GetConnectionString("Default");
 
             services.AddDbContextPool<DataContext>(options => options.UseMySql(connectionString));
             services.AddLogging(lb =>
@@ -62,13 +66,25 @@ namespace MeetingDoc.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (false && env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                //app.UseHsts();
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        var error = context.Features.Get<IExceptionHandlerFeature>();
+                        if (error != null)
+                        {
+                            context.Response.AddApplicationError(error.Error);
+                            await context.Response.WriteAsync(error.Error.Message);
+                        }
+                    });
+                });
             }
 
             //app.UseHttpsRedirection();

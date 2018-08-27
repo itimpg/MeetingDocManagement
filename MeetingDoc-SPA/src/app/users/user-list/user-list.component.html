@@ -1,0 +1,33 @@
+<h3>Users</h3>
+<hr/>
+<button type="button" class="btn btn-primary">+ Add New</button>
+<table class="table pt-5">
+  <thead class="thead-light">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of userList">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>
+        <div class="dropdown show">
+          <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+            Action
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">View</a>
+            <a class="dropdown-item" href="#">Edit</a>
+            <a class="dropdown-item" href="#">Delete</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

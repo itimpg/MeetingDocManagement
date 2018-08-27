@@ -31,22 +31,13 @@ namespace MeetingDoc.Api.Controllers
             _authManager = authManager;
             _configuration = configuration;
             _logger = logger;
-        }
-
-        [HttpGet("Get")]
-        public async Task<IActionResult> Get()
-        {
-            var user = await _authManager.LoginAsync("root", "P@ssw0rd");
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
-        }
+        } 
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
+            throw new System.Exception("Something Errror");
+
             var user = await _authManager.LoginAsync(
                 loginViewModel.Username.ToLower(), loginViewModel.Password);
             if (user == null)

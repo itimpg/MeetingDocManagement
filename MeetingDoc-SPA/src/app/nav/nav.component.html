@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <img src="./assets/ico_logo.svg" class="nav-logo pr-2" />
+  <a class="navbar-brand" href="#">iPad Meeting System</a>
+
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Meetings</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+  </ul>
+
+  <div class="mt-2 mt-md-0">
+    <a class="nav-link" href="#">{{model.currentUser.name}}</a>
+  </div>
+
+  <div class="dropdown">
+    <a class="dropdown-toggle text-light">
+      Dropdown button
+    </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#"><i class="fa fa-user">Edit Profile</i></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Change Password</a>
+      <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a>
+    </div>
+  </div>
+
+</nav>
