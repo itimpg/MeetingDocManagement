@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
         console.log('Login success');
       },
       error => {
-        console.log('Fail');
+        console.log(error);
       }
     );
   }

@@ -36,8 +36,6 @@ namespace MeetingDoc.Api.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            throw new System.Exception("Something Errror");
-
             var user = await _authManager.LoginAsync(
                 loginViewModel.Username.ToLower(), loginViewModel.Password);
             if (user == null)
