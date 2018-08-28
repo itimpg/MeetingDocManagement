@@ -14,6 +14,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { UserComponent } from './users/user/user.component';
+import { AlertifyService } from './_services/alertify.service';
 
 @NgModule({
    declarations: [
@@ -33,6 +34,7 @@ import { UserComponent } from './users/user/user.component';
    ],
    providers: [
       AuthService,
+      AlertifyService,
       ErrorInterceptorProvider
    ],
    bootstrap: [
