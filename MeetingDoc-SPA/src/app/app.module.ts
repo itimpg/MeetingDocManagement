@@ -15,6 +15,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { UserComponent } from './users/user/user.component';
 import { AlertifyService } from './_services/alertify.service';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
    declarations: [
@@ -30,7 +31,8 @@ import { AlertifyService } from './_services/alertify.service';
    imports: [
       BrowserModule,
       HttpClientModule,
-      FormsModule
+      FormsModule,
+      BsDropdownModule.forRoot()
    ],
    providers: [
       AuthService,
