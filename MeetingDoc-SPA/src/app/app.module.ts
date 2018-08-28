@@ -13,6 +13,7 @@ import { AlertComponent } from './alert/alert.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { UserComponent } from './users/user/user.component';
 
 @NgModule({
    declarations: [
@@ -22,6 +23,7 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
       LoginComponent,
       AlertComponent,
       UserListComponent,
+      UserComponent,
       ForgetPasswordComponent
    ],
    imports: [
