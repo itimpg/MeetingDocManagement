@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -9,17 +11,21 @@ import { AuthService } from '../_services/auth.service';
 export class ForgetPasswordComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit() {}
 
   forgetPassword() {
     this.authService.forgetPassword(this.model.username).subscribe(
       response => {
-        console.log('request password');
+        this.router.navigate(['/login']);
       },
       error => {
-        console.log('Request error');
+        this.alertify.error('Request error');
       }
     );
   }

@@ -22,11 +22,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model).subscribe(
       reponse => {
         this.alertify.success('Login success');
+        this.router.navigate(['/home']);
       },
       error => {
         this.alertify.error(error);
-      }, () => {
-        this.router.navigate(['/home']);
       }
     );
   }

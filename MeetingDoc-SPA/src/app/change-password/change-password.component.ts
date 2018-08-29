@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap';
+import { AuthService } from '../_services/auth.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-change-password',
@@ -8,11 +11,24 @@ import { Component, OnInit } from '@angular/core';
 export class ChangePasswordComponent implements OnInit {
   model: any = {};
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private alertify: AlertifyService,
+    public bsModalRef: BsModalRef
+  ) {}
 
   ngOnInit() {}
 
   changePassword() {
-    console.log(this.model);
+    this.authService.changePassword(this.model).subscribe(
+      reponse => {
+        this.alertify.success('Password was changed');
+        this.authService.logout();
+        this.bsModalRef.hide();
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 }

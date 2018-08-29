@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
-@import '../node_modules/alertifyjs/build/css/alertify.min.css';
-@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
-@import 'https://use.fontawesome.com/releases/v5.2.0/css/all.css';
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+@import "https://use.fontawesome.com/releases/v5.2.0/css/all.css";
 /* @import '../node_modules/bootswatch/dist/united/bootstrap.min.css'; */
 
-.nav-logo{
-    height:32px;
+.nav-logo {
+  height: 32px;
+}
+
+.modal-footer {
+  display: block;
 }

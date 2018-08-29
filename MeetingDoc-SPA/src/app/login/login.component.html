@@ -11,7 +11,7 @@
       <input type="email" class="form-control mb-4" id="username" name="username" #username required placeholder="Email" [(ngModel)]="model.username">
       <input type="password" class="form-control mb-4" id="password" name="password" #password required placeholder="Password"
         [(ngModel)]="model.password">
-      <a href="#" >Forgot your password?</a>
+      <a [routerLink]="['/forgetpassword']" >Forgot your password?</a>
       <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary btn-block my-4" type="submit">Login</button>
     </form> 
 

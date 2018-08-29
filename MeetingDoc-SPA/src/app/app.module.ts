@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -14,7 +16,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { UserComponent } from './users/user/user.component';
 import { AlertifyService } from './_services/alertify.service';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, BsModalService, ModalModule } from 'ngx-bootstrap';
 import { MeetingComponent } from './meetings/meeting/meeting.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { appRoutes } from './routes';
@@ -38,14 +40,21 @@ import { AuthGuard } from './_guards/auth.guard';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     AuthService,
     AlertifyService,
     ErrorInterceptorProvider,
+    BsModalService,
     AuthGuard
+  ],
+  entryComponents: [
+    ChangePasswordComponent,
+    UserComponent
   ],
   bootstrap: [AppComponent]
 })
