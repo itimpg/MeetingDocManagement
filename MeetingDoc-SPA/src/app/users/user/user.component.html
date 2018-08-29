@@ -26,9 +26,11 @@
     <input type="text" class="form-control mb-4" id="phoneno" name="phoneno" #phoneno placeholder="Phone No" [(ngModel)]="model.phoneNo"/>
     
     <label class="label">Level:</label>
-    <select class="form-control mb-4" id="level" name="level" #level placeholder="Level" [(ngModel)]="model.level">
-      <option></option>
-    </select> 
+    <select class="form-control mb-4" id="level" name="level" #level placeholder="Level" [(ngModel)]="model.level">   
+      <option value="2">User</option>  
+      <option value="1">Contributor</option>
+      <option value="0">Administrator</option>
+    </select>  
   </div>
   <div class="modal-footer">
     <div class="form-row">

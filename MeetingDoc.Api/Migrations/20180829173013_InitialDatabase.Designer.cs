@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingDoc.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180825073953_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180829173013_InitialDatabase")]
+    partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

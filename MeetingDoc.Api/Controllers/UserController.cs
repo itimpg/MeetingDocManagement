@@ -34,5 +34,26 @@ namespace MeetingDoc.Api.Controllers
             }
             return Ok(viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(UserViewModel viewModel)
+        {
+            await _manager.AddAsync(viewModel);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UserViewModel viewModel)
+        {
+            await _manager.UpdateAsync(viewModel);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _manager.DeleteAsync(id);
+            return Ok();
+        }
     }
 }

@@ -1,12 +1,4 @@
-<app-nav *ngIf="!authService.loggedIn()" class="mb-4"></app-nav>
-<!-- <div class="container">
-  <app-login></app-login>
-  <app-forget-password></app-forget-password>
-  <app-change-password></app-change-password>
-  <app-user-list></app-user-list>
-  <app-user></app-user>
-</div> -->
-
+<app-nav *ngIf="authService.loggedIn()" class="mb-4"></app-nav>
 <div class="container mt-4">
   <router-outlet></router-outlet>
 </div>

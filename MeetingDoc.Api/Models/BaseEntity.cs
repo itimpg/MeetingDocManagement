@@ -3,7 +3,7 @@ using System;
 namespace MeetingDoc.Api.Models
 {
     public abstract class BaseEntity
-    { 
+    {
         public int Id { get; set; }
         public bool IsRemoved { get; set; }
         public string CreatedBy { get; set; }

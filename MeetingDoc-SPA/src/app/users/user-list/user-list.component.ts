@@ -13,7 +13,7 @@ export class UserListComponent implements OnInit {
   bsModalRef: BsModalRef;
   currentPage: number;
   page: number;
-  totalItems: number = 66;
+  totalItems: number;
   userList: any = [];
 
   constructor(
@@ -23,6 +23,9 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    this.totalItems = 66;
+
     this.userList.push({ id: 1, name: 'test 1', email: 'test1@test.com' });
     this.userList.push({ id: 2, name: 'test 2', email: 'test2@test.com' });
     this.userList.push({ id: 3, name: 'test 3', email: 'test3@test.com' });

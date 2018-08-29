@@ -19,7 +19,7 @@ export class AuthService {
       map((response: any) => {
         const user = response;
         if (user) {
-          localStorage.setItem('token', user);
+          localStorage.setItem('token', user.token);
           this.decodedToken = this.jwtHtlper.decodeToken(user.token);
         }
       })
