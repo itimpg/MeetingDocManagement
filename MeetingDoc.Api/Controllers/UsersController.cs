@@ -9,19 +9,19 @@ namespace MeetingDoc.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUserManager _manager;
 
-        public UserController(IUserManager manager)
+        public UsersController(IUserManager manager)
         {
             _manager = manager;
         }
 
         [HttpGet]
-        public IActionResult Get(UserCriteria criteria)
+        public IActionResult Get()
         {
-            return Ok(_manager.Get(criteria));
+            return Ok(_manager.Get(new UserCriteria()));
         }
 
         [HttpGet("{id}")]

@@ -7,6 +7,8 @@ using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers;
 using MeetingDoc.Api.Managers.Interfaces;
+using MeetingDoc.Api.Validators;
+using MeetingDoc.Api.Validators.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -47,6 +49,8 @@ namespace MeetingDoc.Api
             services.AddTransient<Seed>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUserValidator, UserValidator>();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

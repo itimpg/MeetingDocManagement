@@ -123,7 +123,11 @@ namespace MeetingDoc.Api.Managers
                 TotalRecord = query.Count(),
                 Data = query.Skip(pageSize * pageIndex).Select(entity => ToViewModel(entity))
             };
-            paging.TotalPage = (paging.TotalRecord - 1) / (pageSize + 1);
+            paging.TotalPage = pageSize == 0 ? 1 : (paging.TotalRecord - 1) / (pageSize + 1);
+            if (paging.CurrentPage >= paging.TotalPage)
+            {
+                paging.CurrentPage = paging.TotalPage - 1;
+            }
 
             return paging;
         }
