@@ -21,6 +21,7 @@ import { MeetingComponent } from './meetings/meeting/meeting.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
+import { UsersService } from './_services/users.service';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AuthGuard } from './_guards/auth.guard';
   ],
   providers: [
     AuthService,
+    UsersService,
     AlertifyService,
     ErrorInterceptorProvider,
     BsModalService,

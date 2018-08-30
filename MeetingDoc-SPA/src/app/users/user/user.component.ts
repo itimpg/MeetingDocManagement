@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
+import { User } from '../../_models/User';
 
 @Component({
   selector: 'app-user',
@@ -7,20 +8,29 @@ import { BsModalRef } from 'ngx-bootstrap';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  model: any;
+  originModel: User;
+  model: User = new User();
   title: string;
   isEditable: boolean;
 
   constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {
-    if (this.model) {
-      this.title = 'Edit User';
-    } else {
+  ngOnInit() {}
+
+  setModel(model: User, isEditable: boolean) {
+    this.isEditable = isEditable;
+    if (!model) {
       this.title = 'Add User';
-      this.model = {};
+      model = new User();
+    } else {
+      this.title = this.isEditable ? 'Edit User' : 'View User';
     }
+
+    this.originModel = model;
+    this.model = Object.assign({}, model);
   }
 
-  saveUser() {}
+  saveUser() {
+    this.originModel = this.model;
+  }
 }

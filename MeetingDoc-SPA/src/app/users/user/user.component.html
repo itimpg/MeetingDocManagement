@@ -8,37 +8,44 @@
 <form #addEditUserForm="ngForm" (ngSubmit)="saveUser()">
   <div class="modal-body">
     <label class="label">First Name:</label>
-    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname placeholder="First Name" [(ngModel)]="model.firstname"/>
+    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname placeholder="First Name" [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
     
     <label class="label">Last Name:</label>
-    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname placeholder="Last Name" [(ngModel)]="model.lastname"/>
+    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname placeholder="Last Name" [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
     
     <label class="label">Position:</label>
-    <input type="text" class="form-control mb-4" id="position" name="position" #position placeholder="Position" [(ngModel)]="model.position"/>
+    <input type="text" class="form-control mb-4" id="position" name="position" #position placeholder="Position" [(ngModel)]="model.position" [disabled]="!isEditable"/>
     
     <label class="label">Email:</label>
-    <input type="email" class="form-control mb-4" id="username" name="username" #username required placeholder="Email" [(ngModel)]="model.username"/>
+    <input type="email" class="form-control mb-4" id="username" name="email" #email required placeholder="Email" [(ngModel)]="model.email" [disabled]="!isEditable"/>
     
     <label class="label">Password:</label>
-    <input type="password" class="form-control mb-4" id="password" name="password" #password required placeholder="Password" [(ngModel)]="model.password">
+    <input type="password" class="form-control mb-4" id="password" name="password" #password required placeholder="Password" [(ngModel)]="model.password" [disabled]="!isEditable"/>
     
     <label class="label">Phone No.:</label>
-    <input type="text" class="form-control mb-4" id="phoneno" name="phoneno" #phoneno placeholder="Phone No" [(ngModel)]="model.phoneNo"/>
+    <input type="text" class="form-control mb-4" id="phoneno" name="phoneno" #phoneno placeholder="Phone No" [(ngModel)]="model.phoneNo" [disabled]="!isEditable"/>
     
     <label class="label">Level:</label>
-    <select class="form-control mb-4" id="level" name="level" #level placeholder="Level" [(ngModel)]="model.level">   
+    <select class="form-control mb-4" id="level" name="level" #level placeholder="Level" [(ngModel)]="model.level" [disabled]="!isEditable">   
       <option value="2">User</option>  
       <option value="1">Contributor</option>
       <option value="0">Administrator</option>
-    </select>  
+    </select> 
+
+    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
+      <label class="form-check-label">
+        <input class="form-check-input" id="isActive" name="isActive" #isActive [(ngModel)]="model.isActive" type="checkbox"> Active
+      </label>
+    </div>
+  
   </div>
   <div class="modal-footer">
     <div class="form-row">
       <div class="col">
-        <button type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
+        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
       </div>
       <div class="col">
-        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' : 'Close' }}</button>
       </div>
     </div>
   </div>

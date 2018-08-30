@@ -36,14 +36,14 @@ namespace MeetingDoc.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(UserViewModel viewModel)
+        public async Task<IActionResult> Add(int id, UserViewModel viewModel)
         {
             await _manager.AddAsync(viewModel);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UserViewModel viewModel)
+        public async Task<IActionResult> Update(int id, UserViewModel viewModel)
         {
             await _manager.UpdateAsync(viewModel);
             return Ok();

@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { UsersService } from '../../_services/users.service';
 import { UserComponent } from '../user/user.component';
 import { AlertifyService } from '../../_services/alertify.service';
+import { User } from '../../_models/User';
 
 @Component({
   selector: 'app-user-list',
@@ -23,14 +24,11 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    this.totalItems = 66;
-
-    this.userList.push({ id: 1, name: 'test 1', email: 'test1@test.com' });
-    this.userList.push({ id: 2, name: 'test 2', email: 'test2@test.com' });
-    this.userList.push({ id: 3, name: 'test 3', email: 'test3@test.com' });
-
-    // this.usersService.get();
+    this.usersService.getUsers().subscribe(result => {
+      this.userList = result.data;
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 
   pageChanged(event: any): void {
@@ -38,22 +36,19 @@ export class UserListComponent implements OnInit {
     this.alertify.message(this.page.toString());
   }
 
-  viewUser(user) {
-    this.alertify.message('view');
+  viewUser(user: User) { 
     this.showUser(user, false);
   }
 
-  addUser() {
-    this.alertify.message('add');
+  addUser() { 
     this.showUser(null, true);
   }
 
-  editUser(user) {
-    this.alertify.message('edit');
+  editUser(user: User) { 
     this.showUser(user, true);
   }
 
-  deleteUser(user) {
+  deleteUser(user: User) {
     this.alertify.confirm('Do you want to delet this user?', () => {
       this.usersService.delete(user.id);
     });
@@ -61,7 +56,6 @@ export class UserListComponent implements OnInit {
 
   showUser(model: any, isEditable: boolean) {
     this.bsModalRef = this.modalService.show(UserComponent);
-    this.bsModalRef.content.model = model;
-    this.bsModalRef.content.isEditable = isEditable;
+    this.bsModalRef.content.setModel(model, isEditable);
   }
 }
