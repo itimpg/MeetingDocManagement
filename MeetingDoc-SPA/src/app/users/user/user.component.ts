@@ -45,11 +45,12 @@ export class UserComponent implements OnInit {
     }
   }
 
-  saveUser() { 
+  saveUser() {
     if (this.model.id === 0) {
       this.authService.register(this.model).subscribe(
         success => {
           this.alertify.message('save success');
+          this.bsModalRef.hide();
         },
         error => {
           this.alertify.error(error);
@@ -59,6 +60,7 @@ export class UserComponent implements OnInit {
       this.userService.edit(this.model).subscribe(
         success => {
           this.alertify.message('save success');
+          this.bsModalRef.hide();
         },
         error => {
           this.alertify.error(error);

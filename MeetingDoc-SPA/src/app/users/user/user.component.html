@@ -36,7 +36,7 @@
 
     <div class="form-check mb-2 mr-sm-2 mb-sm-0">
       <label class="form-check-label">
-        <input class="form-check-input" id="isActive" name="isActive" #isActive [(ngModel)]="model.isActive" type="checkbox"> Active
+        <input class="form-check-input" id="isActive" name="isActive" #isActive [(ngModel)]="model.isActive" type="checkbox" [disabled]="!isEditable"> Active
       </label>
     </div>
   

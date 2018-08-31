@@ -4,6 +4,7 @@ import { UsersService } from '../../_services/users.service';
 import { UserComponent } from '../user/user.component';
 import { AlertifyService } from '../../_services/alertify.service';
 import { User } from '../../_models/User';
+import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -17,6 +18,8 @@ export class UserListComponent implements OnInit {
   totalItems: number;
   userList: any = [];
 
+  subscriptions: Subscription[] = [];
+
   constructor(
     private usersService: UsersService,
     private alertify: AlertifyService,
@@ -24,6 +27,10 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.reloadData();
+  }
+
+  reloadData() {
     this.usersService.getUsers().subscribe(
       result => {
         this.userList = result.data;
@@ -56,6 +63,7 @@ export class UserListComponent implements OnInit {
       this.usersService.delete(user.id).subscribe(
         () => {
           this.alertify.message('Delete success');
+          this.reloadData();
         },
         error => {
           this.alertify.error(error);
@@ -65,7 +73,26 @@ export class UserListComponent implements OnInit {
   }
 
   showUser(userId: number, isEditable: boolean) {
+    const combine = combineLatest(
+      this.modalService.onShow,
+      this.modalService.onShown,
+      this.modalService.onHide,
+      this.modalService.onHidden
+    ).subscribe(() => {
+      this.reloadData();
+      this.unsubscribe();
+    });
+
+    this.subscriptions.push(combine);
+
     this.bsModalRef = this.modalService.show(UserComponent);
     this.bsModalRef.content.setModel(userId, isEditable);
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
   }
 }
