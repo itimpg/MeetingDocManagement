@@ -8,22 +8,24 @@
 <form #addEditUserForm="ngForm" (ngSubmit)="saveUser()">
   <div class="modal-body">
     <label class="label">First Name:</label>
-    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname placeholder="First Name" [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
     
     <label class="label">Last Name:</label>
-    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname placeholder="Last Name" [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
     
     <label class="label">Position:</label>
-    <input type="text" class="form-control mb-4" id="position" name="position" #position placeholder="Position" [(ngModel)]="model.position" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="position" name="position" #position [(ngModel)]="model.position" [disabled]="!isEditable"/>
     
     <label class="label">Email:</label>
-    <input type="email" class="form-control mb-4" id="username" name="email" #email required placeholder="Email" [(ngModel)]="model.email" [disabled]="!isEditable"/>
+    <input type="email" class="form-control mb-4" id="username" name="email" #email required [(ngModel)]="model.email" [disabled]="!isEditable"/>
     
-    <label class="label">Password:</label>
-    <input type="password" class="form-control mb-4" id="password" name="password" #password required placeholder="Password" [(ngModel)]="model.password" [disabled]="!isEditable"/>
-    
+    <div *ngIf="model.id === 0">
+      <label class="label">Password:</label>
+      <input type="password" class="form-control mb-4" id="password" name="password" #password required [(ngModel)]="model.password" [disabled]="!isEditable"/>
+    </div>
+
     <label class="label">Phone No.:</label>
-    <input type="text" class="form-control mb-4" id="phoneno" name="phoneno" #phoneno placeholder="Phone No" [(ngModel)]="model.phoneNo" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="phoneno" name="phoneno" #phoneno [(ngModel)]="model.phoneNo" [disabled]="!isEditable"/>
     
     <label class="label">Level:</label>
     <select class="form-control mb-4" id="level" name="level" #level placeholder="Level" [(ngModel)]="model.level" [disabled]="!isEditable">   

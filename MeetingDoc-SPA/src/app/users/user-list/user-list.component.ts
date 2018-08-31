@@ -24,11 +24,14 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.usersService.getUsers().subscribe(result => {
-      this.userList = result.data;
-    }, error => {
-      this.alertify.error(error);
-    });
+    this.usersService.getUsers().subscribe(
+      result => {
+        this.userList = result.data;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 
   pageChanged(event: any): void {
@@ -36,16 +39,16 @@ export class UserListComponent implements OnInit {
     this.alertify.message(this.page.toString());
   }
 
-  viewUser(user: User) { 
-    this.showUser(user, false);
+  viewUser(user: User) {
+    this.showUser(user.id, false);
   }
 
-  addUser() { 
-    this.showUser(null, true);
+  addUser() {
+    this.showUser(0, true);
   }
 
-  editUser(user: User) { 
-    this.showUser(user, true);
+  editUser(user: User) {
+    this.showUser(user.id, true);
   }
 
   deleteUser(user: User) {
@@ -54,8 +57,8 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  showUser(model: any, isEditable: boolean) {
+  showUser(userId: number, isEditable: boolean) {
     this.bsModalRef = this.modalService.show(UserComponent);
-    this.bsModalRef.content.setModel(model, isEditable);
+    this.bsModalRef.content.setModel(userId, isEditable);
   }
 }

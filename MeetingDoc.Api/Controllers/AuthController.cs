@@ -31,7 +31,7 @@ namespace MeetingDoc.Api.Controllers
             _authManager = authManager;
             _configuration = configuration;
             _logger = logger;
-        } 
+        }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
@@ -71,7 +71,7 @@ namespace MeetingDoc.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserViewModel userViewModel, string password)
+        public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
             if (await _authManager.IsUserExistsAsync(userViewModel.Email))
             {
@@ -79,7 +79,7 @@ namespace MeetingDoc.Api.Controllers
             }
 
             userViewModel.Email = userViewModel.Email.ToLowerInvariant();
-            var user = await _authManager.RegisterAsync(userViewModel, password);
+            var user = await _authManager.RegisterAsync(userViewModel, userViewModel.Password);
 
             return StatusCode(201);
         }

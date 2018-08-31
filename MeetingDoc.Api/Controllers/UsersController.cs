@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
@@ -35,24 +36,24 @@ namespace MeetingDoc.Api.Controllers
             return Ok(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<IActionResult> Add(int id, UserViewModel viewModel)
         {
-            await _manager.AddAsync(viewModel);
+            await _manager.AddAsync(viewModel, id);
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UserViewModel viewModel)
         {
-            await _manager.UpdateAsync(viewModel);
-            return Ok();
+            await _manager.UpdateAsync(viewModel, id);
+            return NoContent();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, int objId)
         {
-            await _manager.DeleteAsync(id);
+            await _manager.DeleteAsync(objId, id);
             return Ok();
         }
     }

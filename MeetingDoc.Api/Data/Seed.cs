@@ -32,9 +32,9 @@ namespace MeetingDoc.Api.Data
                 Level = UserLevel.Administrator,
                 IsActive = true,
                 IsRemoved = false,
-                CreatedBy = "admin@itec.com",
+                CreatedBy = 1,
                 CreatedDate = DateTime.Now,
-                UpdatedBy = "admin@itec.com",
+                UpdatedBy = 1,
                 UpdatedDate = DateTime.Now
             };
 

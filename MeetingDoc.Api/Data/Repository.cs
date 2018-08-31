@@ -12,19 +12,19 @@ namespace MeetingDoc.Api.Data
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity
     {
-        private DataContext _dbContext;
-        private DbSet<TEntity> _dbSet;
+        protected DataContext DbContext { get; private set; }
+        protected DbSet<TEntity> Dbset { get; private set; }
 
         public Repository(DataContext dbContext)
         {
-            _dbContext = dbContext;
-            _dbSet = dbContext.Set<TEntity>();
+            DbContext = dbContext;
+            Dbset = dbContext.Set<TEntity>();
         }
         public virtual IQueryable<TEntity> GetQuery(
                     Expression<Func<TEntity, bool>> filter = null,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = Dbset;
 
             if (filter != null)
             {
@@ -41,43 +41,43 @@ namespace MeetingDoc.Api.Data
 
         public virtual async Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return await _dbSet.AnyAsync(condition);
+            return await Dbset.AnyAsync(condition);
         }
 
         public virtual async Task<TEntity> GetAsync(object id)
         {
-            return await _dbSet.FindAsync(id);
+            return await Dbset.FindAsync(id);
         }
 
         public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return await _dbSet.FirstOrDefaultAsync(condition);
+            return await Dbset.FirstOrDefaultAsync(condition);
         }
 
         public virtual async Task InsertAsync(TEntity entity)
         {
-            await _dbSet.AddAsync(entity);
+            await Dbset.AddAsync(entity);
         }
 
         public virtual async Task DeleteAsync(object id)
         {
-            TEntity entityToDelete = await _dbSet.FindAsync(id);
+            TEntity entityToDelete = await Dbset.FindAsync(id);
             Delete(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (_dbContext.Entry(entityToDelete).State == EntityState.Detached)
+            if (DbContext.Entry(entityToDelete).State == EntityState.Detached)
             {
-                _dbSet.Attach(entityToDelete);
+                Dbset.Attach(entityToDelete);
             }
-            _dbSet.Remove(entityToDelete);
+            Dbset.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
-            _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
-        }
+            Dbset.Attach(entityToUpdate);
+            DbContext.Entry(entityToUpdate).State = EntityState.Modified;
+        } 
     }
 }

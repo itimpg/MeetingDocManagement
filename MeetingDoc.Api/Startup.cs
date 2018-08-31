@@ -4,6 +4,8 @@ using System.Text;
 using Karambolo.Extensions.Logging.File;
 using MeetingDoc.Api.Data;
 using MeetingDoc.Api.Data.Interfaces;
+using MeetingDoc.Api.Data.Repositories;
+using MeetingDoc.Api.Data.Repositories.Interfaces;
 using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers;
 using MeetingDoc.Api.Managers.Interfaces;
@@ -47,6 +49,9 @@ namespace MeetingDoc.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
             services.AddTransient<Seed>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<IUserManager, UserManager>();

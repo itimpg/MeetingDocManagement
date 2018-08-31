@@ -22,7 +22,7 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -34,7 +34,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int?>("TimeId");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -52,7 +52,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int?>("AgendaId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -64,7 +64,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int>("Ordinal");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -82,7 +82,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int?>("ContentId");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -90,7 +90,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<string>("Note");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -112,7 +112,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int>("Count");
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -126,7 +126,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int?>("TopicId");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -142,7 +142,7 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -152,7 +152,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int?>("TypeId");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -168,7 +168,7 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -176,7 +176,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
@@ -190,7 +190,7 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -214,7 +214,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<string>("Position");
 
-                    b.Property<string>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 

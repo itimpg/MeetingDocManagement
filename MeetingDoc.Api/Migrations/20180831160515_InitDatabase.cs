@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeetingDoc.Api.Migrations
 {
-    public partial class InitialDatabase : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -33,9 +33,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
@@ -59,9 +59,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     TypeId = table.Column<int>(nullable: true)
@@ -84,9 +84,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     TopicId = table.Column<int>(nullable: true),
                     Count = table.Column<int>(nullable: false),
@@ -112,9 +112,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     TimeId = table.Column<int>(nullable: true),
                     Number = table.Column<int>(nullable: false),
@@ -138,9 +138,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     FileName = table.Column<string>(nullable: true),
                     File = table.Column<byte[]>(nullable: true),
@@ -165,9 +165,9 @@ namespace MeetingDoc.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsRemoved = table.Column<bool>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
+                    UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: true),
                     ContentId = table.Column<int>(nullable: true),

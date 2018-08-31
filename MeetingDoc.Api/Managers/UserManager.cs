@@ -1,5 +1,9 @@
+using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Transactions;
 using MeetingDoc.Api.Data.Interfaces;
+using MeetingDoc.Api.Data.Repositories.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
@@ -9,6 +13,8 @@ namespace MeetingDoc.Api.Managers
 {
     public class UserManager : BaseManager<User, UserViewModel>, IUserManager
     {
+        public IUserRepository UserRepository { get { return UnitOfWork.UserRepository; } }
+
         public UserManager(IUnitOfWork unitOfWork, IUserValidator validator)
             : base(unitOfWork, validator)
         {
@@ -27,7 +33,7 @@ namespace MeetingDoc.Api.Managers
                 FirstName = viewModel.FirstName,
                 LastName = viewModel.LastName,
                 Position = viewModel.Position,
-                Email = viewModel.Email, 
+                Email = viewModel.Email,
                 PhoneNo = viewModel.PhoneNo,
                 Level = (UserLevel)viewModel.Level,
                 IsActive = viewModel.IsActive
@@ -48,6 +54,27 @@ namespace MeetingDoc.Api.Managers
                 LevelText = entity.Level.ToString(),
                 IsActive = entity.IsActive
             };
+        }
+
+        public override async Task UpdateAsync(UserViewModel viewModel, int operatedBy)
+        {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException("viewModel");
+            }
+
+            var validateResult = Validator.ValidateBeforeUpdate(viewModel);
+            if (!validateResult.IsValid)
+            {
+                // TODO: handle invalid case
+            }
+
+            User entity = ToEntity(viewModel);
+            entity.CreatedBy = operatedBy;
+            entity.CreatedDate = DateTime.Now;
+
+            await UserRepository.UpdateAsync(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
     }
 }

@@ -10,8 +10,8 @@ namespace MeetingDoc.Api.Managers.Interfaces
     {
         Task<TViewModel> GetAsync(object id);
         PagedResult<TViewModel> Get(BaseCriteria<TViewModel> criteria);
-        Task AddAsync(TViewModel viewModel);
-        Task UpdateAsync(TViewModel viewModel);
-        Task DeleteAsync(object id);
+        Task AddAsync(TViewModel viewModel, int operatedBy);
+        Task UpdateAsync(TViewModel viewModel, int operatedBy);
+        Task DeleteAsync(object id, int operatedBy);
     }
 }

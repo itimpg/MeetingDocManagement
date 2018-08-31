@@ -18,13 +18,13 @@ namespace MeetingDoc.Api.Managers
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected IBaseValidator<TViewModel> Validator { get; private set; }
-        protected IRepository<TEntity> Repository { get; private set; }
+        protected virtual IRepository<TEntity> Repository { get { return UnitOfWork.GetRepository<TEntity>(); } }
 
         #region Constructor
         public BaseManager(IUnitOfWork unitOfWork, IBaseValidator<TViewModel> validator)
         {
             UnitOfWork = unitOfWork;
-            Repository = unitOfWork.GetRepository<TEntity>();
+            Validator = validator;
         }
         #endregion
 
@@ -41,7 +41,7 @@ namespace MeetingDoc.Api.Managers
             return ToPaging(query, criteria.PageSize, criteria.PageIndex);
         }
 
-        public virtual async Task AddAsync(TViewModel viewModel)
+        public virtual async Task AddAsync(TViewModel viewModel, int operatedBy)
         {
             if (viewModel == null)
             {
@@ -57,9 +57,9 @@ namespace MeetingDoc.Api.Managers
             using (var scope = new TransactionScope())
             {
                 TEntity entity = ToEntity(viewModel);
-                entity.CreatedBy = ""; // TODO: get current user here;
+                entity.CreatedBy = operatedBy;
                 entity.CreatedDate = DateTime.Now;
-                entity.UpdatedBy = ""; // TODO: get current user here;
+                entity.UpdatedBy = operatedBy;
                 entity.UpdatedDate = DateTime.Now;
 
                 await Repository.InsertAsync(entity);
@@ -68,7 +68,7 @@ namespace MeetingDoc.Api.Managers
             }
         }
 
-        public virtual async Task UpdateAsync(TViewModel viewModel)
+        public virtual async Task UpdateAsync(TViewModel viewModel, int operatedBy)
         {
             if (viewModel == null)
             {
@@ -84,7 +84,7 @@ namespace MeetingDoc.Api.Managers
             using (var scope = new TransactionScope())
             {
                 TEntity entity = ToEntity(viewModel);
-                entity.CreatedBy = ""; // TODO: get current user here;
+                entity.CreatedBy = operatedBy;
                 entity.CreatedDate = DateTime.Now;
 
                 Repository.Update(entity);
@@ -93,7 +93,7 @@ namespace MeetingDoc.Api.Managers
             }
         }
 
-        public virtual async Task DeleteAsync(object id)
+        public virtual async Task DeleteAsync(object id, int operatedBy)
         {
             using (var scope = new TransactionScope())
             {
@@ -105,7 +105,7 @@ namespace MeetingDoc.Api.Managers
 
                 entity.IsRemoved = true;
                 entity.UpdatedDate = DateTime.Now;
-                entity.UpdatedBy = ""; // TODO: get current user here;
+                entity.UpdatedBy = operatedBy;
 
                 Repository.Update(entity);
                 await UnitOfWork.SaveChangeAsync();

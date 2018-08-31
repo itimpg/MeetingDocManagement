@@ -5,12 +5,6 @@ import { Observable } from 'rxjs';
 import { PagedUser } from '../_models/PagedUser';
 import { User } from '../_models/User';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Authorization': 'bearer ' + localStorage.getItem('token')
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,23 +14,22 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<PagedUser> {
-    debugger;
-    return this.http.get<PagedUser>(this.baseUrl + 'users', httpOptions);
+    return this.http.get<PagedUser>(this.baseUrl + 'users');
   }
 
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(this.baseUrl + 'users/' + id, httpOptions);
+    return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
-  add(model) {
-    return this.http.post(this.baseUrl, model);
+  add(id: number, model: User) {
+    return this.http.post(this.baseUrl + 'auth/Register', { userViewModel: model, password: model.password });
   }
 
-  edit(model) {
-    return this.http.put(this.baseUrl, model);
+  edit(id: number, model: User) {
+    return this.http.put(this.baseUrl + 'users/' + id, model);
   }
 
   delete(id: number) {
-    return this.http.delete(this.baseUrl);
+    return this.http.delete(this.baseUrl + 'users/' + id);
   }
 }
