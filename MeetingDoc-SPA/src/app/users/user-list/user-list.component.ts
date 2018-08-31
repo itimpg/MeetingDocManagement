@@ -53,7 +53,14 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: User) {
     this.alertify.confirm('Do you want to delet this user?', () => {
-      this.usersService.delete(user.id);
+      this.usersService.delete(user.id).subscribe(
+        () => {
+          this.alertify.message('Delete success');
+        },
+        error => {
+          this.alertify.error(error);
+        }
+      );
     });
   }
 

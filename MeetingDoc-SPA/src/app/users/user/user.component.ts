@@ -45,8 +45,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  saveUser() {
-    const operatedBy = this.authService.decodedToken.nameid;
+  saveUser() { 
     if (this.model.id === 0) {
       this.authService.register(this.model).subscribe(
         success => {
@@ -57,7 +56,7 @@ export class UserComponent implements OnInit {
         }
       );
     } else {
-      this.userService.edit(operatedBy, this.model).subscribe(
+      this.userService.edit(this.model).subscribe(
         success => {
           this.alertify.message('save success');
         },

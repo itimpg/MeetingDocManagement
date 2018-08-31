@@ -54,18 +54,14 @@ namespace MeetingDoc.Api.Managers
                 // TODO: handle invalid case
             }
 
-            using (var scope = new TransactionScope())
-            {
-                TEntity entity = ToEntity(viewModel);
-                entity.CreatedBy = operatedBy;
-                entity.CreatedDate = DateTime.Now;
-                entity.UpdatedBy = operatedBy;
-                entity.UpdatedDate = DateTime.Now;
+            TEntity entity = ToEntity(viewModel);
+            entity.CreatedBy = operatedBy;
+            entity.CreatedDate = DateTime.Now;
+            entity.UpdatedBy = operatedBy;
+            entity.UpdatedDate = DateTime.Now;
 
-                await Repository.InsertAsync(entity);
-                await UnitOfWork.SaveChangeAsync();
-                scope.Complete();
-            }
+            await Repository.InsertAsync(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
 
         public virtual async Task UpdateAsync(TViewModel viewModel, int operatedBy)
@@ -81,36 +77,28 @@ namespace MeetingDoc.Api.Managers
                 // TODO: handle invalid case
             }
 
-            using (var scope = new TransactionScope())
-            {
-                TEntity entity = ToEntity(viewModel);
-                entity.CreatedBy = operatedBy;
-                entity.CreatedDate = DateTime.Now;
+            TEntity entity = ToEntity(viewModel);
+            entity.CreatedBy = operatedBy;
+            entity.CreatedDate = DateTime.Now;
 
-                Repository.Update(entity);
-                await UnitOfWork.SaveChangeAsync();
-                scope.Complete();
-            }
+            Repository.Update(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
 
         public virtual async Task DeleteAsync(object id, int operatedBy)
         {
-            using (var scope = new TransactionScope())
+            TEntity entity = await Repository.GetAsync(id);
+            if (entity == null)
             {
-                TEntity entity = await Repository.GetAsync(id);
-                if (entity == null)
-                {
-                    return;
-                }
-
-                entity.IsRemoved = true;
-                entity.UpdatedDate = DateTime.Now;
-                entity.UpdatedBy = operatedBy;
-
-                Repository.Update(entity);
-                await UnitOfWork.SaveChangeAsync();
-                scope.Complete();
+                return;
             }
+
+            entity.IsRemoved = true;
+            entity.UpdatedDate = DateTime.Now;
+            entity.UpdatedBy = operatedBy;
+
+            Repository.Update(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
         #endregion
 

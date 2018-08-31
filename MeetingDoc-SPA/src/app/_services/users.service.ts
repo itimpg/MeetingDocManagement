@@ -21,12 +21,15 @@ export class UsersService {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
-  add(id: number, model: User) {
-    return this.http.post(this.baseUrl + 'auth/Register', { userViewModel: model, password: model.password });
+  add(model: User) {
+    return this.http.post(this.baseUrl + 'auth/Register', {
+      userViewModel: model,
+      password: model.password
+    });
   }
 
-  edit(id: number, model: User) {
-    return this.http.put(this.baseUrl + 'users/' + id, model);
+  edit(model: User) {
+    return this.http.put(this.baseUrl + 'users/', model);
   }
 
   delete(id: number) {

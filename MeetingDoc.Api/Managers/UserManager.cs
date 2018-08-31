@@ -22,7 +22,7 @@ namespace MeetingDoc.Api.Managers
 
         protected override IQueryable<User> GetByCriteria(BaseCriteria<UserViewModel> criteria)
         {
-            return Repository.GetQuery();
+            return Repository.GetQuery().Where(x => !x.IsRemoved);
         }
 
         protected override User ToEntity(UserViewModel viewModel)

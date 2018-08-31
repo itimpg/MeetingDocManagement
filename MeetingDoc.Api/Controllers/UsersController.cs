@@ -36,24 +36,32 @@ namespace MeetingDoc.Api.Controllers
             return Ok(viewModel);
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Add(int id, UserViewModel viewModel)
+        [HttpPost()]
+        public async Task<IActionResult> Add(UserViewModel viewModel)
         {
-            await _manager.AddAsync(viewModel, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _manager.AddAsync(viewModel, userId);
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UserViewModel viewModel)
+        [HttpPut()]
+        public async Task<IActionResult> Update(UserViewModel viewModel)
         {
-            await _manager.UpdateAsync(viewModel, id);
-            return NoContent();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _manager.UpdateAsync(viewModel, userId);
+            return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id, int objId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _manager.DeleteAsync(objId, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (id == 1)
+            {
+                return BadRequest("Default Admin cannot be deleted.");
+            }
+
+            await _manager.DeleteAsync(id, userId);
             return Ok();
         }
     }
