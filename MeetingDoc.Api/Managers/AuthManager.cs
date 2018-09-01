@@ -39,7 +39,7 @@ namespace MeetingDoc.Api.Managers
 
         public async Task<UserViewModel> LoginAsync(string username, string password)
         {
-            var user = await _repository.GetAsync(x => x.Email == username);
+            var user = await _repository.GetAsync(x => x.Email == username && x.IsActive && !x.IsRemoved);
             if (user == null || !VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
             {
                 return null;

@@ -7,16 +7,15 @@
       <li class="nav-item" routerLinkActive="router-link-active">
         <a class="nav-link" [routerLink]="['/home']" >Meetings</a>
       </li>
-      <li class="nav-item" routerLinkActive="router-link-active">
+      <li *ngIf="role === '0'" class="nav-item" routerLinkActive="router-link-active">
         <a class="nav-link" [routerLink]="['/users']">Users</a>
       </li>
     </ul> 
 
     <a dropdown class="btn dropdown">
-      <a class="dropdown-toggle text-light nav-link" dropdownToggle>
-        <!-- <i class="fas fa-user-edit"></i>
-        <i class="fas fa-user-cog"></i> -->
-        <i class="fas fa-user-tie"></i>
+      <a class="dropdown-toggle text-light nav-link" dropdownToggle> 
+        <i class="fas" 
+        [ngClass]="{ 'fa-user-tie': role === '2', 'fa-user-edit': role === '1', 'fa-user-cog' : role === '0' }" ></i>
         {{authService.decodedToken?.unique_name | titlecase}}
       </a>
       <div *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">

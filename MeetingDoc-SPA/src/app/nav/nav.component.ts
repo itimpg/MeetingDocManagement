@@ -11,13 +11,20 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 })
 export class NavComponent implements OnInit {
   model: any;
+  role: string;
 
-  constructor(public authService: AuthService, private router: Router, private modalService: BsModalService) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private modalService: BsModalService
+  ) {
+    this.role = this.authService.decodedToken.role;
+  }
 
   ngOnInit() {
     this.model = {
       currentUser: {
-        name: 'Test'
+        name: 'No name'
       }
     };
   }
