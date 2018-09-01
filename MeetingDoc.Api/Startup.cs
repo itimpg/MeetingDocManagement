@@ -55,6 +55,7 @@ namespace MeetingDoc.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IEmailManager, EmailManager>();
             services.AddScoped<IUserValidator, UserValidator>();
 
             services

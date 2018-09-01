@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
+using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.ViewModels;
@@ -11,11 +12,13 @@ namespace MeetingDoc.Api.Managers
     {
         private IUnitOfWork _unitOfWork;
         private IRepository<User> _repository;
+        private IEmailManager _emailManager;
 
-        public AuthManager(IUnitOfWork unitOfWork)
+        public AuthManager(IUnitOfWork unitOfWork, IEmailManager emailManager)
         {
             _unitOfWork = unitOfWork;
             _repository = unitOfWork.GetRepository<User>();
+            _emailManager = emailManager;
         }
 
         public async Task ChangePassword(int userId, string password)
@@ -30,6 +33,21 @@ namespace MeetingDoc.Api.Managers
             user.UpdatedDate = DateTime.Now;
 
             await _unitOfWork.SaveChangeAsync();
+        }
+
+        public async Task ResetPassword(string email)
+        {
+            var newPassword = PasswordGenerator.GeneratePassword(true, true, true, true, true, 8);
+
+            var user = await _repository.GetAsync(x => x.Email == email);
+            await ChangePassword(user.Id, newPassword);
+
+            _emailManager.SendEmail(new EmailViewModel
+            {
+                EmailTo = email,
+                Subject = "Your password was changed.",
+                Body = $"Your new password is {newPassword}"
+            });
         }
 
         public async Task<bool> IsUserExistsAsync(string username)
@@ -111,6 +129,5 @@ namespace MeetingDoc.Api.Managers
                 return true;
             }
         }
-
     }
 }

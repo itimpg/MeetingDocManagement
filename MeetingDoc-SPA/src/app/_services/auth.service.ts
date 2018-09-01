@@ -36,9 +36,7 @@ export class AuthService {
   }
 
   forgetPassword(email: string) {
-    return this.http
-      .post(this.baseUrl + 'forgetPassword', email)
-      .pipe(map((response: any) => {}));
+    return this.http.put(`${this.baseUrl}resetpassword`, { email: email });
   }
 
   loggedIn() {

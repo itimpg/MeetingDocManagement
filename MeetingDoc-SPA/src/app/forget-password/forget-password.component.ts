@@ -20,12 +20,15 @@ export class ForgetPasswordComponent implements OnInit {
   ngOnInit() {}
 
   forgetPassword() {
-    this.authService.forgetPassword(this.model.username).subscribe(
+    this.authService.forgetPassword(this.model.forgotUsername).subscribe(
       response => {
+        this.alertify.message(
+          `Your new password was sent to email: ${this.model.forgotUsername}`
+        );
         this.router.navigate(['/login']);
       },
       error => {
-        this.alertify.error('Request error');
+        this.alertify.error(error);
       }
     );
   }

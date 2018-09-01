@@ -9,5 +9,6 @@ namespace MeetingDoc.Api.Managers.Interfaces
         Task<UserViewModel> LoginAsync(string username, string password);
         Task<bool> IsUserExistsAsync(string username);
         Task ChangePassword(int userId, string password);
+         Task ResetPassword(string email);
     }
 }

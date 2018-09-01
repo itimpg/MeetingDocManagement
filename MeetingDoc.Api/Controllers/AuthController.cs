@@ -110,5 +110,18 @@ namespace MeetingDoc.Api.Controllers
 
             return Ok();
         }
+
+        [HttpPut("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            var isUserExists = await _authManager.IsUserExistsAsync(resetPasswordViewModel.Email);
+            if (!isUserExists)
+            {
+                return BadRequest("This email is not exists.");
+            }
+
+            await _authManager.ResetPassword(resetPasswordViewModel.Email);
+            return Ok();
+        }
     }
 }
