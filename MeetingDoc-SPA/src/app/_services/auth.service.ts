@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
+import { ChangePasswordModel } from '../_models/ChangePasswordModel';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +31,8 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'register', model);
   }
 
-  changePassword(model: any) {
-    return this.http
-      .post(this.baseUrl + 'changePassword', model)
-      .pipe(map((response: any) => {}));
+  changePassword(id: number, model: ChangePasswordModel) {
+    return this.http.put(this.baseUrl + 'changePassword/' + id, model);
   }
 
   forgetPassword(email: string) {
@@ -48,7 +47,6 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    console.log('logout');
+    localStorage.removeItem('token'); 
   }
 }

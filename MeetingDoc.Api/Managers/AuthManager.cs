@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using MeetingDoc.Api.Data.Interfaces; 
+using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.ViewModels;
@@ -17,13 +17,28 @@ namespace MeetingDoc.Api.Managers
             _unitOfWork = unitOfWork;
             _repository = unitOfWork.GetRepository<User>();
         }
+
+        public async Task ChangePassword(int userId, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            var user = await _repository.GetAsync(userId);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.UpdatedBy = user.Id;
+            user.UpdatedDate = DateTime.Now;
+
+            await _unitOfWork.SaveChangeAsync();
+        }
+
         public async Task<bool> IsUserExistsAsync(string username)
         {
             return await _repository.IsExistsAsync(x => x.Email == username);
         }
 
         public async Task<UserViewModel> LoginAsync(string username, string password)
-        { 
+        {
             var user = await _repository.GetAsync(x => x.Email == username);
             if (user == null || !VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
             {

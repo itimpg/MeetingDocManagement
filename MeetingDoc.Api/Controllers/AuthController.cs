@@ -20,17 +20,20 @@ namespace MeetingDoc.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthManager _authManager;
+        private readonly IUserManager _userManager;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
         public AuthController(
             IAuthManager authManager,
+            IUserManager userManager,
             IConfiguration configuration,
             ILogger<AuthController> logger)
         {
             _authManager = authManager;
             _configuration = configuration;
             _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpPost("Login")]
@@ -40,7 +43,7 @@ namespace MeetingDoc.Api.Controllers
                 loginViewModel.Username.ToLower(), loginViewModel.Password);
             if (user == null)
             {
-                return Unauthorized();
+                return BadRequest("Username / Password is incorrect.");
             }
 
             var claims = new[]{
@@ -83,6 +86,27 @@ namespace MeetingDoc.Api.Controllers
             var user = await _authManager.RegisterAsync(userViewModel, userViewModel.Password, userId);
 
             return StatusCode(201);
+        }
+
+        [HttpPut("ChangePassword/{id}")]
+        public async Task<IActionResult> ChangePassword(int id, ChangePasswordViewModel changePasswordViewModel)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (id == 0 || id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _userManager.GetAsync(id);
+            var loginUser = await _authManager.LoginAsync(user.Email.ToLower(), changePasswordViewModel.oldPassword);
+            if (loginUser == null)
+            {
+                return BadRequest("Old password is incorrect");
+            }
+
+            await _authManager.ChangePassword(user.Id, changePasswordViewModel.newPassword);
+
+            return Ok();
         }
     }
 }
