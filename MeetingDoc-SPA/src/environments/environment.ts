@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:5000/',
-  jwtWhiteList: 'localhost:5000'
+  baseUrl: 'http://itecevolution.ddns.net/api/',
+  jwtWhiteList: 'itecevolution.ddns.net'
 };
 
 /*
