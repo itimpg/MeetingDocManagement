@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { PagedUser } from '../_models/PagedUser';
@@ -9,7 +9,7 @@ import { User } from '../_models/User';
   providedIn: 'root'
 })
 export class UsersService {
-  baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl + 'api/';
 
   constructor(private http: HttpClient) {}
 

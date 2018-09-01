@@ -78,8 +78,9 @@ namespace MeetingDoc.Api.Controllers
                 return BadRequest($"User with email {userViewModel.Email} is already exists.");
             }
 
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             userViewModel.Email = userViewModel.Email.ToLowerInvariant();
-            var user = await _authManager.RegisterAsync(userViewModel, userViewModel.Password);
+            var user = await _authManager.RegisterAsync(userViewModel, userViewModel.Password, userId);
 
             return StatusCode(201);
         }

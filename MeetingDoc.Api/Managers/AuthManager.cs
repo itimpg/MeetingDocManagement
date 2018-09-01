@@ -44,7 +44,7 @@ namespace MeetingDoc.Api.Managers
             };
         }
 
-        public async Task<UserViewModel> RegisterAsync(UserViewModel viewModel, string password)
+        public async Task<UserViewModel> RegisterAsync(UserViewModel viewModel, string password, int userId)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -62,6 +62,11 @@ namespace MeetingDoc.Api.Managers
 
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
+
+                CreatedBy = userId,
+                CreatedDate = DateTime.Now,
+                UpdatedBy = userId,
+                UpdatedDate = DateTime.Now,
             };
 
             await _repository.InsertAsync(user);

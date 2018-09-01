@@ -24,6 +24,7 @@ import { BsDropdownModule, BsModalService, ModalModule } from 'ngx-bootstrap';
 import { MeetingComponent } from './meetings/meeting/meeting.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { UserDetailResolver } from './_resolvers/user.resolver';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -54,8 +55,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:5000'],
-        blacklistedRoutes: ['localhost:5000/api/auth']
+        whitelistedDomains: [ environment.jwtWhiteList ],
+        blacklistedRoutes: [ environment.jwtWhiteList + '/api/auth']
       }
     })
   ],
