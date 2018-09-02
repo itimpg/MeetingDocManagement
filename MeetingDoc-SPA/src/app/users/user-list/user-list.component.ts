@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService, PaginationComponent } from 'ngx-bootstrap';
 import { UsersService } from '../../_services/users.service';
 import { UserComponent } from '../user/user.component';
 import { AlertifyService } from '../../_services/alertify.service';
 import { User } from '../../_models/User';
 import { combineLatest, Subscription } from 'rxjs';
+import { Pagination, PaginatedResult } from '../../_models/pagination';
 
 @Component({
   selector: 'app-user-list',
@@ -13,10 +14,8 @@ import { combineLatest, Subscription } from 'rxjs';
 })
 export class UserListComponent implements OnInit {
   bsModalRef: BsModalRef;
-  currentPage: number;
-  page: number;
-  totalItems: number;
-  userList: any = [];
+  users: User[];
+  pagination: Pagination;
 
   subscriptions: Subscription[] = [];
 
@@ -24,26 +23,33 @@ export class UserListComponent implements OnInit {
     private usersService: UsersService,
     private alertify: AlertifyService,
     private modalService: BsModalService
-  ) {}
-
-  ngOnInit() {
-    this.reloadData();
+  ) {
+    this.pagination = new Pagination();
+    this.pagination.currentPage = 1;
+    this.pagination.itemsPerPage = 5;
   }
 
-  reloadData() {
-    this.usersService.getUsers().subscribe(
-      result => {
-        this.userList = result.data;
-      },
-      error => {
-        this.alertify.error(error);
-      }
-    );
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.usersService
+      .getUsers(this.pagination.currentPage, this.pagination.itemsPerPage)
+      .subscribe(
+        (res: PaginatedResult<User[]>) => {
+          this.users = res.result;
+          this.pagination = res.pagination;
+        },
+        error => {
+          this.alertify.error(error);
+        }
+      );
   }
 
   pageChanged(event: any): void {
-    this.page = event.page;
-    this.alertify.message(this.page.toString());
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
   }
 
   viewUser(user: User) {
@@ -63,7 +69,7 @@ export class UserListComponent implements OnInit {
       this.usersService.delete(user.id).subscribe(
         () => {
           this.alertify.message('Delete success');
-          this.reloadData();
+          this.loadUsers();
         },
         error => {
           this.alertify.error(error);
@@ -79,7 +85,7 @@ export class UserListComponent implements OnInit {
       this.modalService.onHide,
       this.modalService.onHidden
     ).subscribe(() => {
-      this.reloadData();
+      this.loadUsers();
       this.unsubscribe();
     });
 

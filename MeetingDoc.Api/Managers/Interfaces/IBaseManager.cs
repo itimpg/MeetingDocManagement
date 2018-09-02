@@ -9,7 +9,7 @@ namespace MeetingDoc.Api.Managers.Interfaces
         where TViewModel : BaseViewModel
     {
         Task<TViewModel> GetAsync(object id);
-        PagedResult<TViewModel> Get(BaseCriteria<TViewModel> criteria);
+        Task<PagedList<TViewModel>> GetAsync(BaseCriteria<TViewModel> criteria);
         Task AddAsync(TViewModel viewModel, int operatedBy);
         Task UpdateAsync(TViewModel viewModel, int operatedBy);
         Task DeleteAsync(object id, int operatedBy);

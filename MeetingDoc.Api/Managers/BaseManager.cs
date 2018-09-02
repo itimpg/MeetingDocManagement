@@ -9,6 +9,7 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingDoc.Api.Managers
 {
@@ -35,10 +36,10 @@ namespace MeetingDoc.Api.Managers
             return ToViewModel(entity);
         }
 
-        public PagedResult<TViewModel> Get(BaseCriteria<TViewModel> criteria)
+        public async Task<PagedList<TViewModel>> GetAsync(BaseCriteria<TViewModel> criteria)
         {
             IQueryable<TEntity> query = GetByCriteria(criteria);
-            return ToPaging(query, criteria.PageSize, criteria.PageIndex);
+            return await ToPagedListAsync(query, criteria.PageSize, criteria.PageNumber);
         }
 
         public virtual async Task AddAsync(TViewModel viewModel, int operatedBy)
@@ -102,20 +103,20 @@ namespace MeetingDoc.Api.Managers
         }
         #endregion
 
-        #region Protected Method(s)
-        protected virtual PagedResult<TViewModel> ToPaging(IQueryable<TEntity> query, int pageSize, int pageIndex)
+        #region Protected Method(s) 
+        protected virtual async Task<PagedList<TViewModel>> ToPagedListAsync(
+            IQueryable<TEntity> query, int pageSize, int pageNumber)
         {
-            var paging = new PagedResult<TViewModel>()
-            {
-                CurrentPage = pageIndex,
-                TotalRecord = query.Count(),
-                Data = query.Skip(pageSize * pageIndex).Select(entity => ToViewModel(entity))
-            };
-            paging.TotalPage = pageSize == 0 ? 1 : (paging.TotalRecord - 1) / (pageSize + 1);
-            if (paging.CurrentPage >= paging.TotalPage)
-            {
-                paging.CurrentPage = paging.TotalPage - 1;
-            }
+            var count = await query.CountAsync();
+
+            var items = await query
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+            var paging = new PagedList<TViewModel>(
+                items.Select(entity => ToViewModel(entity)).ToList(),
+                count, pageNumber, pageSize);
 
             return paging;
         }

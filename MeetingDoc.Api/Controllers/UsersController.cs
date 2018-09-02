@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -20,9 +21,13 @@ namespace MeetingDoc.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get([FromQuery]UserCriteria criteria)
         {
-            return Ok(_manager.Get(new UserCriteria()));
+            var users = await _manager.GetAsync(criteria);
+            this.Response.AddPagination(
+                users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]

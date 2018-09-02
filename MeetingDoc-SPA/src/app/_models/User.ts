@@ -7,5 +7,6 @@ export class User {
   password: string;
   phoneNo: string;
   level: number;
+  levelText: string;
   isActive: boolean;
 }
