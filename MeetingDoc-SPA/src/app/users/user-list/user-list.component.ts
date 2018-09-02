@@ -6,6 +6,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { User } from '../../_models/User';
 import { combineLatest, Subscription } from 'rxjs';
 import { Pagination, PaginatedResult } from '../../_models/pagination';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -15,22 +16,21 @@ import { Pagination, PaginatedResult } from '../../_models/pagination';
 export class UserListComponent implements OnInit {
   bsModalRef: BsModalRef;
   users: User[];
-  pagination: Pagination;
-
   subscriptions: Subscription[] = [];
+  pagination: Pagination;
 
   constructor(
     private usersService: UsersService,
     private alertify: AlertifyService,
-    private modalService: BsModalService
-  ) {
-    this.pagination = new Pagination();
-    this.pagination.currentPage = 1;
-    this.pagination.itemsPerPage = 5;
-  }
+    private modalService: BsModalService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.loadUsers();
+    this.route.data.subscribe(data => {
+      this.users = data.user.result;
+      this.pagination = data.user.pagination;
+    });
   }
 
   loadUsers() {

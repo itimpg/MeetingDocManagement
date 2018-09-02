@@ -24,6 +24,7 @@ import { BsDropdownModule, BsModalService, ModalModule } from 'ngx-bootstrap';
 import { MeetingComponent } from './meetings/meeting/meeting.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { UserDetailResolver } from './_resolvers/user.resolver';
+import { UserListResolver } from './_resolvers/userlist.resolver';
 import { environment } from '../environments/environment';
 
 export function tokenGetter() {
@@ -67,7 +68,8 @@ export function tokenGetter() {
     ErrorInterceptorProvider,
     BsModalService,
     AuthGuard,
-    UserDetailResolver
+    UserDetailResolver,
+    UserListResolver
   ],
   entryComponents: [
     ChangePasswordComponent,

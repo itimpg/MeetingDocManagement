@@ -11,7 +11,7 @@ namespace MeetingDoc.Api.Helpers
         {
             var errorMessage = exception.Message;
             response.Headers.Add("Application-Error", errorMessage);
-            response.Headers.Add("Access-Control-Expose-Header", "Application-Error");
+            response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
             response.Headers.Add("Access-Control-Allow-Origin", "*");
         }
 
@@ -24,7 +24,7 @@ namespace MeetingDoc.Api.Helpers
             var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
             response.Headers.Add("Pagination", 
                 JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
-            response.Headers.Add("Access-Control-Expose-Header", "Pagination");
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }

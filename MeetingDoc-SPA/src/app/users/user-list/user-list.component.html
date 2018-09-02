@@ -1,17 +1,19 @@
 <h3>Users</h3>
 <hr/>
 
-<a class="btn btn-primary text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
-
 <div class="row">
-  <div class="col-xs-12 col-12">
-    <pagination *ngIf="pagination != null"
-                [boundaryLinks]="true" 
-                [totalItems]="pagination.totalItems" 
-                [itemsPerPage]="pagination.itemsPerPage"
-                [(ngModel)]="pagination.currentPage" 
-                (pageChanged)="pageChanged($event)">
-    </pagination>
+  <div class="col">
+    <a class="btn btn-primary text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col-xs-12 col-12">
+        <pagination class="float-right" *ngIf="pagination != null" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+          [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+          firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -41,14 +43,14 @@
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *dropdownMenu>
             <a class="btn dropdown-item" (click)="viewUser(user)">
-                <i class="fas fa-eye"></i> View</a>
+              <i class="fas fa-eye"></i> View</a>
             <a class="btn dropdown-item" (click)="editUser(user)">
-                <i class="fas fa-edit"></i> Edit</a>
+              <i class="fas fa-edit"></i> Edit</a>
             <a class="btn dropdown-item" (click)="deleteUser(user)">
-                <i class="fas fa-trash-alt"></i> Delete</a>
+              <i class="fas fa-trash-alt"></i> Delete</a>
           </div>
         </div>
       </td>
     </tr>
   </tbody>
-</table> 
+</table>

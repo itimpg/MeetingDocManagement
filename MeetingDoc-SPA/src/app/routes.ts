@@ -6,6 +6,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { UserComponent } from './users/user/user.component';
 import { UserDetailResolver } from './_resolvers/user.resolver';
+import { UserListResolver } from './_resolvers/userlist.resolver';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,7 +17,7 @@ export const appRoutes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: MeetingListComponent },
-      { path: 'users', component: UserListComponent },
+      { path: 'users', component: UserListComponent, resolve: { user: UserListResolver } },
       { path: 'users/:id', component: UserComponent, resolve: { user: UserDetailResolver }}
     ]
   },
