@@ -7,6 +7,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
+import { environment } from '../environments/environment';
 import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
 import { UsersService } from './_services/users.service';
@@ -25,7 +26,11 @@ import { MeetingComponent } from './meetings/meeting/meeting.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { UserDetailResolver } from './_resolvers/user.resolver';
 import { UserListResolver } from './_resolvers/userlist.resolver';
-import { environment } from '../environments/environment';
+import { MeetingTypeListComponent } from './meeting-type/meeting-type-list/meeting-type-list.component';
+import { MeetingTypeComponent } from './meeting-type/meeting-type/meeting-type.component';
+import { MeetingTypeListResolver } from './_resolvers/meetingtypelist.resolver';
+import { MeetingTypeDetailResolver } from './_resolvers/meetingtype.resolver';
+import { MeetingTypeService } from './_services/meetingtype.service';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -42,6 +47,9 @@ export function tokenGetter() {
     UserListComponent,
     UserComponent,
 
+    MeetingTypeListComponent,
+    MeetingTypeComponent,
+
     MeetingListComponent,
     MeetingComponent
   ],
@@ -56,25 +64,25 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: [ environment.jwtWhiteList ],
-        blacklistedRoutes: [ environment.jwtWhiteList + '/api/auth']
+        whitelistedDomains: [environment.jwtWhiteList],
+        blacklistedRoutes: [environment.jwtWhiteList + '/api/auth']
       }
     })
   ],
   providers: [
     AuthService,
     UsersService,
+    MeetingTypeService,
     AlertifyService,
     ErrorInterceptorProvider,
     BsModalService,
     AuthGuard,
     UserDetailResolver,
-    UserListResolver
+    UserListResolver,
+    MeetingTypeListResolver,
+    MeetingTypeDetailResolver
   ],
-  entryComponents: [
-    ChangePasswordComponent,
-    UserComponent
-  ],
+  entryComponents: [ChangePasswordComponent, UserComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

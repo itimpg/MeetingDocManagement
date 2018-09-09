@@ -55,8 +55,10 @@ namespace MeetingDoc.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<IEmailManager, EmailManager>();
             services.AddScoped<IUserValidator, UserValidator>();
+            services.AddScoped<IMeetingTypeManager, MeetingTypeManager>();
+            services.AddScoped<IMeetingTypeValidator, MeetingTypeValidator>();
+            services.AddScoped<IEmailManager, EmailManager>();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
