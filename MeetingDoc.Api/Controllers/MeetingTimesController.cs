@@ -11,21 +11,21 @@ namespace MeetingDoc.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MeetingTopicsController : ControllerBase
+    public class MeetingTimesController : ControllerBase
     {
-        private readonly IMeetingTopicManager _meetingTopicManager;
         private readonly IMeetingTimeManager _meetingTimeManager;
+        private readonly IMeetingAgendaManager _meetingAgendaManager;
 
-        public MeetingTopicsController(IMeetingTopicManager meetingTopicManager, IMeetingTimeManager meetingTimeManager)
+        public MeetingTimesController(IMeetingTimeManager meetingTimeManager, IMeetingAgendaManager meetingAgendaManager)
         {
-            _meetingTopicManager = meetingTopicManager;
             _meetingTimeManager = meetingTimeManager;
+            _meetingAgendaManager = meetingAgendaManager;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]MeetingTopicCriteria criteria)
+        public async Task<IActionResult> Get([FromQuery]MeetingTimeCriteria criteria)
         {
-            var viewModels = await _meetingTopicManager.GetAsync(criteria);
+            var viewModels = await _meetingTimeManager.GetAsync(criteria);
             this.Response.AddPagination(
                 viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
 
@@ -35,7 +35,7 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            MeetingTopicViewModel viewModel = await _meetingTopicManager.GetAsync(id);
+            MeetingTimeViewModel viewModel = await _meetingTimeManager.GetAsync(id);
             if (viewModel == null)
             {
                 return NotFound();
@@ -44,18 +44,18 @@ namespace MeetingDoc.Api.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Add(MeetingTopicViewModel viewModel)
+        public async Task<IActionResult> Add(MeetingTimeViewModel viewModel)
         {
             var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingTopicManager.AddAsync(viewModel, id);
+            await _meetingTimeManager.AddAsync(viewModel, id);
             return Ok();
         }
 
         [HttpPut()]
-        public async Task<IActionResult> Update(MeetingTopicViewModel viewModel)
+        public async Task<IActionResult> Update(MeetingTimeViewModel viewModel)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingTopicManager.UpdateAsync(viewModel, userId);
+            await _meetingTimeManager.UpdateAsync(viewModel, userId);
             return Ok();
         }
 
@@ -63,20 +63,21 @@ namespace MeetingDoc.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingTopicManager.DeleteAsync(id, userId);
+            await _meetingTimeManager.DeleteAsync(id, userId);
             return Ok();
         }
         
-        [HttpGet("{id}/meetingtimes")]
-        public async Task<IActionResult> Get(int id, [FromQuery]MeetingTimeCriteria criteria)
+        [HttpGet("{id}/meetingagendas")]
+        public async Task<IActionResult> Get(int id, [FromQuery]MeetingAgendaCriteria criteria)
         {
-            criteria.Model.MeetingTopicId = id;
+            criteria.Model.MeetingTimeId = id;
 
-            var topics = await _meetingTimeManager.GetAsync(criteria);
+            var topics = await _meetingAgendaManager.GetAsync(criteria);
             this.Response.AddPagination(
                 topics.CurrentPage, topics.PageSize, topics.TotalCount, topics.TotalPages);
 
             return Ok(topics);
         }
+        
     }
 }

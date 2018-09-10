@@ -12,6 +12,8 @@ import { MeetingTypeListResolver } from './_resolvers/meetingtypelist.resolver';
 import { MeetingTypeDetailResolver } from './_resolvers/meetingtype.resolver';
 import { MeetingTopicListComponent } from './meeting-topic/meeting-topic-list/meeting-topic-list.component';
 import { MeetingTopicListResolver } from './_resolvers/meetingtopiclist.resolver';
+import { MeetingTimeListResolver } from './_resolvers/meeting-time-list.resolver';
+import { MeetingTimeListComponent } from './meeting-time/meeting-time-list/meeting-time-list.component';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +37,11 @@ export const appRoutes: Routes = [
         path: 'meetingTypes/:id/topics',
         component: MeetingTopicListComponent,
         resolve: { meetingTopic: MeetingTopicListResolver }
+      },
+      {
+        path: 'meetingtopics/:id/times',
+        component: MeetingTimeListComponent,
+        resolve: { meetingtopic: MeetingTimeListResolver }
       },
       {
         path: 'users',

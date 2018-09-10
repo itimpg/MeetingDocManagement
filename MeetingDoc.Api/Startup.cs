@@ -60,6 +60,14 @@ namespace MeetingDoc.Api
             services.AddScoped<IMeetingTypeValidator, MeetingTypeValidator>();
             services.AddScoped<IMeetingTopicManager, MeetingTopicManager>();
             services.AddScoped<IMeetingTopicValidator, MeetingTopicValidator>();
+            services.AddScoped<IMeetingTimeManager, MeetingTimeManager>();
+            services.AddScoped<IMeetingTimeValidator, MeetingTimeValidator>();
+            services.AddScoped<IMeetingAgendaManager, MeetingAgendaManager>();
+            services.AddScoped<IMeetingAgendaValidator, MeetingAgendaValidator>();
+            services.AddScoped<IMeetingContentManager, MeetingContentManager>();
+            services.AddScoped<IMeetingContentValidator, MeetingContentValidator>();
+            services.AddScoped<IMeetingNoteManager, MeetingNoteManager>();
+            services.AddScoped<IMeetingNoteValidator, MeetingNoteValidator>();
             services.AddScoped<IEmailManager, EmailManager>();
 
             services

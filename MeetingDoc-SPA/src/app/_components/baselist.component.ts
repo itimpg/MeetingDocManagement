@@ -69,9 +69,7 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
     this.showItem(item.id, false);
   }
 
-  viewSubItem(item: T) {
-    this.router.navigate([`meetingTypes/${item.id}/topics`]);
-  }
+  abstract viewSubItem(item: T);
 
   addItem() {
     this.showItem(0, true);

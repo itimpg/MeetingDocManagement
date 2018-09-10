@@ -33,6 +33,10 @@ import { MeetingTopicListComponent } from './meeting-topic/meeting-topic-list/me
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic/meeting-topic.component';
 import { MeetingTopicListResolver } from './_resolvers/meetingtopiclist.resolver';
 import { MeetingTopicService } from './_services/meetingtopic.service';
+import { MeetingTimeComponent } from './meeting-time/meeting-time/meeting-time.component';
+import { MeetingTimeService } from './_services/meetingtime.service';
+import { MeetingTimeListComponent } from './meeting-time/meeting-time-list/meeting-time-list.component';
+import { MeetingTimeListResolver } from './_resolvers/meeting-time-list.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -53,7 +57,10 @@ export function tokenGetter() {
     MeetingTypeComponent,
 
     MeetingTopicListComponent,
-    MeetingTopicComponent
+    MeetingTopicComponent,
+
+    MeetingTimeListComponent,
+    MeetingTimeComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,16 +88,19 @@ export function tokenGetter() {
     MeetingTypeListResolver,
     MeetingTypeDetailResolver,
     MeetingTopicListResolver,
+    MeetingTimeListResolver,
     AuthService,
     UsersService,
     MeetingTypeService,
-    MeetingTopicService
+    MeetingTopicService,
+    MeetingTimeService
   ],
   entryComponents:
   [
     ChangePasswordComponent,
     UserComponent,
-    MeetingTopicComponent
+    MeetingTopicComponent,
+    MeetingTimeComponent
   ],
   bootstrap: [AppComponent]
 })

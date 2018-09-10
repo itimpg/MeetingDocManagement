@@ -31,4 +31,8 @@ export class MeetingTopicListComponent extends BaseListComponent<MeetingTopic> {
   ) {
     super(service, alertify, modalService, route, router);
   }
+
+  viewSubItem(item: MeetingTopic) {
+    this.router.navigate([`meetingtopics/${item.id}/times`]);
+  }
 }

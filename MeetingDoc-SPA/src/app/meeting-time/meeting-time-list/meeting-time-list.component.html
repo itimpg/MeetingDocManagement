@@ -21,14 +21,20 @@
   <thead class="thead-light">
     <tr>
       <th>Id</th>
-      <th>Name</th>
+      <th>Count</th>
+      <th>Fiscal Year</th>
+      <th>Meeting Date</th>
+      <th>Location</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
       <td class="align-middle">{{item.id}}</td>
-      <td class="align-middle">{{item.name}}</td>
+      <td class="align-middle">{{item.count}}</td>
+      <td class="align-middle">{{item.fiscalYear}}</td>
+      <td class="align-middle">{{item.meetingDate}}</td>
+      <td class="align-middle">{{item.location}}</td>
       <td class="align-middle">
         <div class="dropdown" dropdown>
           <a class="btn btn-primary text-light dropdown-toggle" dropdownToggle>
@@ -39,7 +45,7 @@
             <a class="btn dropdown-item" (click)="viewItem(item)">
               <i class="fas fa-eye"></i> View</a>
             <a class="btn dropdown-item" (click)="viewSubItem(item)">
-              <i class="fas fa-eye"></i> View Meeting Time</a>
+              <i class="fas fa-eye"></i> View Meeting Agenda</a>
             <a class="btn dropdown-item" (click)="editItem(item)">
               <i class="fas fa-edit"></i> Edit</a>
             <a class="btn dropdown-item" (click)="deleteItem(item)">
