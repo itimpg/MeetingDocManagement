@@ -17,14 +17,16 @@ namespace MeetingDoc.Api.Managers
 
         protected override IQueryable<MeetingTopic> GetByCriteria(BaseCriteria<MeetingTopicViewModel> criteria)
         {
-            return Repository.GetQuery().Where(x=> !x.IsRemoved && x.Type.Id == criteria.Model.MeetingTypeId);
+            return Repository.GetQuery().Where(x => !x.IsRemoved && x.MeetingTypeId == criteria.Model.MeetingTypeId);
         }
 
         protected override MeetingTopic ToEntity(MeetingTopicViewModel viewModel)
         {
             return new MeetingTopic
             {
-                Id = viewModel.Id
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                MeetingTypeId = viewModel.MeetingTypeId
             };
         }
 
@@ -32,7 +34,9 @@ namespace MeetingDoc.Api.Managers
         {
             return new MeetingTopicViewModel
             {
-                Id = entity.Id
+                Id = entity.Id,
+                Name = entity.Name,
+                MeetingTypeId = entity.MeetingTypeId
             };
         }
     }

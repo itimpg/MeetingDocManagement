@@ -10,12 +10,33 @@ import { map } from 'rxjs/operators';
 })
 export abstract class BaseService<T> {
   protected abstract action: string;
+  protected abstract parentAction: string;
 
   protected baseUrl: string = environment.baseUrl;
 
   constructor(protected http: HttpClient) {}
 
   getItems(page?, itemsPerPage?): Observable<PaginatedResult<T[]>> {
+    return this.getItemsFromUrl(
+      `${this.baseUrl}${this.action}`,
+      page,
+      itemsPerPage
+    );
+  }
+
+  getItemsByParent(parentId: number, page?, itemsPerPage?): Observable<PaginatedResult<T[]>> {
+    return this.getItemsFromUrl(
+      `${this.baseUrl}${this.parentAction}/${parentId}/${this.action}`,
+      page,
+      itemsPerPage
+    );
+  }
+
+  getItemsFromUrl(
+    url: string,
+    page?,
+    itemsPerPage?
+  ): Observable<PaginatedResult<T[]>> {
     const paginatedResult: PaginatedResult<T[]> = new PaginatedResult<T[]>();
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
@@ -23,19 +44,17 @@ export abstract class BaseService<T> {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http
-      .get<any>(this.baseUrl + this.action, { observe: 'response', params })
-      .pipe(
-        map(response => {
-          paginatedResult.result = response.body;
-          if (response.headers.get('Pagination') != null) {
-            paginatedResult.pagination = JSON.parse(
-              response.headers.get('Pagination')
-            );
-          }
-          return paginatedResult;
-        })
-      );
+    return this.http.get<any>(url, { observe: 'response', params }).pipe(
+      map(response => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get('Pagination')
+          );
+        }
+        return paginatedResult;
+      })
+    );
   }
 
   getItem(id: number): Observable<T> {

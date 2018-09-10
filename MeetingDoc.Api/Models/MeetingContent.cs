@@ -6,7 +6,8 @@ namespace MeetingDoc.Api.Models
         // Base64
         public byte[] File { get; set; }
         public int Ordinal { get; set; }
+        public int MeetingAgendaId { get; set; }
 
-        public MeetingAgenda Agenda { get; set; }
+        public MeetingAgenda MeetingAgenda { get; set; }
     }
 }

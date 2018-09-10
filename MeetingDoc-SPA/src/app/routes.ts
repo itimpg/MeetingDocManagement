@@ -32,7 +32,7 @@ export const appRoutes: Routes = [
         resolve: { meetingType: MeetingTypeDetailResolver }
       },
       {
-        path: 'meetingTypes/:id/topic',
+        path: 'meetingTypes/:id/topics',
         component: MeetingTopicListComponent,
         resolve: { meetingTopic: MeetingTopicListResolver }
       },

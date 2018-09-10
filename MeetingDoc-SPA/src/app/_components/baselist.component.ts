@@ -1,10 +1,10 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Subscription, Observable } from 'rxjs';
 import { Pagination, PaginatedResult } from '../_models/pagination';
 import { OnInit } from '@angular/core';
 import { BaseService } from '../_services/base.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseModel } from '../_models/BaseModel';
 
 export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
@@ -16,12 +16,14 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
   items: T[];
   subscriptions: Subscription[] = [];
   pagination: Pagination;
+  parentId: number;
 
   constructor(
     protected service: BaseService<T>,
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected router: Router
   ) {}
 
   ngOnInit() {
@@ -29,20 +31,33 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
       this.items = data[this.actionName].result;
       this.pagination = data[this.actionName].pagination;
     });
+
+    this.route.params.subscribe(params => {
+      this.parentId = params['id'];
+    });
   }
 
   loadItems() {
-    this.service
-      .getItems(this.pagination.currentPage, this.pagination.itemsPerPage)
-      .subscribe(
-        (res: PaginatedResult<T[]>) => {
-          this.items = res.result;
-          this.pagination = res.pagination;
-        },
-        error => {
-          this.alertify.error(error);
-        }
-      );
+    const observableCollection = this.parentId
+      ? this.service.getItemsByParent(
+          this.parentId,
+          this.pagination.currentPage,
+          this.pagination.itemsPerPage
+        )
+      : this.service.getItems(
+          this.pagination.currentPage,
+          this.pagination.itemsPerPage
+        );
+
+    observableCollection.subscribe(
+      (res: PaginatedResult<T[]>) => {
+        this.items = res.result;
+        this.pagination = res.pagination;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 
   pageChanged(event: any): void {
@@ -52,6 +67,10 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
 
   viewItem(item: T) {
     this.showItem(item.id, false);
+  }
+
+  viewSubItem(item: T) {
+    this.router.navigate([`meetingTypes/${item.id}/topics`]);
   }
 
   addItem() {
@@ -89,10 +108,10 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
 
     this.subscriptions.push(combine);
 
-    this.showModal(itemId, isEditable);
+    this.showModal(itemId, isEditable, this.parentId);
   }
 
-  abstract showModal(itemId: number, isEditable: boolean): void;
+  abstract showModal(itemId: number, isEditable: boolean, parentId?): void;
 
   unsubscribe() {
     this.subscriptions.forEach((subscription: Subscription) => {

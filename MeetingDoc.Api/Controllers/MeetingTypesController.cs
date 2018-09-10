@@ -16,9 +16,10 @@ namespace MeetingDoc.Api.Controllers
         private readonly IMeetingTypeManager _meetingTypeManager;
         private readonly IMeetingTopicManager _meetingTopicManager;
 
-        public MeetingTypesController(IMeetingTypeManager manager)
+        public MeetingTypesController(IMeetingTypeManager meetingTypeManager, IMeetingTopicManager meetingTopicManager)
         {
-            _meetingTypeManager = manager;
+            _meetingTypeManager = meetingTypeManager;
+            _meetingTopicManager = meetingTopicManager;
         }
 
         [HttpGet]
@@ -40,18 +41,6 @@ namespace MeetingDoc.Api.Controllers
                 return NotFound();
             }
             return Ok(viewModel);
-        }
-
-        [HttpGet("{id}/topics")]
-        public async Task<IActionResult> Get(int id, [FromQuery]MeetingTopicCriteria criteria)
-        {
-            criteria.Model.MeetingTypeId = id;
-
-            var topics = await _meetingTopicManager.GetAsync(criteria);
-            this.Response.AddPagination(
-                topics.CurrentPage, topics.PageSize, topics.TotalCount, topics.TotalPages);
-
-            return Ok(topics);
         }
 
         [HttpPost()]
@@ -76,6 +65,18 @@ namespace MeetingDoc.Api.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingTypeManager.DeleteAsync(id, userId);
             return Ok();
+        }
+
+        [HttpGet("{id}/meetingtopics")]
+        public async Task<IActionResult> Get(int id, [FromQuery]MeetingTopicCriteria criteria)
+        {
+            criteria.Model.MeetingTypeId = id;
+
+            var topics = await _meetingTopicManager.GetAsync(criteria);
+            this.Response.AddPagination(
+                topics.CurrentPage, topics.PageSize, topics.TotalCount, topics.TotalPages);
+
+            return Ok(topics);
         }
     }
 }

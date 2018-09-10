@@ -10,6 +10,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   model: T;
   title: string;
   isEditable: boolean;
+  parentId: number;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -22,8 +23,9 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
 
   ngOnInit() {}
 
-  setModel(itemId: number, isEditable: boolean) {
-    debugger;
+  setModel(itemId: number, isEditable: boolean, parentId?) {
+    this.parentId = parentId;
+
     if (itemId === 0) {
       this.isEditable = true;
       this.title = `Add ${this.action}`;
@@ -43,9 +45,15 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     }
   }
 
+  PrepareBeforeSave(): T {
+    return this.model;
+  }
+
   saveItem() {
-    if (this.model.id === 0) {
-      this.service.add(this.model).subscribe(
+    const model = this.PrepareBeforeSave();
+
+    if (model.id === 0) {
+      this.service.add(model).subscribe(
         success => {
           this.alertify.message('save success');
           this.bsModalRef.hide();
@@ -55,7 +63,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
         }
       );
     } else {
-      this.service.edit(this.model).subscribe(
+      this.service.edit(model).subscribe(
         success => {
           this.alertify.message('save success');
           this.bsModalRef.hide();

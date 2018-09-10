@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap';
 import { AlertifyService } from '../../_services/alertify.service';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseListComponent } from '../../_components/baselist.component';
 import { MeetingType } from '../../_models/MeetingType';
 import { MeetingTypeService } from 'src/app/_services/meetingtype.service';
@@ -27,8 +27,9 @@ export class MeetingTypeListComponent extends BaseListComponent<MeetingType> {
     protected service: MeetingTypeService,
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected router: Router
   ) {
-    super(service, alertify, modalService, route);
+    super(service, alertify, modalService, route, router);
   }
 }

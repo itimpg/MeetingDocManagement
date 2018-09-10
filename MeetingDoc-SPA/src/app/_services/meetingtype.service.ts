@@ -6,5 +6,6 @@ import { BaseService } from './base.service';
   providedIn: 'root'
 })
 export class MeetingTypeService extends BaseService<MeetingType> {
+  protected parentAction: '';
   protected action = 'meetingTypes';
 }

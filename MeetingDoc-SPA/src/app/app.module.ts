@@ -22,8 +22,6 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { UserComponent } from './users/user/user.component';
 import { AlertifyService } from './_services/alertify.service';
 import { BsDropdownModule, BsModalService, ModalModule } from 'ngx-bootstrap';
-import { MeetingComponent } from './meetings/meeting/meeting.component';
-import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { UserDetailResolver } from './_resolvers/user.resolver';
 import { UserListResolver } from './_resolvers/userlist.resolver';
 import { MeetingTypeListComponent } from './meeting-type/meeting-type-list/meeting-type-list.component';
@@ -31,6 +29,10 @@ import { MeetingTypeComponent } from './meeting-type/meeting-type/meeting-type.c
 import { MeetingTypeListResolver } from './_resolvers/meetingtypelist.resolver';
 import { MeetingTypeDetailResolver } from './_resolvers/meetingtype.resolver';
 import { MeetingTypeService } from './_services/meetingtype.service';
+import { MeetingTopicListComponent } from './meeting-topic/meeting-topic-list/meeting-topic-list.component';
+import { MeetingTopicComponent } from './meeting-topic/meeting-topic/meeting-topic.component';
+import { MeetingTopicListResolver } from './_resolvers/meetingtopiclist.resolver';
+import { MeetingTopicService } from './_services/meetingtopic.service';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -50,8 +52,8 @@ export function tokenGetter() {
     MeetingTypeListComponent,
     MeetingTypeComponent,
 
-    MeetingListComponent,
-    MeetingComponent
+    MeetingTopicListComponent,
+    MeetingTopicComponent
   ],
   imports: [
     BrowserModule,
@@ -70,9 +72,6 @@ export function tokenGetter() {
     })
   ],
   providers: [
-    AuthService,
-    UsersService,
-    MeetingTypeService,
     AlertifyService,
     ErrorInterceptorProvider,
     BsModalService,
@@ -80,9 +79,19 @@ export function tokenGetter() {
     UserDetailResolver,
     UserListResolver,
     MeetingTypeListResolver,
-    MeetingTypeDetailResolver
+    MeetingTypeDetailResolver,
+    MeetingTopicListResolver,
+    AuthService,
+    UsersService,
+    MeetingTypeService,
+    MeetingTopicService
   ],
-  entryComponents: [ChangePasswordComponent, UserComponent],
+  entryComponents:
+  [
+    ChangePasswordComponent,
+    UserComponent,
+    MeetingTopicComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

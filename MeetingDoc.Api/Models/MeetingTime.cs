@@ -4,7 +4,8 @@ namespace MeetingDoc.Api.Models
 {
     public class MeetingTime : BaseEntity
     {
-        public MeetingTopic Topic { get; set; }
+        public int MeetingTopicId { get; set; }
+        public MeetingTopic MeetingTopic { get; set; }
         public int Count { get; set; }
         public string FiscalYear { get; set; }
         public DateTime MeetingDate { get; set; }

@@ -1,3 +1,24 @@
-<p>
-  meeting-topic works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{title}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
+  <div class="modal-body"> 
+    <label class="label">Name:</label>
+    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable"/>
+        
+  </div>
+  <div class="modal-footer">
+    <div class="form-row">
+      <div class="col">
+        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' : 'Close' }}</button>
+      </div>
+    </div>
+  </div>
+</form>
