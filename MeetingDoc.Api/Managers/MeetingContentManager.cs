@@ -17,7 +17,7 @@ namespace MeetingDoc.Api.Managers
 
         protected override IQueryable<MeetingContent> GetByCriteria(BaseCriteria<MeetingContentViewModel> criteria)
         {
-            return Repository.GetQuery();
+            return Repository.GetQuery().Where(x => !x.IsRemoved && x.MeetingAgendaId == criteria.Model.MeetingAgendaId);
         }
 
         protected override MeetingContent ToEntity(MeetingContentViewModel viewModel)
@@ -25,6 +25,10 @@ namespace MeetingDoc.Api.Managers
             return new MeetingContent
             {
                 Id = viewModel.Id,
+                FileName = viewModel.FileName,
+                File = viewModel.File,
+                Ordinal = viewModel.Ordinal,
+                MeetingAgendaId = viewModel.MeetingAgendaId
             };
         }
 
@@ -33,6 +37,10 @@ namespace MeetingDoc.Api.Managers
             return new MeetingContentViewModel
             {
                 Id = entity.Id,
+                FileName = entity.FileName,
+                File = entity.File,
+                Ordinal = entity.Ordinal,
+                MeetingAgendaId = entity.MeetingAgendaId
             };
         }
     }

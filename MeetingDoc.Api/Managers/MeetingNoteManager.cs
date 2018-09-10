@@ -15,7 +15,7 @@ namespace MeetingDoc.Api.Managers
 
         protected override IQueryable<MeetingNote> GetByCriteria(BaseCriteria<MeetingNoteViewModel> criteria)
         {
-            return Repository.GetQuery();
+            return Repository.GetQuery().Where(x => !x.IsRemoved);
         }
 
         protected override MeetingNote ToEntity(MeetingNoteViewModel viewModel)
@@ -23,6 +23,9 @@ namespace MeetingDoc.Api.Managers
             return new MeetingNote
             {
                 Id = viewModel.Id,
+                UserId = viewModel.UserId,
+                MeetingContentId = viewModel.MeetingContentId,
+                Note = viewModel.Note
             };
         }
 
@@ -30,7 +33,10 @@ namespace MeetingDoc.Api.Managers
         {
             return new MeetingNoteViewModel
             {
-                Id = entity.Id
+                Id = entity.Id,
+                UserId = entity.UserId,
+                MeetingContentId = entity.MeetingContentId,
+                Note = entity.Note,
             };
         }
     }
