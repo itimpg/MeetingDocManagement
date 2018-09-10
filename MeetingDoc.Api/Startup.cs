@@ -58,6 +58,8 @@ namespace MeetingDoc.Api
             services.AddScoped<IUserValidator, UserValidator>();
             services.AddScoped<IMeetingTypeManager, MeetingTypeManager>();
             services.AddScoped<IMeetingTypeValidator, MeetingTypeValidator>();
+            services.AddScoped<IMeetingTopicManager, MeetingTopicManager>();
+            services.AddScoped<IMeetingTopicValidator, MeetingTopicValidator>();
             services.AddScoped<IEmailManager, EmailManager>();
 
             services

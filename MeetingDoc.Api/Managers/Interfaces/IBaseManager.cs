@@ -6,7 +6,7 @@ namespace MeetingDoc.Api.Managers.Interfaces
 {
     public interface IBaseManager<TEntity, TViewModel>
         where TEntity : BaseEntity
-        where TViewModel : BaseViewModel
+        where TViewModel : BaseViewModel, new()
     {
         Task<TViewModel> GetAsync(object id);
         Task<PagedList<TViewModel>> GetAsync(BaseCriteria<TViewModel> criteria);

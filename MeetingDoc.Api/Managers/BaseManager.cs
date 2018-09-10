@@ -15,7 +15,7 @@ namespace MeetingDoc.Api.Managers
 {
     public abstract class BaseManager<TEntity, TViewModel>
         where TEntity : BaseEntity
-        where TViewModel : BaseViewModel
+        where TViewModel : BaseViewModel, new()
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected IBaseValidator<TViewModel> Validator { get; private set; }

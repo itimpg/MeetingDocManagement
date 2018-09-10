@@ -2,8 +2,8 @@ using MeetingDoc.Api.Data;
 
 namespace MeetingDoc.Api.ViewModels
 {
-    public abstract class BaseCriteria<TViewModel>
-        where TViewModel : BaseViewModel
+    public class BaseCriteria<TViewModel>
+        where TViewModel : BaseViewModel, new()
     {
         private const int MAX_PAGE_SIZE = 50;
         public int PageNumber { get; set; } = 1;
@@ -13,5 +13,12 @@ namespace MeetingDoc.Api.ViewModels
             get { return _pageSize; }
             set { _pageSize = (value > MAX_PAGE_SIZE) ? MAX_PAGE_SIZE : value; }
         }
+
+        public BaseCriteria()
+        {
+            Model = new TViewModel();
+        }
+
+        public TViewModel Model { get; set; }
     }
 }

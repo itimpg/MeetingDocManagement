@@ -13,27 +13,28 @@ namespace MeetingDoc.Api.Controllers
     [ApiController]
     public class MeetingTypesController : ControllerBase
     {
-        private readonly IMeetingTypeManager _manager;
+        private readonly IMeetingTypeManager _meetingTypeManager;
+        private readonly IMeetingTopicManager _meetingTopicManager;
 
         public MeetingTypesController(IMeetingTypeManager manager)
         {
-            _manager = manager;
+            _meetingTypeManager = manager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]MeetingTypeCriteria criteria)
         {
-            var users = await _manager.GetAsync(criteria);
+            var meetingTypes = await _meetingTypeManager.GetAsync(criteria);
             this.Response.AddPagination(
-                users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+                meetingTypes.CurrentPage, meetingTypes.PageSize, meetingTypes.TotalCount, meetingTypes.TotalPages);
 
-            return Ok(users);
+            return Ok(meetingTypes);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            MeetingTypeViewModel viewModel = await _manager.GetAsync(id);
+            MeetingTypeViewModel viewModel = await _meetingTypeManager.GetAsync(id);
             if (viewModel == null)
             {
                 return NotFound();
@@ -41,11 +42,23 @@ namespace MeetingDoc.Api.Controllers
             return Ok(viewModel);
         }
 
+        [HttpGet("{id}/topics")]
+        public async Task<IActionResult> Get(int id, [FromQuery]MeetingTopicCriteria criteria)
+        {
+            criteria.Model.MeetingTypeId = id;
+
+            var topics = await _meetingTopicManager.GetAsync(criteria);
+            this.Response.AddPagination(
+                topics.CurrentPage, topics.PageSize, topics.TotalCount, topics.TotalPages);
+
+            return Ok(topics);
+        }
+
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingTypeViewModel viewModel)
         {
             var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _manager.AddAsync(viewModel, id);
+            await _meetingTypeManager.AddAsync(viewModel, id);
             return Ok();
         }
 
@@ -53,7 +66,7 @@ namespace MeetingDoc.Api.Controllers
         public async Task<IActionResult> Update(MeetingTypeViewModel viewModel)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _manager.UpdateAsync(viewModel, userId);
+            await _meetingTypeManager.UpdateAsync(viewModel, userId);
             return Ok();
         }
 
@@ -61,7 +74,7 @@ namespace MeetingDoc.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _manager.DeleteAsync(id, userId);
+            await _meetingTypeManager.DeleteAsync(id, userId);
             return Ok();
         }
     }
