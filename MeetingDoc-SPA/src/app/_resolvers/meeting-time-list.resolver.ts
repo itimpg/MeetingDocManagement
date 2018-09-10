@@ -6,8 +6,9 @@ import { MeetingTime } from '../_models/MeetingTime';
 import { MeetingTimeService } from '../_services/meetingtime.service';
 
 @Injectable()
-export class MeetingTimeListResolver extends BaseListByParentResolver<MeetingTime>
-{
+export class MeetingTimeListResolver extends BaseListByParentResolver<
+  MeetingTime
+> {
   constructor(
     protected service: MeetingTimeService,
     protected router: Router,

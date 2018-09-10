@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../_components/base.component';
 import { MeetingTime } from '../../_models/MeetingTime';
 import { BsModalRef } from 'ngx-bootstrap';
-import { MeetingTopicService } from '../../_services/meetingtopic.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { MeetingTimeService } from '../../_services/meetingtime.service';
 
@@ -11,7 +10,7 @@ import { MeetingTimeService } from '../../_services/meetingtime.service';
   templateUrl: './meeting-time.component.html',
   styleUrls: ['./meeting-time.component.css']
 })
-export class MeetingTimeComponent  extends BaseComponent<MeetingTime> {
+export class MeetingTimeComponent extends BaseComponent<MeetingTime> {
   protected action = 'Meeting Time';
 
   constructor(

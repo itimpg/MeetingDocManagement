@@ -1,3 +1,54 @@
-<p>
-  meeting-agenda-list works!
-</p>
+<h3>{{titleName}}</h3>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col-xs-12 col-12">
+        <pagination class="float-right" *ngIf="pagination != null" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+          [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+          previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table pt-5">
+  <thead class="thead-light">
+    <tr>
+      <th>Id</th>
+      <th>Number</th>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td class="align-middle">{{item.id}}</td>
+      <td class="align-middle">{{item.number}}</td>
+      <td class="align-middle">{{item.name}}</td> 
+      <td class="align-middle">
+        <div class="dropdown" dropdown>
+          <a class="btn btn-primary text-light dropdown-toggle" dropdownToggle>
+            Action
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *dropdownMenu>
+            <a class="btn dropdown-item" (click)="viewItem(item)">
+              <i class="fas fa-eye"></i> View</a>
+            <a class="btn dropdown-item" (click)="viewSubItem(item)">
+              <i class="fas fa-eye"></i> View Meeting Contents</a>
+            <a class="btn dropdown-item" (click)="editItem(item)">
+              <i class="fas fa-edit"></i> Edit</a>
+            <a class="btn dropdown-item" (click)="deleteItem(item)">
+              <i class="fas fa-trash-alt"></i> Delete</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

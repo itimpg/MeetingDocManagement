@@ -4,7 +4,6 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { BaseComponent } from '../../_components/base.component';
 import { MeetingTopic } from '../../_models/MeetingTopic';
 import { MeetingTopicService } from '../../_services/meetingtopic.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meeting-topic',
@@ -17,8 +16,7 @@ export class MeetingTopicComponent extends BaseComponent<MeetingTopic> {
   constructor(
     public bsModalRef: BsModalRef,
     protected service: MeetingTopicService,
-    protected alertify: AlertifyService,
-    protected router: Router
+    protected alertify: AlertifyService
   ) {
     super(bsModalRef, service, alertify);
   }

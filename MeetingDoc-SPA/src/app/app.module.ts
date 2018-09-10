@@ -37,6 +37,14 @@ import { MeetingTimeComponent } from './meeting-time/meeting-time/meeting-time.c
 import { MeetingTimeService } from './_services/meetingtime.service';
 import { MeetingTimeListComponent } from './meeting-time/meeting-time-list/meeting-time-list.component';
 import { MeetingTimeListResolver } from './_resolvers/meeting-time-list.resolver';
+import { MeetingAgendaListComponent } from './meeting-agenda/meeting-agenda-list/meeting-agenda-list.component';
+import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda/meeting-agenda.component';
+import { MeetingContentListComponent } from './meeting-content/meeting-content-list/meeting-content-list.component';
+import { MeetingContentComponent } from './meeting-content/meeting-content/meeting-content.component';
+import { MeetingAgendaService } from './_services/meeting-agenda.service';
+import { MeetingContentService } from './_services/meeting-content.service';
+import { MeetingAgendaListResolver } from './_resolvers/meeting-agenda-list.resolver';
+import { MeetingContentListResolver } from './_resolvers/meeting-content-list.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -61,6 +69,12 @@ export function tokenGetter() {
 
     MeetingTimeListComponent,
     MeetingTimeComponent,
+
+    MeetingAgendaListComponent,
+    MeetingAgendaComponent,
+
+    MeetingContentListComponent,
+    MeetingContentComponent
   ],
   imports: [
     BrowserModule,
@@ -89,18 +103,23 @@ export function tokenGetter() {
     MeetingTypeDetailResolver,
     MeetingTopicListResolver,
     MeetingTimeListResolver,
+    MeetingAgendaListResolver,
+    MeetingContentListResolver,
     AuthService,
     UsersService,
     MeetingTypeService,
     MeetingTopicService,
-    MeetingTimeService
+    MeetingTimeService,
+    MeetingAgendaService,
+    MeetingContentService,
   ],
-  entryComponents:
-  [
+  entryComponents: [
     ChangePasswordComponent,
     UserComponent,
     MeetingTopicComponent,
-    MeetingTimeComponent
+    MeetingTimeComponent,
+    MeetingAgendaComponent,
+    MeetingContentComponent
   ],
   bootstrap: [AppComponent]
 })

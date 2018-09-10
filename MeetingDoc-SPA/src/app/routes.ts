@@ -14,6 +14,10 @@ import { MeetingTopicListComponent } from './meeting-topic/meeting-topic-list/me
 import { MeetingTopicListResolver } from './_resolvers/meetingtopiclist.resolver';
 import { MeetingTimeListResolver } from './_resolvers/meeting-time-list.resolver';
 import { MeetingTimeListComponent } from './meeting-time/meeting-time-list/meeting-time-list.component';
+import { MeetingAgendaListComponent } from './meeting-agenda/meeting-agenda-list/meeting-agenda-list.component';
+import { MeetingAgendaListResolver } from './_resolvers/meeting-agenda-list.resolver';
+import { MeetingContentListComponent } from './meeting-content/meeting-content-list/meeting-content-list.component';
+import { MeetingContentListResolver } from './_resolvers/meeting-content-list.resolver';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,7 +45,17 @@ export const appRoutes: Routes = [
       {
         path: 'meetingtopics/:id/times',
         component: MeetingTimeListComponent,
-        resolve: { meetingtopic: MeetingTimeListResolver }
+        resolve: { meetingtime: MeetingTimeListResolver }
+      },
+      {
+        path: 'meetingtimes/:id/agendas',
+        component: MeetingAgendaListComponent,
+        resolve: { meetingagenda: MeetingAgendaListResolver }
+      },
+      {
+        path: 'meetingagendas/:id/contents',
+        component: MeetingContentListComponent,
+        resolve: { meetingcontent: MeetingContentListResolver }
       },
       {
         path: 'users',

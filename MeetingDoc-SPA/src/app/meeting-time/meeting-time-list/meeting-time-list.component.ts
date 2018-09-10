@@ -13,7 +13,7 @@ import { MeetingTimeService } from '../../_services/meetingtime.service';
   styleUrls: ['./meeting-time-list.component.css']
 })
 export class MeetingTimeListComponent extends BaseListComponent<MeetingTime> {
-  actionName = 'meetingtopic';
+  actionName = 'meetingtime';
   titleName = 'Meeting Times';
   itemName = 'Meeting Time';
 
