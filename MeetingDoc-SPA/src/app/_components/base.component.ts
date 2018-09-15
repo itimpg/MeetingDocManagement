@@ -7,6 +7,7 @@ import { AlertifyService } from '../_services/alertify.service';
 export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   protected abstract action: string;
 
+  itemId: number;
   model: T;
   title: string;
   isEditable: boolean;
@@ -21,20 +22,15 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     this.model.id = 0;
   }
 
-  ngOnInit() {}
-
-  setModel(itemId: number, isEditable: boolean, parentId?) {
-    this.parentId = parentId;
-
-    if (itemId === 0) {
+  ngOnInit() {
+    if (this.itemId === 0) {
       this.isEditable = true;
       this.title = `Add ${this.action}`;
     } else {
-      this.isEditable = isEditable;
       this.title = this.isEditable
         ? `Edit  ${this.action}`
         : `View ${this.action}`;
-      this.service.getItem(itemId).subscribe(
+      this.service.getItem(this.itemId).subscribe(
         result => {
           this.model = result;
         },

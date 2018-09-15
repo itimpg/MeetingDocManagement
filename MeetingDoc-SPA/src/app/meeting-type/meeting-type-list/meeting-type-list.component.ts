@@ -7,6 +7,7 @@ import { BaseListComponent } from '../../_components/baselist.component';
 import { MeetingType } from '../../_models/MeetingType';
 import { MeetingTypeService } from 'src/app/_services/meetingtype.service';
 import { MeetingTypeComponent } from '../meeting-type/meeting-type.component';
+import { ShowModalParam } from '../../_models/ShowModalParam';
 
 @Component({
   selector: 'app-meeting-type-list',
@@ -18,9 +19,10 @@ export class MeetingTypeListComponent extends BaseListComponent<MeetingType> {
   titleName = 'Meeting Types';
   itemName = 'Meeting Type';
 
-  showModal(itemId: number, isEditable: boolean): void {
-    this.bsModalRef = this.modalService.show(MeetingTypeComponent);
-    this.bsModalRef.content.setModel(itemId, isEditable);
+  showModal(initialState: ShowModalParam): void {
+    this.bsModalRef = this.modalService.show(MeetingTypeComponent, {
+      initialState
+    });
   }
 
   constructor(

@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-primary text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-primary text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
   </div>
   <div class="col">
     <div class="row">
@@ -30,10 +30,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
-      <td class="align-middle">{{item.id}}</td>
-      <td class="align-middle">{{item.count}}</td>
-      <td class="align-middle">{{item.fiscalYear}}</td>
-      <td class="align-middle">{{item.meetingDate}}</td>
+      <td class="align-middle">{{item.id | thainumber}}</td>
+      <td class="align-middle">{{item.count | thainumber}}</td>
+      <td class="align-middle">{{item.fiscalYear | thainumber}}</td>
+      <td class="align-middle">{{item.meetingDate | thaiyear}}</td>
       <td class="align-middle">{{item.location}}</td>
       <td class="align-middle pull-right">
         <div class="dropdown" dropdown>

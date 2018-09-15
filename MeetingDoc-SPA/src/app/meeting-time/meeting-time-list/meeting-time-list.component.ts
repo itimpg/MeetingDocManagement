@@ -6,6 +6,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { BsModalService } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MeetingTimeService } from '../../_services/meetingtime.service';
+import { ShowModalParam } from '../../_models/ShowModalParam';
 
 @Component({
   selector: 'app-meeting-time-list',
@@ -17,9 +18,10 @@ export class MeetingTimeListComponent extends BaseListComponent<MeetingTime> {
   titleName = 'Meeting Times';
   itemName = 'Meeting Time';
 
-  showModal(itemId: number, isEditable: boolean): void {
-    this.bsModalRef = this.modalService.show(MeetingTimeComponent);
-    this.bsModalRef.content.setModel(itemId, isEditable, this.parentId);
+  showModal(initialState: ShowModalParam): void {
+    this.bsModalRef = this.modalService.show(MeetingTimeComponent, {
+      initialState
+    });
   }
 
   constructor(

@@ -6,6 +6,7 @@ import { BaseService } from '../_services/base.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseModel } from '../_models/BaseModel';
+import { ShowModalParam } from '../_models/ShowModalParam';
 
 export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
   abstract itemName: string;
@@ -106,10 +107,15 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
 
     this.subscriptions.push(combine);
 
-    this.showModal(itemId, isEditable, this.parentId);
+    const param = new ShowModalParam();
+    param.itemId = itemId;
+    param.isEditable = isEditable;
+    param.parentId = this.parentId;
+
+    this.showModal(param);
   }
 
-  abstract showModal(itemId: number, isEditable: boolean, parentId?): void;
+  abstract showModal(initialState: ShowModalParam): void;
 
   unsubscribe() {
     this.subscriptions.forEach((subscription: Subscription) => {

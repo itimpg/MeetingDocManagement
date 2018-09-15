@@ -8,10 +8,10 @@
 <form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
   <div class="modal-body"> 
     <label class="label">Count:</label>
-    <input type="text" class="form-control mb-4" id="count" name="count" #count [(ngModel)]="model.count" [disabled]="!isEditable"/>
+    <input type="text" appNumberOnly class="form-control mb-4" id="count" name="count" #count [(ngModel)]="model.count" [disabled]="!isEditable"/>
     
     <label class="label">Fiscal Year:</label>
-    <input type="text" class="form-control mb-4" id="fiscalYear" name="fiscalYear" #fiscalYear [(ngModel)]="model.fiscalYear" [disabled]="!isEditable"/>
+    <input type="text" appNumberOnly class="form-control mb-4" id="fiscalYear" name="fiscalYear" #fiscalYear [(ngModel)]="model.fiscalYear" [disabled]="!isEditable"/>
      
     <label class="label">Meeting Date:</label>
     <input type="text" class="form-control mb-4" id="meetingDate" name="meetingDate" #fiscalYear [(ngModel)]="model.meetingDate" [disabled]="!isEditable"/>

@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-primary text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-primary text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
   </div>
   <div class="col">
     <div class="row">
@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <td class="align-middle">{{user.id}}</td>
+      <td class="align-middle">{{user.id | thainumber}}</td>
       <td class="align-middle">{{user.firstName}} {{user.lastName}}</td>
       <td class="align-middle">{{user.email}}</td>
       <td class="align-middle">{{user.position}}</td>

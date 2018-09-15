@@ -18,7 +18,7 @@
       </div>
   
       <label class="label">Ordinal:</label>
-      <input type="text" class="form-control mb-4" id="ordinal" name="ordinal" #ordinal [(ngModel)]="model.ordinal" [disabled]="!isEditable"/>
+      <input appNumberOnly type="text" class="form-control mb-4" id="ordinal" name="ordinal" #ordinal [(ngModel)]="model.ordinal" [disabled]="!isEditable"/>
           
     </div>
     <div class="modal-footer">

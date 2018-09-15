@@ -45,6 +45,9 @@ import { MeetingAgendaService } from './_services/meeting-agenda.service';
 import { MeetingContentService } from './_services/meeting-content.service';
 import { MeetingAgendaListResolver } from './_resolvers/meeting-agenda-list.resolver';
 import { MeetingContentListResolver } from './_resolvers/meeting-content-list.resolver';
+import { NumberOnlyDirective } from './_directives/number-only.directive';
+import { ThaiNumberPipe } from './_pipes/thai-number.pipe';
+import { ThaiYearPipe } from './_pipes/thai-year.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -74,7 +77,11 @@ export function tokenGetter() {
     MeetingAgendaComponent,
 
     MeetingContentListComponent,
-    MeetingContentComponent
+    MeetingContentComponent,
+
+    ThaiNumberPipe,
+    ThaiYearPipe,
+    NumberOnlyDirective
   ],
   imports: [
     BrowserModule,
@@ -112,6 +119,8 @@ export function tokenGetter() {
     MeetingTimeService,
     MeetingAgendaService,
     MeetingContentService,
+    ThaiNumberPipe,
+    ThaiYearPipe
   ],
   entryComponents: [
     ChangePasswordComponent,
