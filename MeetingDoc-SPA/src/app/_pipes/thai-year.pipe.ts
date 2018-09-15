@@ -25,7 +25,8 @@ export class ThaiYearPipe implements PipeTransform {
     }
 
     const date = new Date(value);
-    let result = `${date.getDay()}/${date.getMonth() + 1}/${date.getFullYear() + 543}`;
+    let result = `${date.getDate()}/${date.getMonth() +
+      1}/${date.getFullYear() + 543}`;
 
     for (let i = 0; i < this.numbers.length; i++) {
       result = this.replaceAll(result, this.numbers[i], this.thaiNumbers[i]);

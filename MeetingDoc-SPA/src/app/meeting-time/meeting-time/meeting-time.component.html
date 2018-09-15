@@ -6,27 +6,32 @@
 </div>
 
 <form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
-  <div class="modal-body"> 
+  <div class="modal-body">
     <label class="label">Count:</label>
-    <input type="text" appNumberOnly class="form-control mb-4" id="count" name="count" #count [(ngModel)]="model.count" [disabled]="!isEditable"/>
-    
+    <input type="text" appNumberOnly class="form-control mb-4" id="count" name="count" #count [(ngModel)]="model.count"
+      [disabled]="!isEditable" />
+
     <label class="label">Fiscal Year:</label>
-    <input type="text" appNumberOnly class="form-control mb-4" id="fiscalYear" name="fiscalYear" #fiscalYear [(ngModel)]="model.fiscalYear" [disabled]="!isEditable"/>
-     
+    <input type="text" appNumberOnly class="form-control mb-4" id="fiscalYear" name="fiscalYear" #fiscalYear
+      [(ngModel)]="model.fiscalYear" [disabled]="!isEditable" />
+
     <label class="label">Meeting Date:</label>
-    <input type="text" class="form-control mb-4" id="meetingDate" name="meetingDate" #fiscalYear [(ngModel)]="model.meetingDate" [disabled]="!isEditable"/>
-    
+    <input type="text" [(ngModel)]="model.meetingDate" id="meetingDate" name="meetingDate" #meetingDate class="form-control" bsDatepicker>
+
     <label class="label">Location:</label>
-    <input type="text" class="form-control mb-4" id="location" name="location" #location [(ngModel)]="model.location" [disabled]="!isEditable"/> 
+    <input type="text" class="form-control mb-4" id="location" name="location" #location [(ngModel)]="model.location"
+      [disabled]="!isEditable" />
 
   </div>
   <div class="modal-footer">
     <div class="form-row">
       <div class="col">
-        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
+        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block"
+          type="submit">Save</button>
       </div>
       <div class="col">
-        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' : 'Close' }}</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' :
+          'Close' }}</button>
       </div>
     </div>
   </div>

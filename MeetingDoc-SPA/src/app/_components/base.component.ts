@@ -32,13 +32,17 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
         : `View ${this.action}`;
       this.service.getItem(this.itemId).subscribe(
         result => {
-          this.model = result;
+          this.model = this.ConvertResultToModel(result);
         },
         error => {
           this.alertify.error(error);
         }
       );
     }
+  }
+
+  ConvertResultToModel(result: any): T {
+    return result;
   }
 
   PrepareBeforeSave(): T {

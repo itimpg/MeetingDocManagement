@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BsLocaleService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,9 @@ export class AppComponent implements OnInit {
 
   jwtHelper = new JwtHelperService();
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private localeService: BsLocaleService) {
+    this.localeService.use('th');
+  }
 
   ngOnInit() {
     const token = localStorage.getItem('token');

@@ -5,6 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 
+import {
+  BsDropdownModule,
+  BsModalService,
+  ModalModule,
+  BsDatepickerModule,
+  BsLocaleService
+} from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { environment } from '../environments/environment';
@@ -21,7 +28,6 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { UserComponent } from './users/user/user.component';
 import { AlertifyService } from './_services/alertify.service';
-import { BsDropdownModule, BsModalService, ModalModule } from 'ngx-bootstrap';
 import { UserDetailResolver } from './_resolvers/user.resolver';
 import { UserListResolver } from './_resolvers/userlist.resolver';
 import { MeetingTypeListComponent } from './meeting-type/meeting-type-list/meeting-type-list.component';
@@ -48,6 +54,10 @@ import { MeetingContentListResolver } from './_resolvers/meeting-content-list.re
 import { NumberOnlyDirective } from './_directives/number-only.directive';
 import { ThaiNumberPipe } from './_pipes/thai-number.pipe';
 import { ThaiYearPipe } from './_pipes/thai-year.pipe';
+
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { thLocale } from 'ngx-bootstrap/locale';
+defineLocale('th', thLocale);
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -90,6 +100,7 @@ export function tokenGetter() {
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     JwtModule.forRoot({
       config: {
@@ -103,6 +114,7 @@ export function tokenGetter() {
     AlertifyService,
     ErrorInterceptorProvider,
     BsModalService,
+    BsLocaleService,
     AuthGuard,
     UserDetailResolver,
     UserListResolver,

@@ -21,8 +21,16 @@ export class MeetingTimeComponent extends BaseComponent<MeetingTime> {
     super(bsModalRef, service, alertify);
   }
 
+  ConvertResultToModel(result: any): MeetingTime {
+    result.meetingDate = new Date(result.meetingDate);
+    return result;
+  }
+
   PrepareBeforeSave(): MeetingTime {
     this.model.meetingTopicId = this.parentId;
+    const date = this.model.meetingDate;
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    this.model.meetingDate = new Date(date.getTime() - userTimezoneOffset);
     return this.model;
   }
 }
