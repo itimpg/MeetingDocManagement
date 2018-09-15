@@ -9,6 +9,8 @@ namespace MeetingDoc.Api.Managers
 {
     public class MeetingNoteManager : BaseManager<MeetingNote, MeetingNoteViewModel>, IMeetingNoteManager
     {
+        protected override IRepository<MeetingNote> Repository => UnitOfWork.MeetingNoteRepository;
+
         public MeetingNoteManager(IUnitOfWork unitOfWork, IMeetingNoteValidator validator)
             : base(unitOfWork, validator)
         { }

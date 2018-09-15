@@ -9,9 +9,12 @@ namespace MeetingDoc.Api.Managers
 {
     public class MeetingAgendaManager : BaseManager<MeetingAgenda, MeetingAgendaViewModel>, IMeetingAgendaManager
     {
+        protected override IRepository<MeetingAgenda> Repository => UnitOfWork.MeetingAgendaRepository;
+
         public MeetingAgendaManager(IUnitOfWork unitOfWork, IMeetingAgendaValidator validator)
             : base(unitOfWork, validator)
         { }
+
         protected override IQueryable<MeetingAgenda> GetByCriteria(BaseCriteria<MeetingAgendaViewModel> criteria)
         {
             return Repository.GetQuery().Where(x => !x.IsRemoved && x.MeetingTimeId == criteria.Model.MeetingTimeId);

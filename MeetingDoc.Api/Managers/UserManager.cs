@@ -13,7 +13,7 @@ namespace MeetingDoc.Api.Managers
 {
     public class UserManager : BaseManager<User, UserViewModel>, IUserManager
     {
-        public IUserRepository UserRepository { get { return UnitOfWork.UserRepository; } }
+        protected override IRepository<User> Repository => UnitOfWork.UserRepository;
 
         public UserManager(IUnitOfWork unitOfWork, IUserValidator validator)
             : base(unitOfWork, validator)
@@ -54,27 +54,6 @@ namespace MeetingDoc.Api.Managers
                 LevelText = entity.Level.ToString(),
                 IsActive = entity.IsActive
             };
-        }
-
-        public override async Task UpdateAsync(UserViewModel viewModel, int operatedBy)
-        {
-            if (viewModel == null)
-            {
-                throw new ArgumentNullException("viewModel");
-            }
-
-            var validateResult = Validator.ValidateBeforeUpdate(viewModel);
-            if (!validateResult.IsValid)
-            {
-                // TODO: handle invalid case
-            }
-
-            User entity = ToEntity(viewModel);
-            entity.CreatedBy = operatedBy;
-            entity.CreatedDate = DateTime.Now;
-
-            await UserRepository.UpdateAsync(entity);
-            await UnitOfWork.SaveChangeAsync();
         }
     }
 }

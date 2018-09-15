@@ -51,6 +51,12 @@ namespace MeetingDoc.Api
             services.AddTransient<Seed>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMeetingTypeRepository, MeetingTypeRepository>();
+            services.AddScoped<IMeetingTopicRepository, MeetingTopicRepository>();
+            services.AddScoped<IMeetingTimeRepository, MeetingTimeRepository>();
+            services.AddScoped<IMeetingAgendaRepository, MeetingAgendaRepository>();
+            services.AddScoped<IMeetingContentRepository, MeetingContentRepository>();
+            services.AddScoped<IMeetingNoteRepository, MeetingNoteRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();

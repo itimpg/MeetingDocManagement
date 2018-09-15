@@ -19,7 +19,7 @@ namespace MeetingDoc.Api.Managers
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected IBaseValidator<TViewModel> Validator { get; private set; }
-        protected virtual IRepository<TEntity> Repository { get { return UnitOfWork.GetRepository<TEntity>(); } }
+        protected abstract IRepository<TEntity> Repository { get; }
 
         #region Constructor
         public BaseManager(IUnitOfWork unitOfWork, IBaseValidator<TViewModel> validator)
@@ -79,10 +79,10 @@ namespace MeetingDoc.Api.Managers
             }
 
             TEntity entity = ToEntity(viewModel);
-            entity.CreatedBy = operatedBy;
-            entity.CreatedDate = DateTime.Now;
+            entity.UpdatedBy = operatedBy;
+            entity.UpdatedDate = DateTime.Now;
 
-            Repository.Update(entity);
+            await Repository.UpdateAsync(entity);
             await UnitOfWork.SaveChangeAsync();
         }
 
@@ -98,7 +98,7 @@ namespace MeetingDoc.Api.Managers
             entity.UpdatedDate = DateTime.Now;
             entity.UpdatedBy = operatedBy;
 
-            Repository.Update(entity);
+            await Repository.UpdateAsync(entity);
             await UnitOfWork.SaveChangeAsync();
         }
         #endregion

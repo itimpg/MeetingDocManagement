@@ -17,7 +17,7 @@ namespace MeetingDoc.Api.Managers
         public AuthManager(IUnitOfWork unitOfWork, IEmailManager emailManager)
         {
             _unitOfWork = unitOfWork;
-            _repository = unitOfWork.GetRepository<User>();
+            _repository = unitOfWork.UserRepository;
             _emailManager = emailManager;
         }
 

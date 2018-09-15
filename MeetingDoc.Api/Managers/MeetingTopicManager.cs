@@ -9,10 +9,11 @@ namespace MeetingDoc.Api.Managers
 {
     public class MeetingTopicManager : BaseManager<MeetingTopic, MeetingTopicViewModel>, IMeetingTopicManager
     {
+        protected override IRepository<MeetingTopic> Repository => UnitOfWork.MeetingTopicRepository;
+
         public MeetingTopicManager(IUnitOfWork unitOfWork, IMeetingTopicValidator validator)
             : base(unitOfWork, validator)
         {
-
         }
 
         protected override IQueryable<MeetingTopic> GetByCriteria(BaseCriteria<MeetingTopicViewModel> criteria)

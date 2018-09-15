@@ -61,23 +61,13 @@ namespace MeetingDoc.Api.Data
 
         public virtual async Task DeleteAsync(object id)
         {
-            TEntity entityToDelete = await Dbset.FindAsync(id);
-            Delete(entityToDelete);
+            var entity = await GetAsync(id);
+            Dbset.Remove(entity);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public virtual Task UpdateAsync(TEntity entityToUpdate)
         {
-            if (DbContext.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                Dbset.Attach(entityToDelete);
-            }
-            Dbset.Remove(entityToDelete);
+            throw new NotImplementedException();
         }
-
-        public virtual void Update(TEntity entityToUpdate)
-        {
-            Dbset.Attach(entityToUpdate);
-            DbContext.Entry(entityToUpdate).State = EntityState.Modified;
-        } 
     }
 }

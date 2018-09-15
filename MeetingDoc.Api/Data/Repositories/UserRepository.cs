@@ -11,7 +11,7 @@ namespace MeetingDoc.Api.Data.Repositories
         {
         }
 
-        public async Task UpdateAsync(User entityToUpdate)
+        public override async Task UpdateAsync(User entityToUpdate)
         {
             var existsUser = await Dbset.FindAsync(entityToUpdate.Id);
 

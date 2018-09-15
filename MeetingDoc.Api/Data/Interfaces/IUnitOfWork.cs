@@ -7,7 +7,12 @@ namespace MeetingDoc.Api.Data.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
-        IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity;
+        IMeetingTypeRepository MeetingTypeRepository { get; }
+        IMeetingTopicRepository MeetingTopicRepository { get; }
+        IMeetingTimeRepository MeetingTimeRepository { get; }
+        IMeetingAgendaRepository MeetingAgendaRepository { get; }
+        IMeetingContentRepository MeetingContentRepository { get; }
+        IMeetingNoteRepository MeetingNoteRepository { get; }
         Task SaveChangeAsync();
     }
 }

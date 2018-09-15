@@ -11,18 +11,36 @@ namespace MeetingDoc.Api.Data
 
         public UnitOfWork(
             DataContext dbContext,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IMeetingTypeRepository meetingTypeRepository,
+            IMeetingTopicRepository meetingTopicRepository,
+            IMeetingTimeRepository meetingTimeRepository,
+            IMeetingAgendaRepository meetingAgendaRepository,
+            IMeetingContentRepository meetingContentRepository,
+            IMeetingNoteRepository meetingNoteRepository)
         {
             _dbContext = dbContext;
             UserRepository = userRepository;
+            MeetingTypeRepository = meetingTypeRepository;
+            MeetingTopicRepository = meetingTopicRepository;
+            MeetingTimeRepository = meetingTimeRepository;
+            MeetingAgendaRepository = meetingAgendaRepository;
+            MeetingContentRepository = meetingContentRepository;
+            MeetingNoteRepository = meetingNoteRepository;
         }
 
         public IUserRepository UserRepository { get; private set; }
+        public IMeetingContentRepository MeetingContentRepository { get; private set; }
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity
-        {
-            return new Repository<TEntity>(_dbContext);
-        }
+        public IMeetingTypeRepository MeetingTypeRepository { get; private set; }
+
+        public IMeetingTopicRepository MeetingTopicRepository { get; private set; }
+
+        public IMeetingTimeRepository MeetingTimeRepository { get; private set; }
+
+        public IMeetingAgendaRepository MeetingAgendaRepository { get; private set; }
+
+        public IMeetingNoteRepository MeetingNoteRepository { get; private set; }
 
         public async Task SaveChangeAsync()
         {
