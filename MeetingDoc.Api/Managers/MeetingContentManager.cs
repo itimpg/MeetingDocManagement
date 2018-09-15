@@ -26,7 +26,7 @@ namespace MeetingDoc.Api.Managers
             {
                 Id = viewModel.Id,
                 FileName = viewModel.FileName,
-                File = viewModel.File,
+                FileBase64= viewModel.FileBase64,
                 Ordinal = viewModel.Ordinal,
                 MeetingAgendaId = viewModel.MeetingAgendaId
             };
@@ -38,7 +38,7 @@ namespace MeetingDoc.Api.Managers
             {
                 Id = entity.Id,
                 FileName = entity.FileName,
-                File = entity.File,
+                FileBase64 = entity.FileBase64,
                 Ordinal = entity.Ordinal,
                 MeetingAgendaId = entity.MeetingAgendaId
             };

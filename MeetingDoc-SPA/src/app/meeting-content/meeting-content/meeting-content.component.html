@@ -8,8 +8,14 @@
   <form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
     <div class="modal-body"> 
    
-      <label class="label">File Name:</label>
-      <input type="text" class="form-control mb-4" id="fileName" name="fileName" #fileName [(ngModel)]="model.fileName" [disabled]="!isEditable"/>
+      <div *ngIf="model.fileBase64" class="mb-4">
+        <img class="img-fluid mx-auto d-block" [src]="model.fileBase64"/>
+      </div>
+
+      <label class="label">File:</label>
+      <div *ngIf="isEditable" class="mb-4">
+        <input type="file" (change)="readUrl($event)" accept="image/*" />
+      </div>
   
       <label class="label">Ordinal:</label>
       <input type="text" class="form-control mb-4" id="ordinal" name="ordinal" #ordinal [(ngModel)]="model.ordinal" [disabled]="!isEditable"/>

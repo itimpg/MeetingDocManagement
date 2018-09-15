@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingDoc.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180910133030_init_database")]
-    partial class init_database
+    [Migration("20180915033630_initdb")]
+    partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<byte[]>("File");
+                    b.Property<string>("FileBase64");
 
                     b.Property<string>("FileName");
 
@@ -96,7 +96,7 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -250,7 +250,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.HasOne("MeetingDoc.Api.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MeetingDoc.Api.Models.MeetingTime", b =>

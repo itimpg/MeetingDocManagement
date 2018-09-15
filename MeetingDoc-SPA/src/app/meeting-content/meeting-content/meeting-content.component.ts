@@ -25,4 +25,16 @@ export class MeetingContentComponent extends BaseComponent<MeetingContent> {
     this.model.meetingAgendaId = this.parentId;
     return this.model;
   }
+
+  readUrl(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (e: ProgressEvent) => {
+        this.model.fileBase64 = (<FileReader>e.target).result.toString();
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeetingDoc.Api.Migrations
 {
-    public partial class InitDatabase : Migration
+    public partial class initdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,17 +64,17 @@ namespace MeetingDoc.Api.Migrations
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    TypeId = table.Column<int>(nullable: true)
+                    MeetingTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MeetingTopics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingTopics_MeetingTypes_TypeId",
-                        column: x => x.TypeId,
+                        name: "FK_MeetingTopics_MeetingTypes_MeetingTypeId",
+                        column: x => x.MeetingTypeId,
                         principalTable: "MeetingTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +88,7 @@ namespace MeetingDoc.Api.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    TopicId = table.Column<int>(nullable: true),
+                    MeetingTopicId = table.Column<int>(nullable: false),
                     Count = table.Column<int>(nullable: false),
                     FiscalYear = table.Column<string>(nullable: true),
                     MeetingDate = table.Column<DateTime>(nullable: false),
@@ -98,11 +98,11 @@ namespace MeetingDoc.Api.Migrations
                 {
                     table.PrimaryKey("PK_MeetingTimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingTimes_MeetingTopics_TopicId",
-                        column: x => x.TopicId,
+                        name: "FK_MeetingTimes_MeetingTopics_MeetingTopicId",
+                        column: x => x.MeetingTopicId,
                         principalTable: "MeetingTopics",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +116,7 @@ namespace MeetingDoc.Api.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    TimeId = table.Column<int>(nullable: true),
+                    MeetingTimeId = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -124,11 +124,11 @@ namespace MeetingDoc.Api.Migrations
                 {
                     table.PrimaryKey("PK_MeetingAgendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingAgendas_MeetingTimes_TimeId",
-                        column: x => x.TimeId,
+                        name: "FK_MeetingAgendas_MeetingTimes_MeetingTimeId",
+                        column: x => x.MeetingTimeId,
                         principalTable: "MeetingTimes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,19 +143,19 @@ namespace MeetingDoc.Api.Migrations
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     FileName = table.Column<string>(nullable: true),
-                    File = table.Column<byte[]>(nullable: true),
+                    FileBase64 = table.Column<string>(nullable: true),
                     Ordinal = table.Column<int>(nullable: false),
-                    AgendaId = table.Column<int>(nullable: true)
+                    MeetingAgendaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MeetingContents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingContents_MeetingAgendas_AgendaId",
-                        column: x => x.AgendaId,
+                        name: "FK_MeetingContents_MeetingAgendas_MeetingAgendaId",
+                        column: x => x.MeetingAgendaId,
                         principalTable: "MeetingAgendas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,41 +169,41 @@ namespace MeetingDoc.Api.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: true),
-                    ContentId = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    MeetingContentId = table.Column<int>(nullable: false),
                     Note = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MeetingNotes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingNotes_MeetingContents_ContentId",
-                        column: x => x.ContentId,
+                        name: "FK_MeetingNotes_MeetingContents_MeetingContentId",
+                        column: x => x.MeetingContentId,
                         principalTable: "MeetingContents",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MeetingNotes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingAgendas_TimeId",
+                name: "IX_MeetingAgendas_MeetingTimeId",
                 table: "MeetingAgendas",
-                column: "TimeId");
+                column: "MeetingTimeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingContents_AgendaId",
+                name: "IX_MeetingContents_MeetingAgendaId",
                 table: "MeetingContents",
-                column: "AgendaId");
+                column: "MeetingAgendaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingNotes_ContentId",
+                name: "IX_MeetingNotes_MeetingContentId",
                 table: "MeetingNotes",
-                column: "ContentId");
+                column: "MeetingContentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeetingNotes_UserId",
@@ -211,14 +211,14 @@ namespace MeetingDoc.Api.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingTimes_TopicId",
+                name: "IX_MeetingTimes_MeetingTopicId",
                 table: "MeetingTimes",
-                column: "TopicId");
+                column: "MeetingTopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingTopics_TypeId",
+                name: "IX_MeetingTopics_MeetingTypeId",
                 table: "MeetingTopics",
-                column: "TypeId");
+                column: "MeetingTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

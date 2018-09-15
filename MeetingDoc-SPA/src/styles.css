@@ -5,6 +5,7 @@
 @import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
 @import "https://use.fontawesome.com/releases/v5.2.0/css/all.css";
 /* @import '../node_modules/bootswatch/dist/united/bootstrap.min.css'; */
+@import "css/thsarabunnew.css";
 
 .nav-logo {
   height: 32px;
