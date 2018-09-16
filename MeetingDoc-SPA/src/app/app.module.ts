@@ -13,6 +13,7 @@ import {
   BsLocaleService
 } from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BreadcrumbsModule, BreadcrumbsService } from 'ng6-breadcrumbs';
 
 import { environment } from '../environments/environment';
 import { appRoutes } from './routes';
@@ -57,6 +58,9 @@ import { ThaiYearPipe } from './_pipes/thai-year.pipe';
 
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { thLocale } from 'ngx-bootstrap/locale';
+import { AdminGuard } from './_guards/admin.guard';
+import { WriterGuard } from './_guards/writer.guard';
+import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
 defineLocale('th', thLocale);
 
 export function tokenGetter() {
@@ -70,33 +74,28 @@ export function tokenGetter() {
     ChangePasswordComponent,
     LoginComponent,
     ForgetPasswordComponent,
-
     UserListComponent,
     UserComponent,
-
     MeetingTypeListComponent,
     MeetingTypeComponent,
-
     MeetingTopicListComponent,
     MeetingTopicComponent,
-
     MeetingTimeListComponent,
     MeetingTimeComponent,
-
     MeetingAgendaListComponent,
     MeetingAgendaComponent,
-
     MeetingContentListComponent,
     MeetingContentComponent,
-
     ThaiNumberPipe,
     ThaiYearPipe,
-    NumberOnlyDirective
+    NumberOnlyDirective,
+    MeetingScheduleComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    BreadcrumbsModule,
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
@@ -115,7 +114,10 @@ export function tokenGetter() {
     ErrorInterceptorProvider,
     BsModalService,
     BsLocaleService,
+    BreadcrumbsService,
     AuthGuard,
+    WriterGuard,
+    AdminGuard,
     UserDetailResolver,
     UserListResolver,
     MeetingTypeListResolver,

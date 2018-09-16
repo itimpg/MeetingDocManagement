@@ -4,18 +4,20 @@
     <a class="navbar-brand" [routerLink]="['/home']">iPad Meeting System</a>
 
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="router-link-active">
-        <a class="nav-link" [routerLink]="['/home']" >Meeting Types</a>
+      <li>
+          <a class="nav-link" [routerLink]="['/home']">Meeting Schedule</a>
+      </li>
+      <li *ngIf="role === '0' || role === '1'" class="nav-item" routerLinkActive="router-link-active">
+        <a class="nav-link" [routerLink]="['/meetingtypes']">Meeting Types</a>
       </li>
       <li *ngIf="role === '0'" class="nav-item" routerLinkActive="router-link-active">
         <a class="nav-link" [routerLink]="['/users']">Users</a>
       </li>
-    </ul> 
+    </ul>
 
     <a dropdown class="btn dropdown">
-      <a class="dropdown-toggle text-light nav-link" dropdownToggle> 
-        <i class="fas" 
-        [ngClass]="{ 'fa-user-tie': role === '2', 'fa-user-edit': role === '1', 'fa-user-cog' : role === '0' }" ></i>
+      <a class="dropdown-toggle text-light nav-link" dropdownToggle>
+        <i class="fas" [ngClass]="{ 'fa-user-tie': role === '2', 'fa-user-edit': role === '1', 'fa-user-cog' : role === '0' }"></i>
         {{authService.decodedToken?.unique_name | titlecase}}
       </a>
       <div *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">

@@ -2,14 +2,12 @@ import { Routes } from '@angular/router';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
+import { WriterGuard } from './_guards/writer.guard';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { UserComponent } from './users/user/user.component';
-import { UserDetailResolver } from './_resolvers/user.resolver';
 import { UserListResolver } from './_resolvers/userlist.resolver';
 import { MeetingTypeListComponent } from './meeting-type/meeting-type-list/meeting-type-list.component';
-import { MeetingTypeComponent } from './meeting-type/meeting-type/meeting-type.component';
 import { MeetingTypeListResolver } from './_resolvers/meetingtypelist.resolver';
-import { MeetingTypeDetailResolver } from './_resolvers/meetingtype.resolver';
 import { MeetingTopicListComponent } from './meeting-topic/meeting-topic-list/meeting-topic-list.component';
 import { MeetingTopicListResolver } from './_resolvers/meetingtopiclist.resolver';
 import { MeetingTimeListResolver } from './_resolvers/meeting-time-list.resolver';
@@ -18,56 +16,58 @@ import { MeetingAgendaListComponent } from './meeting-agenda/meeting-agenda-list
 import { MeetingAgendaListResolver } from './_resolvers/meeting-agenda-list.resolver';
 import { MeetingContentListComponent } from './meeting-content/meeting-content-list/meeting-content-list.component';
 import { MeetingContentListResolver } from './_resolvers/meeting-content-list.resolver';
+import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
   {
-    path: '',
+    path: 'users',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AdminGuard],
+    component: UserListComponent,
+    resolve: { user: UserListResolver }
+  },
+  {
+    path: 'meetingtypes',
+    runGuardsAndResolvers: 'always',
+    canActivate: [WriterGuard],
+    component: MeetingTypeListComponent,
+    resolve: { meetingType: MeetingTypeListResolver }
+  },
+  {
+    path: 'meetingTypes/:id/topics',
+    runGuardsAndResolvers: 'always',
+    canActivate: [WriterGuard],
+    component: MeetingTopicListComponent,
+    resolve: { meetingTopic: MeetingTopicListResolver }
+  },
+  {
+    path: 'meetingtopics/:id/times',
+    runGuardsAndResolvers: 'always',
+    canActivate: [WriterGuard],
+    component: MeetingTimeListComponent,
+    resolve: { meetingtime: MeetingTimeListResolver }
+  },
+  {
+    path: 'meetingtimes/:id/agendas',
+    runGuardsAndResolvers: 'always',
+    canActivate: [WriterGuard],
+    component: MeetingAgendaListComponent,
+    resolve: { meetingagenda: MeetingAgendaListResolver }
+  },
+  {
+    path: 'meetingagendas/:id/contents',
+    runGuardsAndResolvers: 'always',
+    canActivate: [WriterGuard],
+    component: MeetingContentListComponent,
+    resolve: { meetingcontent: MeetingContentListResolver }
+  },
+  {
+    path: 'home',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: MeetingTypeListComponent,
-        resolve: { meetingType: MeetingTypeListResolver }
-      },
-      {
-        path: 'meetingTypes/:id',
-        component: MeetingTypeComponent,
-        resolve: { meetingType: MeetingTypeDetailResolver }
-      },
-      {
-        path: 'meetingTypes/:id/topics',
-        component: MeetingTopicListComponent,
-        resolve: { meetingTopic: MeetingTopicListResolver }
-      },
-      {
-        path: 'meetingtopics/:id/times',
-        component: MeetingTimeListComponent,
-        resolve: { meetingtime: MeetingTimeListResolver }
-      },
-      {
-        path: 'meetingtimes/:id/agendas',
-        component: MeetingAgendaListComponent,
-        resolve: { meetingagenda: MeetingAgendaListResolver }
-      },
-      {
-        path: 'meetingagendas/:id/contents',
-        component: MeetingContentListComponent,
-        resolve: { meetingcontent: MeetingContentListResolver }
-      },
-      {
-        path: 'users',
-        component: UserListComponent,
-        resolve: { user: UserListResolver }
-      },
-      {
-        path: 'users/:id',
-        component: UserComponent,
-        resolve: { user: UserDetailResolver }
-      }
-    ]
+    component: MeetingScheduleComponent
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

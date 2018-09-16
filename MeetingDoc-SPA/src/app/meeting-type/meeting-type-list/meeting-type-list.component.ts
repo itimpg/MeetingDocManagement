@@ -8,6 +8,7 @@ import { MeetingType } from '../../_models/MeetingType';
 import { MeetingTypeService } from 'src/app/_services/meetingtype.service';
 import { MeetingTypeComponent } from '../meeting-type/meeting-type.component';
 import { ShowModalParam } from '../../_models/ShowModalParam';
+import { BreadcrumbsService } from 'ng6-breadcrumbs';
 
 @Component({
   selector: 'app-meeting-type-list',
@@ -30,7 +31,8 @@ export class MeetingTypeListComponent extends BaseListComponent<MeetingType> {
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    private breadcrumbs: BreadcrumbsService
   ) {
     super(service, alertify, modalService, route, router);
   }

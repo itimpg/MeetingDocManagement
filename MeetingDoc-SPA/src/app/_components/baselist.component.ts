@@ -36,7 +36,11 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
     this.route.params.subscribe(params => {
       this.parentId = params['id'];
     });
+
+    this.InitComponent();
   }
+
+  InitComponent(): void {}
 
   loadItems() {
     const observableCollection = this.parentId
