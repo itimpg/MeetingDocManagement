@@ -1,9 +1,11 @@
-<h3>Users</h3>
+<h3 class="font-weight-bold">
+    <i class="fas fa-users"></i>
+  Users</h3>
 <hr/>
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-sm btn-primary text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-success text-light mb-4" (click)="addUser()"><i class="fas fa-plus-square"></i> Add New</a>
   </div>
   <div class="col">
     <div class="row">
@@ -30,12 +32,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <td class="align-middle">{{user.id | thainumber}}</td>
-      <td class="align-middle">{{user.firstName}} {{user.lastName}}</td>
-      <td class="align-middle">{{user.email}}</td>
-      <td class="align-middle">{{user.position}}</td>
-      <td class="align-middle">{{user.levelText}}</td>
-      <td class="align-middle pull-right">
+      <td>{{user.id | thainumber}}</td>
+      <td>{{user.firstName}} {{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.position}}</td>
+      <td>{{user.levelText}}</td>
+      <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
             Action

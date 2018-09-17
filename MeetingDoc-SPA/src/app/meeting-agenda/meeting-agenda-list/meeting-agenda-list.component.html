@@ -1,9 +1,11 @@
-<h3>{{titleName}}</h3>
+<h3 class="font-weight-bold">
+  <i class="far fa-calendar"></i>
+  {{titleName}}</h3>
 <hr />
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-sm btn-primary text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-success text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
   </div>
   <div class="col">
     <div class="row">
@@ -28,10 +30,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
-      <td class="align-middle">{{item.id | thainumber}}</td>
-      <td class="align-middle">{{item.number | thainumber}}</td>
-      <td class="align-middle">{{item.name}}</td> 
-      <td class="align-middle pull-right">
+      <td>{{item.id | thainumber}}</td>
+      <td>{{item.number | thainumber}}</td>
+      <td>{{item.name}}</td> 
+      <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
             Action

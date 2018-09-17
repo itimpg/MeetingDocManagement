@@ -1,8 +1,8 @@
-import { OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap';
-import { BaseModel } from '../_models/BaseModel';
-import { BaseService } from '../_services/base.service';
-import { AlertifyService } from '../_services/alertify.service';
+import { OnInit } from "@angular/core";
+import { BsModalRef } from "ngx-bootstrap";
+import { BaseModel } from "../_models/BaseModel";
+import { BaseService } from "../_services/base.service";
+import { AlertifyService } from "../_services/alertify.service";
 
 export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   protected abstract action: string;
@@ -30,6 +30,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     if (this.itemId === 0) {
       this.isEditable = true;
       this.title = `Add ${this.action}`;
+      this.initAdd();
     } else {
       this.title = this.isEditable
         ? `Edit  ${this.action}`
@@ -37,6 +38,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
       this.service.getItem(this.itemId).subscribe(
         result => {
           this.model = this.ConvertResultToModel(result);
+          this.initEdit();
         },
         error => {
           this.alertify.error(error);
@@ -44,6 +46,9 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
       );
     }
   }
+
+  initAdd() {}
+  initEdit() {}
 
   ConvertResultToModel(result: any): T {
     return result;
@@ -59,7 +64,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     if (model.id === 0) {
       this.service.add(model).subscribe(
         success => {
-          this.alertify.message('save success');
+          this.alertify.message("save success");
           this.bsModalRef.hide();
         },
         error => {
@@ -69,7 +74,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     } else {
       this.service.edit(model).subscribe(
         success => {
-          this.alertify.message('save success');
+          this.alertify.message("save success");
           this.bsModalRef.hide();
         },
         error => {

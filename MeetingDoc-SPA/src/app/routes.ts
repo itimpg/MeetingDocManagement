@@ -17,6 +17,7 @@ import { MeetingAgendaListResolver } from './_resolvers/meeting-agenda-list.reso
 import { MeetingContentListComponent } from './meeting-content/meeting-content-list/meeting-content-list.component';
 import { MeetingContentListResolver } from './_resolvers/meeting-content-list.resolver';
 import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
+import { UserGuard } from './_guards/user.guard';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -66,7 +67,7 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     runGuardsAndResolvers: 'always',
-    canActivate: [AuthGuard],
+    canActivate: [UserGuard],
     component: MeetingScheduleComponent
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }

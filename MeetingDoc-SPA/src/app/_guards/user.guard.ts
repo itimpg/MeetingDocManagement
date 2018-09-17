@@ -5,16 +5,16 @@ import { AuthService } from '../_services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class WriterGuard implements CanActivate {
+export class UserGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
     if (this.authService.loggedIn()) {
       const role = this.authService.decodedToken.role;
-      if (role === '0' || role === '1') {
+      if (role === '0' || role === '2') {
         return true;
       } else {
-        this.router.navigate(['meetingtypes']);
+        this.router.navigate(['home']);
         return false;
       }
     }

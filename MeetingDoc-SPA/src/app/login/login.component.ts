@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertify: AlertifyService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -22,7 +23,12 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model).subscribe(
       reponse => {
         this.alertify.success('Login success');
-        this.router.navigate(['/home']);
+        const role = this.authService.decodedToken.role;
+        if (role === '2') {
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['/meetingtypes']);
+        }
       },
       error => {
         this.alertify.error(error);

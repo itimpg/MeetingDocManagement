@@ -61,6 +61,7 @@ import { thLocale } from 'ngx-bootstrap/locale';
 import { AdminGuard } from './_guards/admin.guard';
 import { WriterGuard } from './_guards/writer.guard';
 import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
+import { UserGuard } from './_guards/user.guard';
 defineLocale('th', thLocale);
 
 export function tokenGetter() {
@@ -116,6 +117,7 @@ export function tokenGetter() {
     BsLocaleService,
     BreadcrumbsService,
     AuthGuard,
+    UserGuard,
     WriterGuard,
     AdminGuard,
     UserDetailResolver,

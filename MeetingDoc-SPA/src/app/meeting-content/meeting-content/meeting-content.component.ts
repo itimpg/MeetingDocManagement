@@ -21,6 +21,10 @@ export class MeetingContentComponent extends BaseComponent<MeetingContent> {
     super(bsModalRef, service, alertify);
   }
 
+  initAdd() {
+    this.model.ordinal = 1;
+  }
+
   PrepareBeforeSave(): MeetingContent {
     this.model.meetingAgendaId = this.parentId;
     return this.model;

@@ -1,9 +1,11 @@
-<h3>{{titleName}}</h3>
+<h3 class="font-weight-bold">
+  <i class="fas fa-book-open"></i>
+  {{titleName}}</h3>
 <hr />
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-sm btn-primary text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-success text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
   </div>
   <div class="col">
     <div class="row">
@@ -20,7 +22,6 @@
 <table class="table pt-5">
   <thead class="thead-light">
     <tr>
-      <th>Id</th>
       <th>Image</th>
       <th>Ordinal</th>
       <th></th>
@@ -28,13 +29,14 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
-      <td class="align-middle">{{item.id | thainumber}}</td>
-      <td class="align-middle">
-        <img [src]="item.fileBase64" class="img-thumbnail" />
+      <td>
+        <img [src]="item.fileBase64" style="height: 128px;" class="img-thumbnail" />
       </td>
-      <td class="align-middle">{{item.ordinal | thainumber}}</td>
-      <td class="align-middle pull-right">
-        <div class="dropdown" dropdown>
+      <td>
+        <span class="align-text-top"> {{item.ordinal | thainumber}}</span>
+      </td>
+      <div class="pull-right">
+        <div class="dropdown mt-2" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
             Action
           </a>
@@ -48,7 +50,7 @@
               <i class="fas fa-trash-alt"></i> Delete</a>
           </div>
         </div>
-      </td>
+      </div>
     </tr>
   </tbody>
 </table>
