@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
@@ -27,7 +30,11 @@ namespace MeetingDoc.Api.Managers
                 Id = viewModel.Id,
                 MeetingTimeId = viewModel.MeetingTimeId,
                 Number = viewModel.Number,
-                Name = viewModel.Name
+                Name = viewModel.Name,
+                MeetingAgendaUsers = viewModel.Users.Where(x => x.IsSelected).Select(x => new MeetingAgendaUser
+                {
+                    UserId = x.UserId,
+                }).ToList()
             };
         }
 
@@ -38,8 +45,30 @@ namespace MeetingDoc.Api.Managers
                 Id = entity.Id,
                 MeetingTimeId = entity.MeetingTimeId,
                 Number = entity.Number,
-                Name = entity.Name
+                Name = entity.Name,
+                Users = entity.MeetingAgendaUsers?.Select(x => new MeetingAgendaUserViewModel
+                {
+                    UserId = x.UserId,
+                    IsSelected = true,
+                })?.ToList() ?? new List<MeetingAgendaUserViewModel>()
             };
+        }
+        public override async Task<MeetingAgendaViewModel> GetAsync(int id)
+        {
+            MeetingAgenda entity = id == 0 ? new MeetingAgenda() : await Repository.GetAsync(id);
+            var viewModel = ToViewModel(entity);
+            var selectedUserIds = viewModel.Users.Select(x => x.UserId);
+            var unSelectedUsers = UnitOfWork.UserRepository
+                .GetQuery(x => x.IsActive && !x.IsRemoved && !selectedUserIds.Contains(x.Id))
+                .Select(x => new MeetingAgendaUserViewModel
+                {
+                    UserId = x.Id,
+                    UserFullName = $"{x.FirstName} {x.LastName}",
+                    IsSelected = false,
+                });
+
+            viewModel.Users = viewModel.Users.Union(unSelectedUsers).ToList();
+            return viewModel;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MeetingDoc.Api.Managers
         #endregion
 
         #region Public Method(s)
-        public virtual async Task<TViewModel> GetAsync(object id)
+        public virtual async Task<TViewModel> GetAsync(int id)
         {
             TEntity entity = await Repository.GetAsync(id);
             return ToViewModel(entity);
@@ -86,7 +86,7 @@ namespace MeetingDoc.Api.Managers
             await UnitOfWork.SaveChangeAsync();
         }
 
-        public virtual async Task DeleteAsync(object id, int operatedBy)
+        public virtual async Task DeleteAsync(int id, int operatedBy)
         {
             TEntity entity = await Repository.GetAsync(id);
             if (entity == null)

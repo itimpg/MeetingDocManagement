@@ -139,6 +139,7 @@ export function tokenGetter() {
   entryComponents: [
     ChangePasswordComponent,
     UserComponent,
+    MeetingTypeComponent,
     MeetingTopicComponent,
     MeetingTimeComponent,
     MeetingAgendaComponent,

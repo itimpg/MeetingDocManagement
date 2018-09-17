@@ -14,5 +14,6 @@ namespace MeetingDoc.Api.Data
         public DbSet<MeetingAgenda> MeetingAgendas { get; set; }
         public DbSet<MeetingContent> MeetingContents { get; set; }
         public DbSet<MeetingNote> MeetingNotes { get; set; }
+        public DbSet<MeetingAgendaUser> MeetingAgendaUsers { get; set; }
     }
 }

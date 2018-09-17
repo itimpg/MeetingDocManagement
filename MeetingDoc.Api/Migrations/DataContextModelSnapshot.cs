@@ -45,6 +45,34 @@ namespace MeetingDoc.Api.Migrations
                     b.ToTable("MeetingAgendas");
                 });
 
+            modelBuilder.Entity("MeetingDoc.Api.Models.MeetingAgendaUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsRemoved");
+
+                    b.Property<int>("MeetingAgendaId");
+
+                    b.Property<int>("UpdatedBy");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MeetingAgendaId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MeetingAgendaUsers");
+                });
+
             modelBuilder.Entity("MeetingDoc.Api.Models.MeetingContent", b =>
                 {
                     b.Property<int>("Id")
@@ -228,6 +256,19 @@ namespace MeetingDoc.Api.Migrations
                     b.HasOne("MeetingDoc.Api.Models.MeetingTime", "MeetingTime")
                         .WithMany()
                         .HasForeignKey("MeetingTimeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MeetingDoc.Api.Models.MeetingAgendaUser", b =>
+                {
+                    b.HasOne("MeetingDoc.Api.Models.MeetingAgenda", "MeetingAgenda")
+                        .WithMany("MeetingAgendaUsers")
+                        .HasForeignKey("MeetingAgendaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeetingDoc.Api.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

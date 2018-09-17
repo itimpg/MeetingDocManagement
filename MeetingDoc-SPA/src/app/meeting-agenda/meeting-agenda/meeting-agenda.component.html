@@ -6,22 +6,33 @@
 </div>
 
 <form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
-  <div class="modal-body"> 
- 
+  <div class="modal-body">
+
     <label class="label">Number:</label>
-    <input appNumberOnly type="text" class="form-control mb-4" id="number" name="number" #number [(ngModel)]="model.number" [disabled]="!isEditable"/>
+    <input appNumberOnly type="text" class="form-control mb-4" id="number" name="number" #number [(ngModel)]="model.number"
+      [disabled]="!isEditable" />
 
     <label class="label">Name:</label>
-    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable"/>
-        
+    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable" />
+
+    <label class="label">Attendee:</label>
+    <div class="custom-control custom-checkbox">
+      <div *ngFor="let user of model.users; let i = index">
+        <input type="checkbox" class="custom-control-input" value="{{user.userId}}" name="user_{{i}}" [(ngModel)]="user.isSelected" />
+        <label class="custom-control-label">{{user.userFullName}}</label>
+      </div>
+    </div> 
+    
   </div>
   <div class="modal-footer">
     <div class="form-row">
       <div class="col">
-        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
+        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block"
+          type="submit">Save</button>
       </div>
       <div class="col">
-        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' : 'Close' }}</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' :
+          'Close' }}</button>
       </div>
     </div>
   </div>

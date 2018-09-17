@@ -132,6 +132,37 @@ namespace MeetingDoc.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MeetingAgendaUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsRemoved = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<int>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    MeetingAgendaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingAgendaUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MeetingAgendaUsers_MeetingAgendas_MeetingAgendaId",
+                        column: x => x.MeetingAgendaId,
+                        principalTable: "MeetingAgendas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MeetingAgendaUsers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MeetingContents",
                 columns: table => new
                 {
@@ -196,6 +227,16 @@ namespace MeetingDoc.Api.Migrations
                 column: "MeetingTimeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MeetingAgendaUsers_MeetingAgendaId",
+                table: "MeetingAgendaUsers",
+                column: "MeetingAgendaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MeetingAgendaUsers_UserId",
+                table: "MeetingAgendaUsers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MeetingContents_MeetingAgendaId",
                 table: "MeetingContents",
                 column: "MeetingAgendaId");
@@ -223,6 +264,9 @@ namespace MeetingDoc.Api.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "MeetingAgendaUsers");
+
             migrationBuilder.DropTable(
                 name: "MeetingNotes");
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MeetingDoc.Api.Models
 {
     public class MeetingAgenda : BaseEntity
@@ -6,5 +8,6 @@ namespace MeetingDoc.Api.Models
         public MeetingTime MeetingTime { get; set; }
         public int Number { get; set; }
         public string Name { get; set; }
+        public IList<MeetingAgendaUser> MeetingAgendaUsers { get; set; }
     }
 }

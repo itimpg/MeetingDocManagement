@@ -17,7 +17,8 @@ namespace MeetingDoc.Api.Data
             IMeetingTimeRepository meetingTimeRepository,
             IMeetingAgendaRepository meetingAgendaRepository,
             IMeetingContentRepository meetingContentRepository,
-            IMeetingNoteRepository meetingNoteRepository)
+            IMeetingNoteRepository meetingNoteRepository,
+            IMeeitngAgendaUserRepository meeitngAgendaUserRepository)
         {
             _dbContext = dbContext;
             UserRepository = userRepository;
@@ -27,6 +28,7 @@ namespace MeetingDoc.Api.Data
             MeetingAgendaRepository = meetingAgendaRepository;
             MeetingContentRepository = meetingContentRepository;
             MeetingNoteRepository = meetingNoteRepository;
+            MeeitngAgendaUserRepository = meeitngAgendaUserRepository;
         }
 
         public IUserRepository UserRepository { get; private set; }
@@ -41,6 +43,8 @@ namespace MeetingDoc.Api.Data
         public IMeetingAgendaRepository MeetingAgendaRepository { get; private set; }
 
         public IMeetingNoteRepository MeetingNoteRepository { get; private set; }
+
+        public IMeeitngAgendaUserRepository MeeitngAgendaUserRepository { get; private set; }
 
         public async Task SaveChangeAsync()
         {

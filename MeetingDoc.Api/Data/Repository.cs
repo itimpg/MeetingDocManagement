@@ -44,7 +44,7 @@ namespace MeetingDoc.Api.Data
             return await Dbset.AnyAsync(condition);
         }
 
-        public virtual async Task<TEntity> GetAsync(object id)
+        public virtual async Task<TEntity> GetAsync(int id)
         {
             return await Dbset.FindAsync(id);
         }
@@ -59,7 +59,7 @@ namespace MeetingDoc.Api.Data
             await Dbset.AddAsync(entity);
         }
 
-        public virtual async Task DeleteAsync(object id)
+        public virtual async Task DeleteAsync(int id)
         {
             var entity = await GetAsync(id);
             Dbset.Remove(entity);

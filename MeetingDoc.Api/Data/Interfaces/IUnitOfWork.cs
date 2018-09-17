@@ -13,6 +13,7 @@ namespace MeetingDoc.Api.Data.Interfaces
         IMeetingAgendaRepository MeetingAgendaRepository { get; }
         IMeetingContentRepository MeetingContentRepository { get; }
         IMeetingNoteRepository MeetingNoteRepository { get; }
+        IMeeitngAgendaUserRepository MeeitngAgendaUserRepository { get; }
         Task SaveChangeAsync();
     }
 }

@@ -12,11 +12,11 @@ namespace MeetingDoc.Api.Data.Interfaces
         IQueryable<TEntity> GetQuery(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-        Task<TEntity> GetAsync(object id);
+        Task<TEntity> GetAsync(int id);
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> condition);
         Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> condition);
         Task InsertAsync(TEntity entity);
-        Task DeleteAsync(object id);
+        Task DeleteAsync(int id);
         Task UpdateAsync(TEntity entityToUpdate);
     }
 }

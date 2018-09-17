@@ -57,6 +57,7 @@ namespace MeetingDoc.Api
             services.AddScoped<IMeetingAgendaRepository, MeetingAgendaRepository>();
             services.AddScoped<IMeetingContentRepository, MeetingContentRepository>();
             services.AddScoped<IMeetingNoteRepository, MeetingNoteRepository>();
+            services.AddScoped<IMeeitngAgendaUserRepository, MeeitngAgendaUserRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
@@ -74,6 +75,7 @@ namespace MeetingDoc.Api
             services.AddScoped<IMeetingContentValidator, MeetingContentValidator>();
             services.AddScoped<IMeetingNoteManager, MeetingNoteManager>();
             services.AddScoped<IMeetingNoteValidator, MeetingNoteValidator>();
+            services.AddScoped<IMeetingScheduleManager, MeetingScheduleManager>();
             services.AddScoped<IEmailManager, EmailManager>();
 
             services

@@ -23,6 +23,10 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   }
 
   ngOnInit() {
+    this.InitComponent();
+  }
+
+  InitComponent() {
     if (this.itemId === 0) {
       this.isEditable = true;
       this.title = `Add ${this.action}`;
