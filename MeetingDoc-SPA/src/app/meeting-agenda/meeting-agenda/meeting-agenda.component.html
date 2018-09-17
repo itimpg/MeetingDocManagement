@@ -16,13 +16,14 @@
     <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable" />
 
     <label class="label">Attendee:</label>
-    <div class="custom-control custom-checkbox">
+    <div class="form-check">
       <div *ngFor="let user of model.users; let i = index">
-        <input type="checkbox" class="custom-control-input" value="{{user.userId}}" name="user_{{i}}" [(ngModel)]="user.isSelected" />
-        <label class="custom-control-label">{{user.userFullName}}</label>
+        <label class="">
+          <input type="checkbox" class="" value="{{user.userId}}" name="user_{{i}}" [(ngModel)]="user.isSelected" />
+          {{user.userFullName}}</label>
       </div>
-    </div> 
-    
+    </div>
+
   </div>
   <div class="modal-footer">
     <div class="form-row">

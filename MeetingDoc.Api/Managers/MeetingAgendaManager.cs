@@ -45,12 +45,7 @@ namespace MeetingDoc.Api.Managers
                 Id = entity.Id,
                 MeetingTimeId = entity.MeetingTimeId,
                 Number = entity.Number,
-                Name = entity.Name,
-                Users = entity.MeetingAgendaUsers?.Select(x => new MeetingAgendaUserViewModel
-                {
-                    UserId = x.UserId,
-                    IsSelected = true,
-                })?.ToList() ?? new List<MeetingAgendaUserViewModel>()
+                Name = entity.Name
             };
         }
         public override async Task<MeetingAgendaViewModel> GetAsync(int id)
@@ -58,16 +53,22 @@ namespace MeetingDoc.Api.Managers
             MeetingAgenda entity = id == 0 ? new MeetingAgenda() : await Repository.GetAsync(id);
             var viewModel = ToViewModel(entity);
             var selectedUserIds = viewModel.Users.Select(x => x.UserId);
-            var unSelectedUsers = UnitOfWork.UserRepository
+            var users = UnitOfWork.UserRepository
                 .GetQuery(x => x.IsActive && !x.IsRemoved && !selectedUserIds.Contains(x.Id))
-                .Select(x => new MeetingAgendaUserViewModel
-                {
-                    UserId = x.Id,
-                    UserFullName = $"{x.FirstName} {x.LastName}",
-                    IsSelected = false,
-                });
+                .Select(x => x);
 
-            viewModel.Users = viewModel.Users.Union(unSelectedUsers).ToList();
+            var query = from u in users
+                        join au in entity.MeetingAgendaUsers ?? new List<MeetingAgendaUser>()
+                            on u.Id equals au.UserId into lj
+                        from au in lj.DefaultIfEmpty()
+                        select new MeetingAgendaUserViewModel
+                        {
+                            UserId = u.Id,
+                            UserFullName = $"{u.FirstName} {u.LastName}",
+                            IsSelected = au != null
+                        };
+
+            viewModel.Users = query.OrderBy(x => x.UserId).ToList();
             return viewModel;
         }
     }

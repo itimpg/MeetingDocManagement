@@ -34,7 +34,7 @@ namespace MeetingDoc.Api.Data.Repositories
 
         public override async Task UpdateAsync(MeetingAgenda entityToUpdate)
         {
-            var existsEntity = await Dbset.FindAsync(entityToUpdate.Id);
+            var existsEntity = await Dbset.Include(x => x.MeetingAgendaUsers).FirstOrDefaultAsync(x => x.Id == entityToUpdate.Id);
             existsEntity.Name = entityToUpdate.Name;
             existsEntity.Number = entityToUpdate.Number;
             existsEntity.UpdatedBy = entityToUpdate.UpdatedBy;
