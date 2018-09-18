@@ -20,7 +20,11 @@ namespace MeetingDoc.Api.Managers
         public async Task<PagedList<MeetingScheduleViewModel>> GetAsync(MeetingScheduleCriteria criteria)
         {
             var query = _unitOfWork.MeeitngAgendaUserRepository
-                .GetQuery(x => x.UserId == criteria.Model.UserId && !x.IsRemoved);
+                .GetQuery(x => x.UserId == criteria.Model.UserId && !x.IsRemoved)
+                .Include(x => x.MeetingAgenda)
+                .ThenInclude(x => x.MeetingTime)
+                .ThenInclude(x => x.MeetingTopic)
+                .ThenInclude(x => x.MeetingType);
 
             var count = await query.CountAsync();
 

@@ -1,3 +1,51 @@
-<p>
-  meeting-schedule works!
-</p>
+<h3 class="font-weight-bold">
+  <i class="far fa-calendar-alt"></i>
+  {{titleName}}</h3>
+<hr />
+
+<div class="row">
+  <div class="col">
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col-xs-12 col-12">
+        <pagination class="float-right" *ngIf="pagination != null" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+          [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+          previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table pt-5">
+  <thead class="thead-light">
+    <tr> 
+      <th>Meeting Type</th>
+      <th>Meeting Topic</th>
+      <th>Meeting Time</th>
+      <th>Location</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{item.meetingType}}</td>
+      <td>{{item.meetingTopic}}</td>
+      <td>{{item.meetingTimeCount}}/{{item.meetingFiscalYear}}</td>
+      <td>{{item.meetingPlace}}</td>
+      <td class="pull-right">
+        <div class="dropdown" dropdown>
+          <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
+            Action
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *dropdownMenu>
+            <a class="btn dropdown-item" (click)="viewSubItem(item)">
+              <i class="fas fa-eye"></i> View</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

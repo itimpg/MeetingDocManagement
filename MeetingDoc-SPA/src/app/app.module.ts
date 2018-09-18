@@ -62,6 +62,8 @@ import { AdminGuard } from './_guards/admin.guard';
 import { WriterGuard } from './_guards/writer.guard';
 import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
 import { UserGuard } from './_guards/user.guard';
+import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
+import { MeetingScheduleService } from './_services/meeting-schedule.service';
 defineLocale('th', thLocale);
 
 export function tokenGetter() {
@@ -128,6 +130,7 @@ export function tokenGetter() {
     MeetingTimeListResolver,
     MeetingAgendaListResolver,
     MeetingContentListResolver,
+    MeetingScheduleListResolver,
     AuthService,
     UsersService,
     MeetingTypeService,
@@ -135,6 +138,7 @@ export function tokenGetter() {
     MeetingTimeService,
     MeetingAgendaService,
     MeetingContentService,
+    MeetingScheduleService,
     ThaiNumberPipe,
     ThaiYearPipe
   ],

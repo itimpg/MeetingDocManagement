@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers.Interfaces;
@@ -10,10 +11,10 @@ namespace MeetingDoc.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MeetingScheduleController : ControllerBase
+    public class MeetingSchedulesController : ControllerBase
     {
         private readonly IMeetingScheduleManager _meetingScheduleManager;
-        public MeetingScheduleController(IMeetingScheduleManager meetingScheduleManager)
+        public MeetingSchedulesController(IMeetingScheduleManager meetingScheduleManager)
         {
             _meetingScheduleManager = meetingScheduleManager;
         }
@@ -21,6 +22,9 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]MeetingScheduleCriteria criteria)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            criteria.Model.UserId = userId;
+
             var viewModels = await _meetingScheduleManager.GetAsync(criteria);
             this.Response.AddPagination(
                 viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
