@@ -36,16 +36,20 @@ namespace MeetingDoc.Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        [HttpPost("Renewal")]
+        public async Task<IActionResult> Renewal(RenewalViewModel renewalViewModel)
         {
-            var user = await _authManager.LoginAsync(
-                loginViewModel.Username.ToLower(), loginViewModel.Password);
+            var user = await _userManager.GetAsync(renewalViewModel.UserId);
             if (user == null)
             {
-                return BadRequest("Username / Password is incorrect.");
+                return NotFound();
             }
 
+            return GenerateToken(user);
+        }
+
+        private IActionResult GenerateToken(UserViewModel user)
+        {
             var claims = new[]{
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
@@ -58,10 +62,18 @@ namespace MeetingDoc.Api.Controllers
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
+            var sessionExpiredMinutes = _configuration.GetSection("AppSettings:SessionExpiredMinutes").Value;
+
+            int expiredMinutes;
+            if (!int.TryParse(sessionExpiredMinutes, out expiredMinutes))
+            {
+                expiredMinutes = 20;
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(20),
+                Expires = DateTime.Now.AddMinutes(expiredMinutes),
                 SigningCredentials = creds,
             };
 
@@ -73,6 +85,21 @@ namespace MeetingDoc.Api.Controllers
             {
                 token = tokenHandler.WriteToken(token)
             });
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            var user = await _authManager.LoginAsync(
+                loginViewModel.Username.ToLower(), loginViewModel.Password);
+            if (user == null)
+            {
+                return BadRequest("Username / Password is incorrect.");
+            }
+
+            this._logger.LogInformation($"{loginViewModel.Username} login success");
+
+            return GenerateToken(user);
         }
 
         [HttpPost("Register")]
@@ -106,6 +133,8 @@ namespace MeetingDoc.Api.Controllers
                 return BadRequest("Old password is incorrect");
             }
 
+            this._logger.LogInformation($"{user.Email} change password");
+
             await _authManager.ChangePassword(user.Id, changePasswordViewModel.newPassword);
 
             return Ok();
@@ -119,6 +148,8 @@ namespace MeetingDoc.Api.Controllers
             {
                 return BadRequest("This email is not exists.");
             }
+
+            this._logger.LogInformation($"{resetPasswordViewModel.Email} reset password");
 
             await _authManager.ResetPassword(resetPasswordViewModel.Email);
             return Ok();

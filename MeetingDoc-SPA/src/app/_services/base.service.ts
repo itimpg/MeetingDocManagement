@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,10 @@ export abstract class BaseService<T> {
 
   protected baseUrl: string = environment.baseUrl;
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected authService: AuthService) {}
 
   getItems(page?, itemsPerPage?): Observable<PaginatedResult<T[]>> {
+    this.authService.renewToken();
     return this.getItemsFromUrl(
       `${this.baseUrl}${this.action}`,
       page,
@@ -24,7 +26,12 @@ export abstract class BaseService<T> {
     );
   }
 
-  getItemsByParent(parentId: number, page?, itemsPerPage?): Observable<PaginatedResult<T[]>> {
+  getItemsByParent(
+    parentId: number,
+    page?,
+    itemsPerPage?
+  ): Observable<PaginatedResult<T[]>> {
+    this.authService.renewToken();
     return this.getItemsFromUrl(
       `${this.baseUrl}${this.parentAction}/${parentId}/${this.action}`,
       page,
@@ -37,6 +44,7 @@ export abstract class BaseService<T> {
     page?,
     itemsPerPage?
   ): Observable<PaginatedResult<T[]>> {
+    this.authService.renewToken();
     const paginatedResult: PaginatedResult<T[]> = new PaginatedResult<T[]>();
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
@@ -58,18 +66,22 @@ export abstract class BaseService<T> {
   }
 
   getItem(id: number): Observable<T> {
-    return this.http.get<T>(this.baseUrl + `${this.action}/` + id);
+    this.authService.renewToken();
+    return this.http.get<T>(`${this.baseUrl}${this.action}/${id}`);
   }
 
   add(model: T) {
+    this.authService.renewToken();
     return this.http.post(`${this.baseUrl}${this.action}/`, model);
   }
 
   edit(model: T) {
+    this.authService.renewToken();
     return this.http.put(`${this.baseUrl}${this.action}/`, model);
   }
 
   delete(id: number) {
+    this.authService.renewToken();
     return this.http.delete(`${this.baseUrl}${this.action}/${id}`);
   }
 }

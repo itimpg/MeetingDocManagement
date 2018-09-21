@@ -39,6 +39,22 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}resetpassword`, { email: email });
   }
 
+  renewToken() {
+    const token = localStorage.getItem('token');
+    this.decodedToken = this.jwtHtlper.decodeToken(token);
+    const userId = this.decodedToken.nameid;
+
+    this.http
+      .post(this.baseUrl + 'renewal', { userId: userId })
+      .subscribe((success: any) => {
+        const user = success;
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.decodedToken = this.jwtHtlper.decodeToken(user.token);
+        }
+      });
+  }
+
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHtlper.isTokenExpired(token);

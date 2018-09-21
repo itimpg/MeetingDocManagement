@@ -5,6 +5,7 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels.Criterias;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -14,9 +15,16 @@ namespace MeetingDoc.Api.Controllers
     public class MeetingSchedulesController : ControllerBase
     {
         private readonly IMeetingScheduleManager _meetingScheduleManager;
-        public MeetingSchedulesController(IMeetingScheduleManager meetingScheduleManager)
+        private readonly IUserManager _userManager;
+        private readonly ILogger<MeetingSchedulesController> _logger;
+        public MeetingSchedulesController(
+            IMeetingScheduleManager meetingScheduleManager,
+            IUserManager userManager,
+            ILogger<MeetingSchedulesController> logger)
         {
             _meetingScheduleManager = meetingScheduleManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]

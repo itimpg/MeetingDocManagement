@@ -5,6 +5,8 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -14,10 +16,12 @@ namespace MeetingDoc.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserManager _manager;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserManager manager)
+        public UsersController(IUserManager manager, ILogger<UsersController> logger)
         {
             _manager = manager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -46,6 +50,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _manager.AddAsync(viewModel, userId);
+            var user = await _manager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Add User : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -54,6 +60,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _manager.UpdateAsync(viewModel, userId);
+            var user = await _manager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Edit User : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -67,6 +75,8 @@ namespace MeetingDoc.Api.Controllers
             }
 
             await _manager.DeleteAsync(id, userId);
+            var user = await _manager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Delete User : {id}");
             return Ok();
         }
     }

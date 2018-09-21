@@ -5,6 +5,8 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -14,10 +16,16 @@ namespace MeetingDoc.Api.Controllers
     public class MeetingContentsController : ControllerBase
     {
         private readonly IMeetingContentManager _meetingContentManager;
-
-        public MeetingContentsController(IMeetingContentManager meetingTimeManager)
+        private readonly IUserManager _userManager;
+        private readonly ILogger<MeetingContentsController> _logger;
+        public MeetingContentsController(
+            IMeetingContentManager meetingTimeManager,
+            IUserManager userManager,
+            ILogger<MeetingContentsController> logger)
         {
             _meetingContentManager = meetingTimeManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -44,8 +52,10 @@ namespace MeetingDoc.Api.Controllers
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingContentViewModel viewModel)
         {
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingContentManager.AddAsync(viewModel, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _meetingContentManager.AddAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Add Content : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -54,6 +64,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingContentManager.UpdateAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Edit Content : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -62,6 +74,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingContentManager.DeleteAsync(id, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Delete Content : {id}");
             return Ok();
         }
     }

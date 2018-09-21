@@ -33,6 +33,10 @@ namespace MeetingDoc.Api.Managers
         public virtual async Task<TViewModel> GetAsync(int id)
         {
             TEntity entity = await Repository.GetAsync(id);
+            if (entity == null)
+            {
+                return null;
+            }
             return ToViewModel(entity);
         }
 

@@ -5,6 +5,8 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -13,13 +15,21 @@ namespace MeetingDoc.Api.Controllers
     [ApiController]
     public class MeetingAgendasController : ControllerBase
     {
+        private readonly IUserManager _userManager;
         private readonly IMeetingAgendaManager _meetingAgendaManager;
         private readonly IMeetingContentManager _meetingContentManager;
+        private ILogger<MeetingAgendasController> _logger;
 
-        public MeetingAgendasController(IMeetingAgendaManager meetingTimeManager, IMeetingContentManager meetingContentManager)
+        public MeetingAgendasController(
+            IMeetingAgendaManager meetingTimeManager,
+            IMeetingContentManager meetingContentManager,
+            IUserManager userManager,
+            ILogger<MeetingAgendasController> logger)
         {
             _meetingAgendaManager = meetingTimeManager;
             _meetingContentManager = meetingContentManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -46,8 +56,10 @@ namespace MeetingDoc.Api.Controllers
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingAgendaViewModel viewModel)
         {
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingAgendaManager.AddAsync(viewModel, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _meetingAgendaManager.AddAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Add Agenda : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -56,6 +68,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingAgendaManager.UpdateAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Edit Agenda : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -64,9 +78,11 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingAgendaManager.DeleteAsync(id, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Delete Agenda : {id}");
             return Ok();
         }
-        
+
         [HttpGet("{id}/meetingcontents")]
         public async Task<IActionResult> Get(int id, [FromQuery]MeetingContentCriteria criteria)
         {

@@ -5,6 +5,8 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -14,9 +16,17 @@ namespace MeetingDoc.Api.Controllers
     public class MeetingNotesController : ControllerBase
     {
         private readonly IMeetingNoteManager _meetingNoteManager;
-        public MeetingNotesController(IMeetingNoteManager meetingNoteManager)
+        private readonly IUserManager _userManager;
+        private readonly ILogger<MeetingNotesController> _logger;
+
+        public MeetingNotesController(
+            IMeetingNoteManager meetingNoteManager,
+            IUserManager userManager,
+            ILogger<MeetingNotesController> logger)
         {
             _meetingNoteManager = meetingNoteManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -43,8 +53,10 @@ namespace MeetingDoc.Api.Controllers
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingNoteViewModel viewModel)
         {
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingNoteManager.AddAsync(viewModel, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _meetingNoteManager.AddAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Add Note : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -53,6 +65,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingNoteManager.UpdateAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Edit Note : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -61,6 +75,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingNoteManager.DeleteAsync(id, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Delete Note : {id}");
             return Ok();
         }
     }

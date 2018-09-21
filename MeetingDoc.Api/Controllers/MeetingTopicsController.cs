@@ -5,6 +5,8 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MeetingDoc.Api.Controllers
 {
@@ -15,11 +17,19 @@ namespace MeetingDoc.Api.Controllers
     {
         private readonly IMeetingTopicManager _meetingTopicManager;
         private readonly IMeetingTimeManager _meetingTimeManager;
+        private readonly IUserManager _userManager;
+        private readonly ILogger<MeetingTopicsController> _logger;
 
-        public MeetingTopicsController(IMeetingTopicManager meetingTopicManager, IMeetingTimeManager meetingTimeManager)
+        public MeetingTopicsController(
+            IMeetingTopicManager meetingTopicManager,
+            IMeetingTimeManager meetingTimeManager,
+            IUserManager userManager,
+            ILogger<MeetingTopicsController> logger)
         {
             _meetingTopicManager = meetingTopicManager;
             _meetingTimeManager = meetingTimeManager;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -46,8 +56,10 @@ namespace MeetingDoc.Api.Controllers
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingTopicViewModel viewModel)
         {
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _meetingTopicManager.AddAsync(viewModel, id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _meetingTopicManager.AddAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Add Topic : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -56,6 +68,8 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingTopicManager.UpdateAsync(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Edit Topic : {JsonConvert.SerializeObject(viewModel)}");
             return Ok();
         }
 
@@ -64,9 +78,11 @@ namespace MeetingDoc.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _meetingTopicManager.DeleteAsync(id, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Delete Topic : {id}");
             return Ok();
         }
-        
+
         [HttpGet("{id}/meetingtimes")]
         public async Task<IActionResult> Get(int id, [FromQuery]MeetingTimeCriteria criteria)
         {

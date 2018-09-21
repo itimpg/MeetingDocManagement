@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/User';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,13 @@ import { map } from 'rxjs/operators';
 export class UsersService {
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUsers(page?, itemsPerPage?): Observable<PaginatedResult<User[]>> {
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<
       User[]
     >();
+    this.authService.renewToken();
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
       params = params.append('pageNumber', page);
@@ -38,10 +40,12 @@ export class UsersService {
   }
 
   getUser(id: number): Observable<User> {
+    this.authService.renewToken();
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
   add(model: User) {
+    this.authService.renewToken();
     return this.http.post(this.baseUrl + 'auth/Register', {
       userViewModel: model,
       password: model.password
@@ -49,10 +53,12 @@ export class UsersService {
   }
 
   edit(model: User) {
+    this.authService.renewToken();
     return this.http.put(this.baseUrl + 'users/', model);
   }
 
   delete(id: number) {
+    this.authService.renewToken();
     return this.http.delete(this.baseUrl + 'users/' + id);
   }
 }
