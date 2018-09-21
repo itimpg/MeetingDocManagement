@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Text;
-using Karambolo.Extensions.Logging.File;
 using MeetingDoc.Api.Data;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Data.Repositories;
@@ -41,11 +40,6 @@ namespace MeetingDoc.Api
             var connectionString = Configuration.GetConnectionString("Default");
 
             services.AddDbContextPool<DataContext>(options => options.UseMySql(connectionString));
-            services.AddLogging(lb =>
-            {
-                lb.AddConfiguration(Configuration.GetSection("Logging"));
-                lb.AddFile(new FileLoggerContext(AppContext.BaseDirectory, "app.log"));
-            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
             services.AddTransient<Seed>();
