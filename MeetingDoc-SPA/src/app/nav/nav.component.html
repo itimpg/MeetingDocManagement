@@ -25,7 +25,21 @@
           <i class="fa fa-key"></i> เปลี่ยนรหัสผ่าน</a>
         <a class="btn dropdown-item" (click)="logout()">
           <i class="fa fa-sign-out"></i> ออกจากระบบ</a>
+          <a class="btn dropdown-item" (click)="openModal(template)">
+            <i class="fas fa-info-circle"></i> เกี่ยวกับระบบ</a>
       </div>
     </a>
   </div>
 </nav>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">เกี่ยวกับระบบ</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    ระบบบริหารจัดการข้อมูลสารสนเทศสาหรับผู้บริหารระดับสูง เป็นสิทธิ์ของสถาบัณบัณฑิตพัฒนศิลป์ R 2561
+  </div>
+</ng-template>

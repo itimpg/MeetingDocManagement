@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -12,6 +13,7 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 export class NavComponent implements OnInit {
   model: any;
   role: string;
+  modalRef: BsModalRef;
 
   constructor(
     public authService: AuthService,
@@ -36,5 +38,9 @@ export class NavComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }
