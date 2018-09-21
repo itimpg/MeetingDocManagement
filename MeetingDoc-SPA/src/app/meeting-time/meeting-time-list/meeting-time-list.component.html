@@ -23,7 +23,7 @@
   <thead class="thead-light">
     <tr>
       <th>วาระ</th>
-      <th>วันประชุม</th>
+      <th>วัน/เวลา ประชุม</th>
       <th>สถานที่</th>
       <th></th>
     </tr>
@@ -31,7 +31,7 @@
   <tbody>
     <tr *ngFor="let item of items">
       <td>{{item.count | thainumber}}/{{item.fiscalYear | thainumber}}</td>
-      <td>{{item.meetingDate | thaiyear}}</td>
+      <td>{{item.meetingDate | thaidate}}</td>
       <td>{{item.location}}</td>
       <td class="pull-right">
         <div class="dropdown" dropdown>

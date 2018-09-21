@@ -10,7 +10,8 @@ import {
   BsModalService,
   ModalModule,
   BsDatepickerModule,
-  BsLocaleService
+  BsLocaleService,
+  TimepickerModule
 } from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BreadcrumbsModule, BreadcrumbsService } from 'ng6-breadcrumbs';
@@ -55,6 +56,7 @@ import { MeetingContentListResolver } from './_resolvers/meeting-content-list.re
 import { NumberOnlyDirective } from './_directives/number-only.directive';
 import { ThaiNumberPipe } from './_pipes/thai-number.pipe';
 import { ThaiYearPipe } from './_pipes/thai-year.pipe';
+import { ThaiDatePipe } from './_pipes/thai-date.pipe';
 
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { thLocale } from 'ngx-bootstrap/locale';
@@ -91,6 +93,7 @@ export function tokenGetter() {
     MeetingContentComponent,
     ThaiNumberPipe,
     ThaiYearPipe,
+    ThaiDatePipe,
     NumberOnlyDirective,
     MeetingScheduleComponent
   ],
@@ -103,6 +106,7 @@ export function tokenGetter() {
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     JwtModule.forRoot({
       config: {
@@ -140,7 +144,8 @@ export function tokenGetter() {
     MeetingContentService,
     MeetingScheduleService,
     ThaiNumberPipe,
-    ThaiYearPipe
+    ThaiYearPipe,
+    ThaiDatePipe
   ],
   entryComponents: [
     ChangePasswordComponent,

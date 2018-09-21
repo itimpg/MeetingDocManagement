@@ -16,7 +16,13 @@
       [(ngModel)]="model.fiscalYear" [disabled]="!isEditable" />
 
     <label class="label">Meeting Date:</label>
-    <input type="text" [(ngModel)]="model.meetingDate" required id="meetingDate" name="meetingDate" #meetingDate class="form-control" bsDatepicker>
+    <div>
+      <input type="text" [(ngModel)]="model.meetingDate" required id="meetingDate" name="meetingDate" #meetingDate
+        class="form-control" bsDatepicker>
+    </div>
+
+    <label class="label">Meeting Time:</label>
+    <timepicker [showMeridian]="false" [showSpinners]="true" [(ngModel)]="model.meetingDate" required id="meetingTime" name="meetingTime" #meetingTime></timepicker>
 
     <label class="label">Location:</label>
     <input type="text" class="form-control mb-4" id="location" required name="location" #location [(ngModel)]="model.location"
