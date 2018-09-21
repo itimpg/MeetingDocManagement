@@ -7,17 +7,17 @@
 
 <form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
   <div class="modal-body"> 
-    <label class="label">Name:</label>
-    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable"/>
+    <label class="label">หัวข้อ/วาระ:</label>
+    <input type="text" class="form-control mb-4" id="name" name="name" #name required [(ngModel)]="model.name" [disabled]="!isEditable"/>
         
   </div>
   <div class="modal-footer">
     <div class="form-row">
       <div class="col">
-        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">Save</button>
+        <button *ngIf="isEditable" type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">บันทึก</button>
       </div>
       <div class="col">
-        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'Cancel' : 'Close' }}</button>
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">{{ isEditable ? 'ยกเลิก' : 'ปิด' }}</button>
       </div>
     </div>
   </div>

@@ -5,7 +5,7 @@
 
 <div class="row">
   <div class="col">
-    <a class="btn btn-sm btn-success text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> Add New</a>
+    <a class="btn btn-sm btn-success text-light mb-4" (click)="addItem()"><i class="fas fa-plus-square"></i> เพิ่มข้อมูล</a>
   </div>
   <div class="col">
     <div class="row">
@@ -22,32 +22,30 @@
 <table class="table pt-5">
   <thead class="thead-light">
     <tr>
-      <th>Id</th>
-      <th>Number</th>
-      <th>Name</th>
+      <th>หมายเลข</th>
+      <th>ระเบียบวาระ</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
-      <td>{{item.id | thainumber}}</td>
       <td>{{item.number | thainumber}}</td>
       <td>{{item.name}}</td> 
       <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
-            Action
+            คำสั่ง
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *dropdownMenu>
             <a class="btn dropdown-item" (click)="viewItem(item)">
-              <i class="fas fa-eye"></i> View</a>
+              <i class="fas fa-eye"></i> ดูข้อมูล</a>
             <a class="btn dropdown-item" (click)="viewSubItem(item)">
-              <i class="fas fa-eye"></i> View Meeting Contents</a>
+              <i class="fas fa-eye"></i> ข้อมูลและเอกสาร</a>
             <a class="btn dropdown-item" (click)="editItem(item)">
-              <i class="fas fa-edit"></i> Edit</a>
+              <i class="fas fa-edit"></i> แก้ไข</a>
             <a class="btn dropdown-item" (click)="deleteItem(item)">
-              <i class="fas fa-trash-alt"></i> Delete</a>
+              <i class="fas fa-trash-alt"></i> ลบ</a>
           </div>
         </div>
       </td>

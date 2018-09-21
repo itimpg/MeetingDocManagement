@@ -11,7 +11,7 @@ import { BsModalRef } from 'ngx-bootstrap';
   styleUrls: ['./meeting-type.component.css']
 })
 export class MeetingTypeComponent extends BaseComponent<MeetingType> {
-  protected action = 'Meeting Type';
+  protected action = 'ประเภท/กลุ่ม การประชุม';
 
   constructor(
     public bsModalRef: BsModalRef,

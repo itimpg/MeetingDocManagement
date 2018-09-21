@@ -9,11 +9,11 @@
   <div class="modal-body">
 
     <label class="label">Number:</label>
-    <input appNumberOnly type="text" class="form-control mb-4" id="number" name="number" #number [(ngModel)]="model.number"
+    <input appNumberOnly type="text" class="form-control mb-4" id="number" name="number" required #number [(ngModel)]="model.number"
       [disabled]="!isEditable" />
 
     <label class="label">Name:</label>
-    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" [disabled]="!isEditable" />
+    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" required [disabled]="!isEditable" />
 
     <label class="label">Attendee:</label>
     <div class="form-check">

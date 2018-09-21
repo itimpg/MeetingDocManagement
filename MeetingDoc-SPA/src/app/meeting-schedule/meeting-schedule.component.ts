@@ -16,8 +16,8 @@ export class MeetingScheduleComponent extends BaseListComponent<
   MeetingSchedule
 > {
   actionName = 'meetingschedule';
-  titleName = 'Meeting Schedule';
-  itemName = 'Meeting Schedule';
+  titleName = 'ตารางรายการกิจกรรมการประชุม';
+  itemName = 'ตารางรายการกิจกรรมการประชุม';
 
   constructor(
     protected service: MeetingScheduleService,

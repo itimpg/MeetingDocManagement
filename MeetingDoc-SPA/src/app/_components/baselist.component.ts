@@ -85,10 +85,10 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
   }
 
   deleteItem(item: T) {
-    this.alertify.confirm(`Do you want to delet this ${this.itemName}?`, () => {
+    this.alertify.confirm(`คุณต้องการลบข้อมูล${this.itemName}นี้หรือไม่?`, () => {
       this.service.delete(item.id).subscribe(
         () => {
-          this.alertify.message('Delete success');
+          this.alertify.message('ลบข้อมูลแล้ว');
           this.loadItems();
         },
         error => {

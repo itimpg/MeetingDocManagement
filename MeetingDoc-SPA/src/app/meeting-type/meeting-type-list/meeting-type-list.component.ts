@@ -17,8 +17,8 @@ import { BreadcrumbsService } from 'ng6-breadcrumbs';
 })
 export class MeetingTypeListComponent extends BaseListComponent<MeetingType> {
   actionName = 'meetingType';
-  titleName = 'Meeting Types';
-  itemName = 'Meeting Type';
+  titleName = 'ประเภท/กลุ่ม การประชุม';
+  itemName = 'ประเภท/กลุ่ม การประชุม';
 
   showModal(initialState: ShowModalParam): void {
     this.bsModalRef = this.modalService.show(MeetingTypeComponent, {

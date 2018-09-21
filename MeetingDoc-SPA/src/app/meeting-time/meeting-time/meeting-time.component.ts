@@ -11,7 +11,7 @@ import { MeetingTimeService } from '../../_services/meetingtime.service';
   styleUrls: ['./meeting-time.component.css']
 })
 export class MeetingTimeComponent extends BaseComponent<MeetingTime> {
-  protected action = 'Meeting Time';
+  protected action = 'วัน/เวลา การประชุม';
 
   constructor(
     public bsModalRef: BsModalRef,

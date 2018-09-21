@@ -11,7 +11,7 @@ import { MeetingContentService } from '../../_services/meeting-content.service';
   styleUrls: ['./meeting-content.component.css']
 })
 export class MeetingContentComponent extends BaseComponent<MeetingContent> {
-  protected action = 'Meeting Content';
+  protected action = 'ข้อมูลและเอกสาร';
 
   constructor(
     public bsModalRef: BsModalRef,

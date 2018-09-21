@@ -9,6 +9,10 @@ import { MeetingAgendaService } from '../_services/meeting-agenda.service';
 export class MeetingAgendaListResolver extends BaseListByParentResolver<
   MeetingAgenda
 > {
+
+  protected pageNumber = 1;
+  protected pageSize = 10;
+
   constructor(
     protected service: MeetingAgendaService,
     protected router: Router,

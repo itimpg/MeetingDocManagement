@@ -17,8 +17,8 @@ export class MeetingAgendaListComponent extends BaseListComponent<
   MeetingAgenda
 > {
   actionName = 'meetingagenda';
-  titleName = 'Meeting Agendas';
-  itemName = 'Meeting Agenda';
+  titleName = 'ระเบียบวาระ การประชุม';
+  itemName = 'ระเบียบวาระ การประชุม';
 
   showModal(initialState: ShowModalParam): void {
     this.bsModalRef = this.modalService.show(MeetingAgendaComponent, {

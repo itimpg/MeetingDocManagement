@@ -17,8 +17,8 @@ export class MeetingContentListComponent extends BaseListComponent<
   MeetingContent
 > {
   actionName = 'meetingcontent';
-  titleName = 'Meeting Contents';
-  itemName = 'Meeting Content';
+  titleName = 'ข้อมูลและเอกสาร';
+  itemName = 'ข้อมูลและเอกสาร';
 
   showModal(initialState: ShowModalParam): void {
     this.bsModalRef = this.modalService.show(MeetingContentComponent, {

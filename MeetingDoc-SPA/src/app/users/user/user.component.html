@@ -8,10 +8,10 @@
 <form #addEditUserForm="ngForm" (ngSubmit)="saveUser()">
   <div class="modal-body">
     <label class="label">First Name:</label>
-    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname required [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
     
     <label class="label">Last Name:</label>
-    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
+    <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname required [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
     
     <label class="label">Position:</label>
     <input type="text" class="form-control mb-4" id="position" name="position" #position [(ngModel)]="model.position" [disabled]="!isEditable"/>

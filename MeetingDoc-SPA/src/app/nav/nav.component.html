@@ -5,13 +5,13 @@
 
     <ul class="navbar-nav mr-auto">
       <li *ngIf="role === '0' || role === '2'">
-        <a class="nav-link" [routerLink]="['/home']">Meeting Schedule</a>
+        <a class="nav-link" [routerLink]="['/home']">ตารางรายการกิจกรรมการประชุม</a>
       </li>
       <li *ngIf="role === '0' || role === '1'" class="nav-item" routerLinkActive="router-link-active">
-        <a class="nav-link" [routerLink]="['/meetingtypes']">Meeting Types</a>
+        <a class="nav-link" [routerLink]="['/meetingtypes']">ประเภท/กลุ่ม การประชุม</a>
       </li>
       <li *ngIf="role === '0'" class="nav-item" routerLinkActive="router-link-active">
-        <a class="nav-link" [routerLink]="['/users']">Users</a>
+        <a class="nav-link" [routerLink]="['/users']">ผู้ใช้งาน</a>
       </li>
     </ul>
 
@@ -22,9 +22,9 @@
       </a>
       <div *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="btn dropdown-item" (click)="showChagnePassword()">
-          <i class="fa fa-key"></i> Change Password</a>
+          <i class="fa fa-key"></i> เปลี่ยนรหัสผ่าน</a>
         <a class="btn dropdown-item" (click)="logout()">
-          <i class="fa fa-sign-out"></i> Logout</a>
+          <i class="fa fa-sign-out"></i> ออกจากระบบ</a>
       </div>
     </a>
   </div>

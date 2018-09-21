@@ -11,7 +11,7 @@ import { MeetingTopicService } from '../../_services/meetingtopic.service';
   styleUrls: ['./meeting-topic.component.css']
 })
 export class MeetingTopicComponent extends BaseComponent<MeetingTopic> {
-  protected action = 'Meeting Topic';
+  protected action = 'หัวข้อ/วาระ การประชุม';
 
   constructor(
     public bsModalRef: BsModalRef,

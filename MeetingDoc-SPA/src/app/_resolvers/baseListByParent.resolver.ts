@@ -5,8 +5,8 @@ import { catchError } from 'rxjs/operators';
 import { BaseService } from '../_services/base.service';
 
 export abstract class BaseListByParentResolver<T> implements Resolve<T[]> {
-  pageNumber = 1;
-  pageSize = 5;
+  protected pageNumber = 1;
+  protected pageSize = 5;
 
   constructor(
     protected service: BaseService<T>,

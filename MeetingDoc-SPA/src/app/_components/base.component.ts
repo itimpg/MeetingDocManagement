@@ -1,8 +1,8 @@
-import { OnInit } from "@angular/core";
-import { BsModalRef } from "ngx-bootstrap";
-import { BaseModel } from "../_models/BaseModel";
-import { BaseService } from "../_services/base.service";
-import { AlertifyService } from "../_services/alertify.service";
+import { OnInit } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap';
+import { BaseModel } from '../_models/BaseModel';
+import { BaseService } from '../_services/base.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   protected abstract action: string;
@@ -29,12 +29,12 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   InitComponent() {
     if (this.itemId === 0) {
       this.isEditable = true;
-      this.title = `Add ${this.action}`;
+      this.title = `เพิ่มข้อมูล ${this.action}`;
       this.initAdd();
     } else {
       this.title = this.isEditable
-        ? `Edit  ${this.action}`
-        : `View ${this.action}`;
+        ? `แก้ไข ${this.action}`
+        : `ดูรายละเอียด ${this.action}`;
       this.service.getItem(this.itemId).subscribe(
         result => {
           this.model = this.ConvertResultToModel(result);
@@ -64,7 +64,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     if (model.id === 0) {
       this.service.add(model).subscribe(
         success => {
-          this.alertify.message("save success");
+          this.alertify.message('บันทึกสำเร็จ');
           this.bsModalRef.hide();
         },
         error => {
@@ -74,7 +74,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
     } else {
       this.service.edit(model).subscribe(
         success => {
-          this.alertify.message("save success");
+          this.alertify.message('บันทึกสำเร็จ');
           this.bsModalRef.hide();
         },
         error => {

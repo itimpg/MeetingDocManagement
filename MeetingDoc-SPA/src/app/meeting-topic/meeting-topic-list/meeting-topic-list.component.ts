@@ -15,8 +15,8 @@ import { ShowModalParam } from '../../_models/ShowModalParam';
 })
 export class MeetingTopicListComponent extends BaseListComponent<MeetingTopic> {
   actionName = 'meetingTopic';
-  titleName = 'Meeting Topics';
-  itemName = 'Meeting Topic';
+  titleName = 'หัวข้อ/วาระ การประชุม';
+  itemName = 'หัวข้อ/วาระ การประชุม';
 
   showModal(initialState: ShowModalParam): void {
     this.bsModalRef = this.modalService.show(MeetingTopicComponent, {

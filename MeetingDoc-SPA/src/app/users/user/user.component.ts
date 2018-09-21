@@ -30,10 +30,10 @@ export class UserComponent implements OnInit {
   setModel(userId: number, isEditable: boolean) {
     if (userId === 0) {
       this.isEditable = true;
-      this.title = 'Add User';
+      this.title = 'เพิ่มข้อมูลผู้ใช้งาน';
     } else {
       this.isEditable = isEditable;
-      this.title = this.isEditable ? 'Edit User' : 'View User';
+      this.title = this.isEditable ? 'แก้ไขผู้ใช้งาน' : 'ดูข้อมูลผู้ใช้งาม';
       this.userService.getUser(userId).subscribe(
         user => {
           this.model = user;

@@ -11,7 +11,7 @@ import { MeetingAgenda } from '../../_models/MeetingAgenda';
   styleUrls: ['./meeting-agenda.component.css']
 })
 export class MeetingAgendaComponent extends BaseComponent<MeetingAgenda> {
-  protected action = 'Meeting Agenda';
+  protected action = 'ระเบียบวาระ การประชุม';
 
   constructor(
     public bsModalRef: BsModalRef,
