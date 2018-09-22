@@ -35,7 +35,11 @@ export class MeetingContentComponent extends BaseComponent<MeetingContent> {
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent) => {
-        this.model.fileBase64 = (<FileReader>e.target).result.toString();
+        if (e.loaded > 2.5 * 1028 * 1028) {
+          this.alertify.error('กรุณาเลือกไฟล์ขนาดไม่เกิน 2.5 Mb');
+        } else {
+          this.model.fileBase64 = (<FileReader>e.target).result.toString();
+        }
       };
 
       reader.readAsDataURL(event.target.files[0]);

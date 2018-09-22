@@ -28,6 +28,8 @@ namespace MeetingDoc.Api.Managers
                 .Where(x =>
                     !x.MeetingAgenda.IsDraft
                     && !x.MeetingAgenda.IsRemoved
+                    && !x.MeetingAgenda.MeetingTime.IsDraft
+                    && !x.MeetingAgenda.MeetingTime.IsRemoved
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsDraft
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsRemoved
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsDraft

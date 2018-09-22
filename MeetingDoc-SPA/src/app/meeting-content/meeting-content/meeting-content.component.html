@@ -15,6 +15,7 @@
       <label class="label">File:</label>
       <div *ngIf="isEditable" class="mb-4">
         <input type="file" (change)="readUrl($event)" accept="image/*" />
+        <pre class="text-danger">รองรับไฟล์ขนาดไม่เกิน 2.5 Mb</pre>
       </div>
   
       <label class="label">Ordinal:</label>
