@@ -22,11 +22,15 @@
     </div>
 
     <label class="label">Meeting Time:</label>
-    <timepicker [showMeridian]="false" [showSpinners]="true" [(ngModel)]="model.meetingDate" required id="meetingTime" name="meetingTime" #meetingTime></timepicker>
+    <timepicker [showMeridian]="false" [showSpinners]="true" [(ngModel)]="model.meetingDate" required id="meetingTime"
+      name="meetingTime" #meetingTime></timepicker>
 
     <label class="label">Location:</label>
     <input type="text" class="form-control mb-4" id="location" required name="location" #location [(ngModel)]="model.location"
       [disabled]="!isEditable" />
+
+    <input type="checkbox" class="mr-1" id="isDraft" name="isDraft" #isDraft [(ngModel)]="model.isDraft" />
+    <label class="label" for="isDraft"> บันทึกร่าง</label>
 
   </div>
   <div class="modal-footer">

@@ -37,6 +37,7 @@ namespace MeetingDoc.Api.Data.Repositories
             var existsEntity = await Dbset.Include(x => x.MeetingAgendaUsers).FirstOrDefaultAsync(x => x.Id == entityToUpdate.Id);
             existsEntity.Name = entityToUpdate.Name;
             existsEntity.Number = entityToUpdate.Number;
+            existsEntity.IsDraft = entityToUpdate.IsDraft;
             existsEntity.UpdatedBy = entityToUpdate.UpdatedBy;
             existsEntity.UpdatedDate = DateTime.Now;
 

@@ -25,6 +25,7 @@ export class MeetingAgendaComponent extends BaseComponent<MeetingAgenda> {
     if (this.itemId === 0) {
       this.isEditable = true;
       this.title = `Add ${this.action}`;
+      this.model.isDraft = true;
     } else {
       this.title = this.isEditable
         ? `Edit  ${this.action}`

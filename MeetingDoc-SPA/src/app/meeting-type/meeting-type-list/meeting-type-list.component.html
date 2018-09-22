@@ -23,12 +23,14 @@
   <thead class="thead-light">
     <tr> 
       <th>ประเภท/กลุ่ม</th>
+      <th>สถานะ</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
       <td>{{item.name}}</td>
+      <td>{{item.isDraft ? 'Draft' : 'Publish'}}</td>
       <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>

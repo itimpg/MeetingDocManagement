@@ -30,7 +30,8 @@ namespace MeetingDoc.Api.Managers
                 MeetingTopicId = viewModel.MeetingTopicId,
                 FiscalYear = viewModel.FiscalYear,
                 MeetingDate = viewModel.MeetingDate,
-                Location = viewModel.Location
+                Location = viewModel.Location,
+                IsDraft = viewModel.IsDraft
             };
         }
 
@@ -43,7 +44,8 @@ namespace MeetingDoc.Api.Managers
                 MeetingTopicId = entity.MeetingTopicId,
                 FiscalYear = entity.FiscalYear,
                 MeetingDate = entity.MeetingDate,
-                Location = entity.Location
+                Location = entity.Location,
+                IsDraft = entity.IsDraft
             };
         }
     }

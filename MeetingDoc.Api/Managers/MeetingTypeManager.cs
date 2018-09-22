@@ -26,7 +26,8 @@ namespace MeetingDoc.Api.Managers
             return new MeetingType
             {
                 Id = viewModel.Id,
-                Name = viewModel.Name
+                Name = viewModel.Name,
+                IsDraft = viewModel.IsDraft,
             };
         }
 
@@ -35,7 +36,8 @@ namespace MeetingDoc.Api.Managers
             return new MeetingTypeViewModel
             {
                 Id = entity.Id,
-                Name = entity.Name
+                Name = entity.Name,
+                IsDraft = entity.IsDraft,
             };
         }
     }

@@ -31,6 +31,7 @@ namespace MeetingDoc.Api.Managers
                 MeetingTimeId = viewModel.MeetingTimeId,
                 Number = viewModel.Number,
                 Name = viewModel.Name,
+                IsDraft = viewModel.IsDraft,
                 MeetingAgendaUsers = viewModel.Users.Where(x => x.IsSelected).Select(x => new MeetingAgendaUser
                 {
                     UserId = x.UserId,
@@ -45,7 +46,8 @@ namespace MeetingDoc.Api.Managers
                 Id = entity.Id,
                 MeetingTimeId = entity.MeetingTimeId,
                 Number = entity.Number,
-                Name = entity.Name
+                Name = entity.Name,
+                IsDraft = entity.IsDraft,
             };
         }
         public override async Task<MeetingAgendaViewModel> GetAsync(int id)

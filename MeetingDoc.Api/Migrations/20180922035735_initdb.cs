@@ -19,7 +19,8 @@ namespace MeetingDoc.Api.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    IsDraft = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +65,8 @@ namespace MeetingDoc.Api.Migrations
                     UpdatedBy = table.Column<int>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    MeetingTypeId = table.Column<int>(nullable: false)
+                    MeetingTypeId = table.Column<int>(nullable: false),
+                    IsDraft = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +94,8 @@ namespace MeetingDoc.Api.Migrations
                     Count = table.Column<int>(nullable: false),
                     FiscalYear = table.Column<string>(nullable: true),
                     MeetingDate = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: true)
+                    Location = table.Column<string>(nullable: true),
+                    IsDraft = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,7 +121,8 @@ namespace MeetingDoc.Api.Migrations
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     MeetingTimeId = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    IsDraft = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

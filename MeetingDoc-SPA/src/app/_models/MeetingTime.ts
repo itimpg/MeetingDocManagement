@@ -6,4 +6,5 @@ export class MeetingTime extends BaseModel {
   fiscalYear: string;
   meetingDate: Date;
   location: string;
+  isDraft: boolean;
 }

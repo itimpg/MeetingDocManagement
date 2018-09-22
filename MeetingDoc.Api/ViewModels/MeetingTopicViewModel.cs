@@ -4,5 +4,6 @@ namespace MeetingDoc.Api.ViewModels
     {
         public string Name { get; set; }
         public int MeetingTypeId { get; set; }
+        public bool IsDraft { get; set; }
     }
 }

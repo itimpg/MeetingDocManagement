@@ -16,6 +16,7 @@ namespace MeetingDoc.Api.Data.Repositories
             var existsEntity = await Dbset.FindAsync(entityToUpdate.Id);
 
             existsEntity.Name = entityToUpdate.Name;
+            existsEntity.IsDraft = entityToUpdate.IsDraft;
             existsEntity.UpdatedBy = entityToUpdate.UpdatedBy;
             existsEntity.UpdatedDate = DateTime.Now;
         }

@@ -25,4 +25,8 @@ export class MeetingTopicComponent extends BaseComponent<MeetingTopic> {
     this.model.meetingTypeId = this.parentId;
     return this.model;
   }
+
+  initAdd() {
+    this.model.isDraft = true;
+  }
 }

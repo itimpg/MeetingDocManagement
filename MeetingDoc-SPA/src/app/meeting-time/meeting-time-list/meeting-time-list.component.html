@@ -25,6 +25,7 @@
       <th>วาระ</th>
       <th>วัน/เวลา ประชุม</th>
       <th>สถานที่</th>
+      <th>สถานะ</th>
       <th></th>
     </tr>
   </thead>
@@ -33,6 +34,7 @@
       <td>{{item.count | thainumber}}/{{item.fiscalYear | thainumber}}</td>
       <td>{{item.meetingDate | thaidate}}</td>
       <td>{{item.location}}</td>
+      <td>{{item.isDraft ? 'Draft' : 'Publish'}}</td>
       <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>

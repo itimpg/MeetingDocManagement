@@ -20,4 +20,8 @@ export class MeetingTypeComponent extends BaseComponent<MeetingType> {
   ) {
     super(bsModalRef, service, alertify);
   }
+
+  initAdd() {
+    this.model.isDraft = true;
+  }
 }

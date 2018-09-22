@@ -14,7 +14,7 @@ namespace MeetingDoc.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("MeetingDoc.Api.Models.MeetingAgenda", b =>
@@ -25,6 +25,8 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsDraft");
 
                     b.Property<bool>("IsRemoved");
 
@@ -146,6 +148,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<string>("FiscalYear");
 
+                    b.Property<bool>("IsDraft");
+
                     b.Property<bool>("IsRemoved");
 
                     b.Property<string>("Location");
@@ -174,6 +178,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<bool>("IsDraft");
+
                     b.Property<bool>("IsRemoved");
 
                     b.Property<int>("MeetingTypeId");
@@ -199,6 +205,8 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsDraft");
 
                     b.Property<bool>("IsRemoved");
 

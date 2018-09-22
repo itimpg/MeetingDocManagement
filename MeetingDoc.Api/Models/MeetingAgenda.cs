@@ -8,6 +8,7 @@ namespace MeetingDoc.Api.Models
         public MeetingTime MeetingTime { get; set; }
         public int Number { get; set; }
         public string Name { get; set; }
+        public bool IsDraft { get; set; }
         public IList<MeetingAgendaUser> MeetingAgendaUsers { get; set; }
     }
 }

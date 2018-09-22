@@ -19,6 +19,7 @@ namespace MeetingDoc.Api.Data.Repositories
             existsEntity.FiscalYear = entityToUpdate.FiscalYear;
             existsEntity.MeetingDate = entityToUpdate.MeetingDate;
             existsEntity.Location = entityToUpdate.Location;
+            existsEntity.IsDraft = entityToUpdate.IsDraft;
             existsEntity.UpdatedBy = entityToUpdate.UpdatedBy;
             existsEntity.UpdatedDate = DateTime.Now;
         }

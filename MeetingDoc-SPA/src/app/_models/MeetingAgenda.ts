@@ -6,4 +6,5 @@ export class MeetingAgenda extends BaseModel {
   number: number;
   name: string;
   users: MeetingAgendaUser[];
+  isDraft: boolean;
 }

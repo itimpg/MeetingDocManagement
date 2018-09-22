@@ -32,7 +32,7 @@
     <tr *ngFor="let item of items">
       <td>{{item.meetingType}}</td>
       <td>{{item.meetingTopic}}</td>
-      <td>{{item.meetingTimeCount}}/{{item.meetingFiscalYear}}</td>
+      <td>{{item.meetingTimeCount | thainumber}}/{{item.meetingFiscalYear | thainumber}}</td>
       <td>{{item.meetingPlace}}</td>
       <td class="pull-right">
         <div class="dropdown" dropdown>

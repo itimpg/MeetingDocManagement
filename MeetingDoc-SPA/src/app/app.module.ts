@@ -66,6 +66,7 @@ import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.co
 import { UserGuard } from './_guards/user.guard';
 import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
 import { MeetingScheduleService } from './_services/meeting-schedule.service';
+import { UnAuthGuard } from './_guards/unauth.guard';
 defineLocale('th', thLocale);
 
 export function tokenGetter() {
@@ -123,6 +124,7 @@ export function tokenGetter() {
     BsLocaleService,
     BreadcrumbsService,
     AuthGuard,
+    UnAuthGuard,
     UserGuard,
     WriterGuard,
     AdminGuard,

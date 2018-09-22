@@ -12,6 +12,7 @@ namespace MeetingDoc.Api.ViewModels
         public int MeetingTimeId { get; set; }
         public int Number { get; set; }
         public string Name { get; set; }
+        public bool IsDraft { get; set; }
         public IList<MeetingAgendaUserViewModel> Users { get; set; }
     }
 }

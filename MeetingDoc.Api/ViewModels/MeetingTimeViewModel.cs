@@ -9,5 +9,6 @@ namespace MeetingDoc.Api.ViewModels
         public string FiscalYear { get; set; }
         public DateTime MeetingDate { get; set; }
         public string Location { get; set; }
+        public bool IsDraft { get; set; }
     }
 }

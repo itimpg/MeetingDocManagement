@@ -9,7 +9,10 @@
   <div class="modal-body"> 
     <label class="label">หัวข้อ/วาระ:</label>
     <input type="text" class="form-control mb-4" id="name" name="name" #name required [(ngModel)]="model.name" [disabled]="!isEditable"/>
-        
+    
+    <input type="checkbox" class="mr-1" id="isDraft" name="isDraft" #isDraft [(ngModel)]="model.isDraft" />
+    <label class="label" for="isDraft"> บันทึกร่าง</label>
+
   </div>
   <div class="modal-footer">
     <div class="form-row">

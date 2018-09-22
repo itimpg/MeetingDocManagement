@@ -13,7 +13,8 @@
       [disabled]="!isEditable" />
 
     <label class="label">Name:</label>
-    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" required [disabled]="!isEditable" />
+    <input type="text" class="form-control mb-4" id="name" name="name" #name [(ngModel)]="model.name" required
+      [disabled]="!isEditable" />
 
     <label class="label">Attendee:</label>
     <div class="form-check">
@@ -23,6 +24,9 @@
           {{user.userFullName}}</label>
       </div>
     </div>
+
+    <input type="checkbox" class="mr-1" id="isDraft" name="isDraft" #isDraft [(ngModel)]="model.isDraft" />
+    <label class="label" for="isDraft"> บันทึกร่าง</label>
 
   </div>
   <div class="modal-footer">

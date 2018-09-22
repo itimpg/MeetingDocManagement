@@ -33,4 +33,8 @@ export class MeetingTimeComponent extends BaseComponent<MeetingTime> {
     this.model.meetingDate = new Date(date.getTime() - userTimezoneOffset);
     return this.model;
   }
+
+  initAdd() {
+    this.model.isDraft = true;
+  }
 }
