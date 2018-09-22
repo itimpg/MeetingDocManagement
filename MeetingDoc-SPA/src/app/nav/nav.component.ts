@@ -3,7 +3,6 @@ import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
-import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +13,7 @@ export class NavComponent implements OnInit {
   model: any;
   role: string;
   modalRef: BsModalRef;
+  isCollapsed = true;
 
   constructor(
     public authService: AuthService,

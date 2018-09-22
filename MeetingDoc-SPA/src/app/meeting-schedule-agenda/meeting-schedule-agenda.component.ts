@@ -32,6 +32,6 @@ export class MeetingScheduleAgendaComponent extends BaseListComponent<
   }
 
   viewSubItem(item: MeetingAgenda) {
-    this.router.navigate([`meetingagendas/${item.id}/contents`]);
+    this.router.navigate([`meetingSchedule/${this.parentId}/agendas/${item.id}/read`]);
   }
 }

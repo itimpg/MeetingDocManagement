@@ -11,7 +11,8 @@ import {
   ModalModule,
   BsDatepickerModule,
   BsLocaleService,
-  TimepickerModule
+  TimepickerModule,
+  CollapseModule
 } from 'ngx-bootstrap';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BreadcrumbsModule, BreadcrumbsService } from 'ng6-breadcrumbs';
@@ -70,6 +71,7 @@ import { MoveContentComponent } from './meeting-content/move-content/move-conten
 import { MeetingScheduleAgendaComponent } from './meeting-schedule-agenda/meeting-schedule-agenda.component';
 import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule-agenda-list.resolver';
 import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
+import { MeetingReaderComponent } from './meeting-reader/meeting-reader.component';
 
 defineLocale('th', thLocale);
 
@@ -103,6 +105,7 @@ export function tokenGetter() {
       MeetingScheduleComponent,
       MoveContentComponent,
       MeetingScheduleAgendaComponent,
+      MeetingReaderComponent
    ],
    imports: [
       BrowserModule,
@@ -115,6 +118,7 @@ export function tokenGetter() {
       BsDatepickerModule.forRoot(),
       TimepickerModule.forRoot(),
       RouterModule.forRoot(appRoutes),
+      CollapseModule.forRoot(),
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,

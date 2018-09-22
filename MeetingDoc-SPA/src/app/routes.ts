@@ -21,6 +21,8 @@ import { UserGuard } from './_guards/user.guard';
 import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
 import { MeetingScheduleAgendaComponent } from './meeting-schedule-agenda/meeting-schedule-agenda.component';
 import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule-agenda-list.resolver';
+import { MeetingReaderResolver } from './_resolvers/meeting-reader.resolver';
+import { MeetingReaderComponent } from './meeting-reader/meeting-reader.component';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -80,6 +82,13 @@ export const appRoutes: Routes = [
     canActivate: [UserGuard],
     component: MeetingScheduleAgendaComponent,
     resolve: { meetingagenda: MeetingScheduleAgendaListResolver }
+  },
+  {
+    path: 'meetingSchedule/:id/agendas/:agendaId/read',
+    runGuardsAndResolvers: 'always',
+    canActivate: [UserGuard],
+    component: MeetingReaderComponent,
+    //resolve: { reader: MeetingReaderResolver }
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

@@ -2,33 +2,38 @@
   <div class="container">
     <img src="./assets/logo.png" class="nav-logo pr-2" />
     <a class="navbar-brand" [routerLink]="['/home']">iPad Meeting System</a>
+    <button class="navbar-toggler collapsed" type="button" (click)="isCollapsed = !isCollapsed" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ul class="navbar-nav mr-auto">
-      <li *ngIf="role === '0' || role === '2'">
-        <a class="nav-link" [routerLink]="['/home']">ตารางรายการกิจกรรมการประชุม</a>
-      </li>
-      <li *ngIf="role === '0' || role === '1'" class="nav-item" routerLinkActive="router-link-active">
-        <a class="nav-link" [routerLink]="['/meetingtypes']">ประเภท/กลุ่ม การประชุม</a>
-      </li>
-      <li *ngIf="role === '0'" class="nav-item" routerLinkActive="router-link-active">
-        <a class="nav-link" [routerLink]="['/users']">ผู้ใช้งาน</a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="role === '0' || role === '2'">
+          <a class="nav-link" [routerLink]="['/home']">ตารางรายการกิจกรรมการประชุม</a>
+        </li>
+        <li *ngIf="role === '0' || role === '1'" class="nav-item" routerLinkActive="router-link-active">
+          <a class="nav-link" [routerLink]="['/meetingtypes']">ประเภท/กลุ่ม การประชุม</a>
+        </li>
+        <li *ngIf="role === '0'" class="nav-item" routerLinkActive="router-link-active">
+          <a class="nav-link" [routerLink]="['/users']">ผู้ใช้งาน</a>
+        </li>
+      </ul>
 
-    <a dropdown class="btn dropdown">
-      <a class="dropdown-toggle text-light nav-link" dropdownToggle>
-        <i class="fas" [ngClass]="{ 'fa-user-tie': role === '2', 'fa-user-edit': role === '1', 'fa-user-cog' : role === '0' }"></i>
-        {{authService.decodedToken?.unique_name | titlecase}}
-      </a>
-      <div *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="btn dropdown-item" (click)="showChagnePassword()">
-          <i class="fa fa-key"></i> เปลี่ยนรหัสผ่าน</a>
-        <a class="btn dropdown-item" (click)="logout()">
-          <i class="fa fa-sign-out"></i> ออกจากระบบ</a>
+      <a dropdown class="btn dropdown">
+        <a class="dropdown-toggle text-light nav-link" dropdownToggle>
+          <i class="fas" [ngClass]="{ 'fa-user-tie': role === '2', 'fa-user-edit': role === '1', 'fa-user-cog' : role === '0' }"></i>
+          {{authService.decodedToken?.unique_name | titlecase}}
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="btn dropdown-item" (click)="showChagnePassword()">
+            <i class="fa fa-key"></i> เปลี่ยนรหัสผ่าน</a>
+          <a class="btn dropdown-item" (click)="logout()">
+            <i class="fa fa-sign-out"></i> ออกจากระบบ</a>
           <a class="btn dropdown-item" (click)="openModal(template)">
             <i class="fas fa-info-circle"></i> เกี่ยวกับระบบ</a>
-      </div>
-    </a>
+        </div>
+      </a>
+    </div>
   </div>
 </nav>
 
