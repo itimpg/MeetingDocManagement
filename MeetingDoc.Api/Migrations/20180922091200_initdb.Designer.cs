@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingDoc.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180922035735_initdb")]
+    [Migration("20180922091200_initdb")]
     partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,7 +86,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("FileBase64");
+                    b.Property<byte[]>("FileBase64")
+                        .HasColumnType("MediumBlob");
 
                     b.Property<string>("FileName");
 

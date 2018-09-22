@@ -15,5 +15,11 @@ namespace MeetingDoc.Api.Data
         public DbSet<MeetingContent> MeetingContents { get; set; }
         public DbSet<MeetingNote> MeetingNotes { get; set; }
         public DbSet<MeetingAgendaUser> MeetingAgendaUsers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<MeetingContent>().Property(x => x.FileBase64)
+                .HasColumnType("MediumBlob");
+        }
     }
 }

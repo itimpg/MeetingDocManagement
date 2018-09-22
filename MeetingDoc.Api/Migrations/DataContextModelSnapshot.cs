@@ -84,7 +84,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("FileBase64");
+                    b.Property<byte[]>("FileBase64")
+                        .HasColumnType("MediumBlob");
 
                     b.Property<string>("FileName");
 
