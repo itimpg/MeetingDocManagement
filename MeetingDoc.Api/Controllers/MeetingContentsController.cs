@@ -16,14 +16,17 @@ namespace MeetingDoc.Api.Controllers
     public class MeetingContentsController : ControllerBase
     {
         private readonly IMeetingContentManager _meetingContentManager;
+        private readonly IMeetingAgendaManager _meetingAgendaManager;
         private readonly IUserManager _userManager;
         private readonly ILogger<MeetingContentsController> _logger;
         public MeetingContentsController(
             IMeetingContentManager meetingTimeManager,
+            IMeetingAgendaManager meetingAgendaManager,
             IUserManager userManager,
             ILogger<MeetingContentsController> logger)
         {
             _meetingContentManager = meetingTimeManager;
+            _meetingAgendaManager = meetingAgendaManager;
             _userManager = userManager;
             _logger = logger;
         }
@@ -87,6 +90,13 @@ namespace MeetingDoc.Api.Controllers
             var user = await _userManager.GetAsync(userId);
             _logger.LogInformation($"{user.Email} Delete Content : {id}");
             return Ok();
+        }
+
+        [HttpGet("{contentId}/agendas")]
+        public async Task<IActionResult> GetAgendas(int contentId)
+        {
+            var viewModels = await _meetingAgendaManager.GetByContentAsync(contentId);
+            return Ok(viewModels);
         }
     }
 }

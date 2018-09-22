@@ -74,5 +74,27 @@ namespace MeetingDoc.Api.Managers
             viewModel.Users = query.OrderBy(x => x.UserId).ToList();
             return viewModel;
         }
+
+        public async Task<IList<MeetingAgendaViewModel>> GetByContentAsync(int contentId)
+        {
+            var content = await UnitOfWork.MeetingContentRepository
+                .GetQuery(x => x.Id == contentId)
+                .Include(x => x.MeetingAgenda)
+                .FirstOrDefaultAsync();
+            var timeId = content.MeetingAgenda.MeetingTimeId;
+            var query = Repository
+                .GetQuery(x =>
+                    x.MeetingTimeId == timeId
+                    && !x.IsRemoved
+                    && x.Id != content.MeetingAgendaId)
+                .Select(x => new MeetingAgendaViewModel
+                {
+                    Id = x.Id,
+                    Number = x.Number,
+                    Name = x.Name,
+                });
+
+            return await query.ToListAsync();
+        }
     }
 }

@@ -4,6 +4,9 @@ import { MeetingContent } from '../_models/MeetingContent';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { MoveContent } from '../_models/MoveContent';
+import { Observable } from 'rxjs';
+import { MeetingAgenda } from '../_models/MeetingAgenda';
+import { PaginatedResult } from '../_models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +22,11 @@ export class MeetingContentService extends BaseService<MeetingContent> {
   moveContent(model: MoveContent) {
     this.authService.renewToken();
     return this.http.post(`${this.baseUrl}${this.action}/movecontent`, model);
+  }
+
+  getAgendas(contentId: number): Observable<MeetingAgenda[]> {
+    this.authService.renewToken();
+    const url = `${this.baseUrl}${this.action}/${contentId}/agendas`;
+    return this.http.get<MeetingAgenda[]>(url);
   }
 }

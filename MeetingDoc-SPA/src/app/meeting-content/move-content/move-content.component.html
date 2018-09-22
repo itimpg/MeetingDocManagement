@@ -9,8 +9,11 @@
   <div class="modal-body"> 
      
     <label class="label">ระเบียบวาระ:</label>
-    <!-- <input appNumberOnly type="text" class="form-control mb-4" id="ordinal" name="ordinal" required #ordinal [(ngModel)]="model.ordinal" [disabled]="!isEditable"/> -->
-        
+    <select class="form-control mb-4" 
+    id="agendaId" name="agendaId" #agendaId [(ngModel)]="model.agendaId" required>   
+      <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.name}}</option>
+    </select> 
+
   </div>
   <div class="modal-footer">
     <div class="form-row">
