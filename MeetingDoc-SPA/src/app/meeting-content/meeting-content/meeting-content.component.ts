@@ -22,7 +22,7 @@ export class MeetingContentComponent extends BaseComponent<MeetingContent> {
   }
 
   initAdd() {
-    this.model.ordinal = 1;
+    this.model.ordinal = this.total + 1;
   }
 
   PrepareBeforeSave(): MeetingContent {

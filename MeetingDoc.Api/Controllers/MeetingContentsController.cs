@@ -49,6 +49,16 @@ namespace MeetingDoc.Api.Controllers
             return Ok(viewModel);
         }
 
+        [HttpPost("movecontent")]
+        public async Task<IActionResult> MoveContent(MoveContentViewModel viewModel)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _meetingContentManager.MoveContent(viewModel, userId);
+            var user = await _userManager.GetAsync(userId);
+            _logger.LogInformation($"{user.Email} Move Content : {viewModel.ContentId} to Agenda {viewModel.AgendaId}");
+            return Ok();
+        }
+
         [HttpPost()]
         public async Task<IActionResult> Add(MeetingContentViewModel viewModel)
         {

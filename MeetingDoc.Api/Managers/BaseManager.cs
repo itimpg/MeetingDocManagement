@@ -70,9 +70,7 @@ namespace MeetingDoc.Api.Managers
         }
 
         public virtual async Task UpdateAsync(TViewModel viewModel, int operatedBy)
-        {       try
-            {
-
+        {
             if (viewModel == null)
             {
                 throw new ArgumentNullException("viewModel");
@@ -88,15 +86,9 @@ namespace MeetingDoc.Api.Managers
             entity.UpdatedBy = operatedBy;
             entity.UpdatedDate = DateTime.Now;
 
-     
-                await Repository.UpdateAsync(entity);
-                await UnitOfWork.SaveChangeAsync();
-            }
-            catch (Exception ex)
-            {
-                var a = "";
-                throw ex;
-            }
+
+            await Repository.UpdateAsync(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
 
         public virtual async Task DeleteAsync(int id, int operatedBy)

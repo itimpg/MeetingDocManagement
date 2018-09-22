@@ -30,7 +30,7 @@ export class MeetingScheduleComponent extends BaseListComponent<
   }
 
   viewSubItem(item: MeetingSchedule) {
-    this.router.navigate([`meetingSchedule/${item.id}/meeting`]);
+    this.router.navigate([`meetingSchedule/${item.id}/agendas`]);
   }
 
   showModal(initialState: ShowModalParam): void {}

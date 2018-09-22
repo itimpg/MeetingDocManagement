@@ -115,6 +115,7 @@ export abstract class BaseListComponent<T extends BaseModel> implements OnInit {
     param.itemId = itemId;
     param.isEditable = isEditable;
     param.parentId = this.parentId;
+    param.total = this.pagination.totalItems;
 
     this.showModal(param);
   }

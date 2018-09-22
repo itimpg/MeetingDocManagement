@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">ย้ายเอกสาร</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form #addEditUserForm="ngForm" (ngSubmit)="saveItem()">
+  <div class="modal-body"> 
+     
+    <label class="label">ระเบียบวาระ:</label>
+    <!-- <input appNumberOnly type="text" class="form-control mb-4" id="ordinal" name="ordinal" required #ordinal [(ngModel)]="model.ordinal" [disabled]="!isEditable"/> -->
+        
+  </div>
+  <div class="modal-footer">
+    <div class="form-row">
+      <div class="col">
+        <button type="submit" [disabled]="!addEditUserForm.valid" class="btn btn-primary btn-block" type="submit">ย้าย</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</form>

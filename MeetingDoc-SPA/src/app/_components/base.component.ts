@@ -11,6 +11,7 @@ export abstract class BaseComponent<T extends BaseModel> implements OnInit {
   model: T;
   title: string;
   isEditable: boolean;
+  total: number;
   parentId: number;
 
   constructor(

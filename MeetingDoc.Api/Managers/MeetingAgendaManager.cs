@@ -7,6 +7,7 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingDoc.Api.Managers
 {

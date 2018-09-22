@@ -19,7 +19,7 @@ export abstract class BaseService<T> {
 
   getItems(page?, itemsPerPage?): Observable<PaginatedResult<T[]>> {
     this.authService.renewToken();
-    return this.getItemsFromUrl(
+    return this.getItemsFromUrl<T>(
       `${this.baseUrl}${this.action}`,
       page,
       itemsPerPage
@@ -32,20 +32,20 @@ export abstract class BaseService<T> {
     itemsPerPage?
   ): Observable<PaginatedResult<T[]>> {
     this.authService.renewToken();
-    return this.getItemsFromUrl(
+    return this.getItemsFromUrl<T>(
       `${this.baseUrl}${this.parentAction}/${parentId}/${this.action}`,
       page,
       itemsPerPage
     );
   }
 
-  getItemsFromUrl(
+  getItemsFromUrl<TItem>(
     url: string,
     page?,
     itemsPerPage?
-  ): Observable<PaginatedResult<T[]>> {
+  ): Observable<PaginatedResult<TItem[]>> {
     this.authService.renewToken();
-    const paginatedResult: PaginatedResult<T[]> = new PaginatedResult<T[]>();
+    const paginatedResult: PaginatedResult<TItem[]> = new PaginatedResult<TItem[]>();
     let params = new HttpParams();
     if (page != null && itemsPerPage != null) {
       params = params.append('pageNumber', page);

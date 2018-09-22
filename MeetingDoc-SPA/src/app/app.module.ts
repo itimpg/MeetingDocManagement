@@ -64,9 +64,13 @@ import { AdminGuard } from './_guards/admin.guard';
 import { WriterGuard } from './_guards/writer.guard';
 import { MeetingScheduleComponent } from './meeting-schedule/meeting-schedule.component';
 import { UserGuard } from './_guards/user.guard';
-import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
 import { MeetingScheduleService } from './_services/meeting-schedule.service';
 import { UnAuthGuard } from './_guards/unauth.guard';
+import { MoveContentComponent } from './meeting-content/move-content/move-content.component';
+import { MeetingScheduleAgendaComponent } from './meeting-schedule-agenda/meeting-schedule-agenda.component';
+import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule-agenda-list.resolver';
+import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
+
 defineLocale('th', thLocale);
 
 export function tokenGetter() {
@@ -74,48 +78,50 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    ChangePasswordComponent,
-    LoginComponent,
-    ForgetPasswordComponent,
-    UserListComponent,
-    UserComponent,
-    MeetingTypeListComponent,
-    MeetingTypeComponent,
-    MeetingTopicListComponent,
-    MeetingTopicComponent,
-    MeetingTimeListComponent,
-    MeetingTimeComponent,
-    MeetingAgendaListComponent,
-    MeetingAgendaComponent,
-    MeetingContentListComponent,
-    MeetingContentComponent,
-    ThaiNumberPipe,
-    ThaiYearPipe,
-    ThaiDatePipe,
-    NumberOnlyDirective,
-    MeetingScheduleComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    BreadcrumbsModule,
-    ModalModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    PaginationModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: [environment.jwtWhiteList],
-        blacklistedRoutes: [environment.jwtWhiteList + '/api/auth']
-      }
-    })
+   declarations: [
+      AppComponent,
+      NavComponent,
+      ChangePasswordComponent,
+      LoginComponent,
+      ForgetPasswordComponent,
+      UserListComponent,
+      UserComponent,
+      MeetingTypeListComponent,
+      MeetingTypeComponent,
+      MeetingTopicListComponent,
+      MeetingTopicComponent,
+      MeetingTimeListComponent,
+      MeetingTimeComponent,
+      MeetingAgendaListComponent,
+      MeetingAgendaComponent,
+      MeetingContentListComponent,
+      MeetingContentComponent,
+      ThaiNumberPipe,
+      ThaiYearPipe,
+      ThaiDatePipe,
+      NumberOnlyDirective,
+      MeetingScheduleComponent,
+      MoveContentComponent,
+      MeetingScheduleAgendaComponent,
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      FormsModule,
+      BreadcrumbsModule,
+      ModalModule.forRoot(),
+      BsDropdownModule.forRoot(),
+      PaginationModule.forRoot(),
+      BsDatepickerModule.forRoot(),
+      TimepickerModule.forRoot(),
+      RouterModule.forRoot(appRoutes),
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: tokenGetter,
+          whitelistedDomains: [environment.jwtWhiteList],
+          blacklistedRoutes: [environment.jwtWhiteList + '/api/auth']
+        }
+      })
   ],
   providers: [
     AlertifyService,
@@ -137,6 +143,7 @@ export function tokenGetter() {
     MeetingAgendaListResolver,
     MeetingContentListResolver,
     MeetingScheduleListResolver,
+    MeetingScheduleAgendaListResolver,
     AuthService,
     UsersService,
     MeetingTypeService,
@@ -156,7 +163,8 @@ export function tokenGetter() {
     MeetingTopicComponent,
     MeetingTimeComponent,
     MeetingAgendaComponent,
-    MeetingContentComponent
+    MeetingContentComponent,
+    MoveContentComponent
   ],
   bootstrap: [AppComponent]
 })

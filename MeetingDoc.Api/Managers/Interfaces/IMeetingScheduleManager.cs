@@ -8,5 +8,6 @@ namespace MeetingDoc.Api.Managers.Interfaces
     public interface IMeetingScheduleManager
     {
         Task<PagedList<MeetingScheduleViewModel>> GetAsync(MeetingScheduleCriteria criteria);
+        Task<PagedList<MeetingAgendaViewModel>> GetAgendasAsync(MeetingAgendaCriteria criteria);
     }
 }

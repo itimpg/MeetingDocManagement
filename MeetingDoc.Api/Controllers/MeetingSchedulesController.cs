@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Helpers;
 using MeetingDoc.Api.Managers.Interfaces;
+using MeetingDoc.Api.ViewModels;
 using MeetingDoc.Api.ViewModels.Criterias;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,19 @@ namespace MeetingDoc.Api.Controllers
             var viewModels = await _meetingScheduleManager.GetAsync(criteria);
             this.Response.AddPagination(
                 viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
+
+            return Ok(viewModels);
+        }
+
+        [HttpGet("{meetingTimeId}/agendas")]
+        public async Task<IActionResult> GetAgendas(int meetingTimeId, [FromQuery]MeetingAgendaCriteria criteria)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            criteria.Model.MeetingTimeId = meetingTimeId;
+            criteria.UserId = userId;
+            var viewModels = await _meetingScheduleManager.GetAgendasAsync(criteria);
+            this.Response.AddPagination(
+               viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
 
             return Ok(viewModels);
         }

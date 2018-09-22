@@ -1,5 +1,5 @@
 <h3 class="font-weight-bold">
-  <i class="far fa-calendar-alt"></i>
+  <i class="far fa-calendar"></i>
   {{titleName}}</h3>
 <hr />
 
@@ -20,22 +20,16 @@
 
 <table class="table pt-5">
   <thead class="thead-light">
-    <tr> 
-      <th>ประเภทการประชุม</th>
-      <th>วาระการประชุม</th>
-      <th>ครั้งที่ประชุม</th>
-      <th>วันเวลาประชุม</th>
-      <th>สถานที่</th>
+    <tr>
+      <th>หมายเลข</th>
+      <th>ระเบียบวาระ</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
-      <td>{{item.meetingType}}</td>
-      <td>{{item.meetingTopic}}</td>
-      <td>{{item.meetingTimeCount | thainumber}}/{{item.meetingFiscalYear | thainumber}}</td>
-      <td>{{item.meetingDateTime | thaidate}}</td>
-      <td>{{item.meetingPlace}}</td>
+      <td>{{item.number | thainumber}}</td>
+      <td>{{item.name}}</td>
       <td class="pull-right">
         <div class="dropdown" dropdown>
           <a class="btn btn-sm btn-primary text-light dropdown-toggle" dropdownToggle>
@@ -43,7 +37,7 @@
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *dropdownMenu>
-            <a class="btn dropdown-item" (click)="viewSubItem(item)">
+            <a class="btn dropdown-item" (click)="viewItem(item)">
               <i class="fas fa-eye"></i> ดูข้อมูล</a>
           </div>
         </div>

@@ -52,5 +52,15 @@ namespace MeetingDoc.Api.Managers
                 MeetingAgendaId = entity.MeetingAgendaId
             };
         }
+
+        public async Task MoveContent(MoveContentViewModel viewModel, int userId)
+        {
+            var content = await UnitOfWork.MeetingContentRepository.GetAsync(viewModel.ContentId);
+            content.MeetingAgendaId = viewModel.AgendaId;
+            content.UpdatedBy = userId;
+            content.UpdatedDate = DateTime.Now;
+
+            await UnitOfWork.SaveChangeAsync();
+        }
     }
 }

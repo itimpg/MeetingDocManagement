@@ -41,17 +41,21 @@ namespace MeetingDoc.Api.Data.Repositories
             existsEntity.UpdatedBy = entityToUpdate.UpdatedBy;
             existsEntity.UpdatedDate = DateTime.Now;
 
-            var existsUsers = existsEntity.MeetingAgendaUsers;
-            DbContext.MeetingAgendaUsers.RemoveRange(existsUsers);
-
-            foreach (var user in entityToUpdate.MeetingAgendaUsers)
+            if (!entityToUpdate.IsRemoved)
             {
-                user.MeetingAgendaId = entityToUpdate.Id;
-                user.CreatedBy = entityToUpdate.UpdatedBy;
-                user.CreatedDate = DateTime.Now;
-                user.UpdatedBy = entityToUpdate.UpdatedBy;
-                user.UpdatedDate = DateTime.Now;
-                await DbContext.MeetingAgendaUsers.AddAsync(user);
+
+                var existsUsers = existsEntity.MeetingAgendaUsers;
+                DbContext.MeetingAgendaUsers.RemoveRange(existsUsers);
+
+                foreach (var user in entityToUpdate.MeetingAgendaUsers)
+                {
+                    user.MeetingAgendaId = entityToUpdate.Id;
+                    user.CreatedBy = entityToUpdate.UpdatedBy;
+                    user.CreatedDate = DateTime.Now;
+                    user.UpdatedBy = entityToUpdate.UpdatedBy;
+                    user.UpdatedDate = DateTime.Now;
+                    await DbContext.MeetingAgendaUsers.AddAsync(user);
+                }
             }
         }
     }

@@ -7,6 +7,9 @@ import { BsModalService } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MeetingContentService } from '../../_services/meeting-content.service';
 import { ShowModalParam } from '../../_models/ShowModalParam';
+import { MeetingTopicComponent } from '../../meeting-topic/meeting-topic/meeting-topic.component';
+import { combineLatest } from 'rxjs';
+import { MoveContentComponent } from '../move-content/move-content.component';
 
 @Component({
   selector: 'app-meeting-content-list',
@@ -37,4 +40,23 @@ export class MeetingContentListComponent extends BaseListComponent<
   }
 
   viewSubItem(item: MeetingContent) {}
+
+  moveItem(item: MeetingContent) {
+    const combine = combineLatest(
+      this.modalService.onShow,
+      this.modalService.onShown,
+      this.modalService.onHide,
+      this.modalService.onHidden
+    ).subscribe(() => {
+      this.loadItems();
+      this.unsubscribe();
+    });
+
+    this.subscriptions.push(combine);
+
+    const initialState = { contentId: item.id };
+    this.bsModalRef = this.modalService.show(MoveContentComponent, {
+      initialState
+    });
+  }
 }

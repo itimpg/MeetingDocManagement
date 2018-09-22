@@ -24,7 +24,27 @@ namespace MeetingDoc.Api.Managers
                 .Include(x => x.MeetingAgenda)
                 .ThenInclude(x => x.MeetingTime)
                 .ThenInclude(x => x.MeetingTopic)
-                .ThenInclude(x => x.MeetingType);
+                .ThenInclude(x => x.MeetingType)
+                .Where(x =>
+                    !x.MeetingAgenda.IsDraft
+                    && !x.MeetingAgenda.IsRemoved
+                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsDraft
+                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsRemoved
+                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsDraft
+                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsRemoved)
+                .Select(x => new MeetingScheduleViewModel
+                {
+                    Id = x.MeetingAgenda.MeetingTime.Id,
+                    UserId = x.UserId,
+                    MeetingType = x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.Name,
+                    MeetingTopic = x.MeetingAgenda.MeetingTime.MeetingTopic.Name,
+                    MeetingTimeCount = x.MeetingAgenda.MeetingTime.Count,
+                    MeetingFiscalYear = x.MeetingAgenda.MeetingTime.FiscalYear,
+                    MeetingDateTime = x.MeetingAgenda.MeetingTime.MeetingDate,
+                    MeetingPlace = x.MeetingAgenda.MeetingTime.Location,
+                })
+                .OrderByDescending(x => x.MeetingDateTime)
+                .Distinct();
 
             var count = await query.CountAsync();
 
@@ -37,17 +57,43 @@ namespace MeetingDoc.Api.Managers
                     .ToListAsync();
 
             var paging = new PagedList<MeetingScheduleViewModel>(
-                items.Select(x => new MeetingScheduleViewModel
+                await query.ToListAsync(),
+                count, pageNumber, pageSize);
+
+            return paging;
+        }
+
+        public async Task<PagedList<MeetingAgendaViewModel>> GetAgendasAsync(MeetingAgendaCriteria criteria)
+        {
+            var query = _unitOfWork.MeeitngAgendaUserRepository
+                .GetQuery(x => x.UserId == criteria.UserId && !x.IsRemoved)
+                .Include(x => x.MeetingAgenda)
+                .Where(x =>
+                    !x.MeetingAgenda.IsDraft
+                    && !x.MeetingAgenda.IsRemoved
+                    && x.MeetingAgenda.MeetingTimeId == criteria.Model.MeetingTimeId);
+
+            var count = await query.CountAsync();
+
+            var pageNumber = criteria.PageNumber;
+            var pageSize = criteria.PageSize;
+
+            var items = await query
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+            var paging = new PagedList<MeetingAgendaViewModel>(
+                items.Select(x => new MeetingAgendaViewModel
                 {
-                    Id = x.Id,
-                    UserId = x.UserId,
-                    MeetingType = x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.Name,
-                    MeetingTopic = x.MeetingAgenda.MeetingTime.MeetingTopic.Name,
-                    MeetingTimeCount = x.MeetingAgenda.MeetingTime.Count,
-                    MeetingFiscalYear = x.MeetingAgenda.MeetingTime.FiscalYear,
-                    MeetingDateTime = x.MeetingAgenda.MeetingTime.MeetingDate,
-                    MeetingPlace = x.MeetingAgenda.MeetingTime.Location,
-                }).ToList(),
+                    Id = x.MeetingAgendaId,
+                    MeetingTimeId = x.MeetingAgenda.MeetingTimeId,
+                    Number = x.MeetingAgenda.Number,
+                    Name = x.MeetingAgenda.Name,
+                })
+                .OrderByDescending(x => x.Number)
+                .Distinct()
+                .ToList(),
                 count, pageNumber, pageSize);
 
             return paging;

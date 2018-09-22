@@ -22,19 +22,19 @@ export class MeetingAgendaComponent extends BaseComponent<MeetingAgenda> {
   }
 
   InitComponent() {
-    if (this.itemId === 0) {
-      this.isEditable = true;
-      this.title = `Add ${this.action}`;
-      this.model.isDraft = true;
-    } else {
-      this.title = this.isEditable
-        ? `Edit  ${this.action}`
-        : `View ${this.action}`;
-    }
-
     this.service.getItem(this.itemId).subscribe(
       result => {
         this.model = this.ConvertResultToModel(result);
+        if (this.itemId === 0) {
+          this.isEditable = true;
+          this.title = `เพิ่ม ${this.action}`;
+          this.model.isDraft = true;
+          this.model.number = this.total + 1;
+        } else {
+          this.title = this.isEditable
+            ? `แก้ไข  ${this.action}`
+            : `ดูรายละเอียด ${this.action}`;
+        }
       },
       error => {
         this.alertify.error(error);
