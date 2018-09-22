@@ -88,7 +88,7 @@ export const appRoutes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [UserGuard],
     component: MeetingReaderComponent,
-    //resolve: { reader: MeetingReaderResolver }
+    resolve: { meetingContent: MeetingReaderResolver }
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

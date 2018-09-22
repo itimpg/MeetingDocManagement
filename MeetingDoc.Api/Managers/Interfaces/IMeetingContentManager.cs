@@ -7,5 +7,6 @@ namespace MeetingDoc.Api.Managers.Interfaces
     public interface IMeetingContentManager : IBaseManager<MeetingContent, MeetingContentViewModel>
     {
         Task MoveContent(MoveContentViewModel viewModel, int userId);
+        Task<PagedList<MeetingContentViewModel>> GetScheduleContentsAsync(MeetingContentCriteria criteria);
     }
 }

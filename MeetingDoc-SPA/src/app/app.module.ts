@@ -72,6 +72,7 @@ import { MeetingScheduleAgendaComponent } from './meeting-schedule-agenda/meetin
 import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule-agenda-list.resolver';
 import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
 import { MeetingReaderComponent } from './meeting-reader/meeting-reader.component';
+import { MeetingReaderResolver } from './_resolvers/meeting-reader.resolver';
 
 defineLocale('th', thLocale);
 
@@ -148,6 +149,7 @@ export function tokenGetter() {
     MeetingContentListResolver,
     MeetingScheduleListResolver,
     MeetingScheduleAgendaListResolver,
+    MeetingReaderResolver,
     AuthService,
     UsersService,
     MeetingTypeService,

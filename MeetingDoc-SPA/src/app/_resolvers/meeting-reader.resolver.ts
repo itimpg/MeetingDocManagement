@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
-import { MeetingAgenda } from '../_models/MeetingAgenda';
+import { MeetingContentService } from '../_services/meeting-content.service';
+import { MeetingContent } from '../_models/MeetingContent';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MeetingScheduleService } from '../_services/meeting-schedule.service';
 
 @Injectable()
-export class MeetingReaderResolver
-  implements Resolve<MeetingAgenda[]> {
+export class MeetingReaderResolver implements Resolve<MeetingContent[]> {
   protected pageNumber = 1;
-  protected pageSize = 5;
+  protected pageSize = 1;
 
   constructor(
-    protected service: MeetingScheduleService,
+    protected service: MeetingContentService,
     protected router: Router,
     protected alertify: AlertifyService
-  ) {}
+  ) {
+  }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<MeetingAgenda[]> {
+  resolve(route: ActivatedRouteSnapshot): Observable<MeetingContent[]> {
     return this.service
-      .getAgendas(route.params['id'], this.pageNumber, this.pageSize)
+      .getContents(route.params['agendaId'], this.pageNumber, this.pageSize)
       .pipe(
         catchError(eror => {
           this.alertify.error('Problem retrieving data');

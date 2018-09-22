@@ -94,5 +94,18 @@ namespace MeetingDoc.Api.Controllers
 
             return Ok(topics);
         }
+
+        [HttpGet("{id}/schedulecontents")]
+        public async Task<IActionResult> GetScheduleContents(int id, [FromQuery]MeetingContentCriteria criteria)
+        {
+            criteria.Model.MeetingAgendaId = id;
+
+            var topics = await _meetingContentManager.GetScheduleContentsAsync(criteria);
+            this.Response.AddPagination(
+                topics.CurrentPage, topics.PageSize, topics.TotalCount, topics.TotalPages);
+
+            return Ok(topics);
+        }
+
     }
 }

@@ -29,4 +29,17 @@ export class MeetingContentService extends BaseService<MeetingContent> {
     const url = `${this.baseUrl}${this.action}/${contentId}/agendas`;
     return this.http.get<MeetingAgenda[]>(url);
   }
+
+  getContents(
+    agendaId: number,
+    page?,
+    itemsPerPage?
+  ): Observable<PaginatedResult<MeetingContent[]>> {
+    this.authService.renewToken();
+    return this.getItemsFromUrl<MeetingContent>(
+      `${this.baseUrl}meetingagendas/${agendaId}/schedulecontents`,
+      page,
+      itemsPerPage
+    );
+  }
 }

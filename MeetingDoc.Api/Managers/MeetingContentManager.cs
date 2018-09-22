@@ -62,5 +62,13 @@ namespace MeetingDoc.Api.Managers
 
             await UnitOfWork.SaveChangeAsync();
         }
+
+        public async Task<PagedList<MeetingContentViewModel>> GetScheduleContentsAsync(MeetingContentCriteria criteria)
+        {
+            var query = Repository
+                .GetQuery(x => x.MeetingAgendaId == criteria.Model.MeetingAgendaId && !x.IsRemoved)
+                .OrderBy(x => x.Ordinal);
+            return await this.ToPagedListAsync(query, criteria.PageSize, criteria.PageNumber);
+        }
     }
 }

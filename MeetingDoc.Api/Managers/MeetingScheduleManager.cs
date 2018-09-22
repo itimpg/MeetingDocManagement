@@ -93,7 +93,7 @@ namespace MeetingDoc.Api.Managers
                     Number = x.MeetingAgenda.Number,
                     Name = x.MeetingAgenda.Name,
                 })
-                .OrderByDescending(x => x.Number)
+                .OrderBy(x => x.Number)
                 .Distinct()
                 .ToList(),
                 count, pageNumber, pageSize);
