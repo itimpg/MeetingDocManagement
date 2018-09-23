@@ -6,6 +6,8 @@ import { AlertifyService } from '../_services/alertify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap';
 import { ShowModalParam } from '../_models/ShowModalParam';
+import { PaginatedResult } from '../_models/pagination';
+import { MeetingScheduleService } from '../_services/meeting-schedule.service';
 
 @Component({
   selector: 'app-meeting-schedule-agenda',
@@ -23,6 +25,7 @@ export class MeetingScheduleAgendaComponent extends BaseListComponent<
 
   constructor(
     protected service: MeetingAgendaService,
+    protected scheduleService: MeetingScheduleService,
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
     protected route: ActivatedRoute,
@@ -32,6 +35,26 @@ export class MeetingScheduleAgendaComponent extends BaseListComponent<
   }
 
   viewSubItem(item: MeetingAgenda) {
-    this.router.navigate([`meetingSchedule/${this.parentId}/agendas/${item.id}/read`]);
+    this.router.navigate([
+      `meetingSchedule/${this.parentId}/agendas/${item.id}/read`
+    ]);
+  }
+
+  loadItems() {
+    const observableCollection = this.scheduleService.getAgendas(
+      this.parentId,
+      this.pagination.currentPage,
+      this.pagination.itemsPerPage
+    );
+
+    observableCollection.subscribe(
+      (res: PaginatedResult<MeetingAgenda[]>) => {
+        this.items = res.result;
+        this.pagination = res.pagination;
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 }
