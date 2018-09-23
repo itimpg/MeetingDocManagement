@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../_components/base.component';
 import { MeetingContent } from '../../_models/MeetingContent';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -11,6 +11,9 @@ import { MeetingContentService } from '../../_services/meeting-content.service';
   styleUrls: ['./meeting-content.component.css']
 })
 export class MeetingContentComponent extends BaseComponent<MeetingContent> {
+  @ViewChild('myImage')
+  myImage: ElementRef;
+
   protected action = 'ข้อมูลและเอกสาร';
 
   constructor(
@@ -27,6 +30,13 @@ export class MeetingContentComponent extends BaseComponent<MeetingContent> {
 
   PrepareBeforeSave(): MeetingContent {
     this.model.meetingAgendaId = this.parentId;
+    const width = this.myImage.nativeElement.offsetWidth;
+    const height = this.myImage.nativeElement.offsetHeight;
+    if (width) {
+      this.model.ratio = height / width;
+    } else {
+      this.model.ratio = 1;
+    }
     return this.model;
   }
 

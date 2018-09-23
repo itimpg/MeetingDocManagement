@@ -8,7 +8,7 @@ namespace MeetingDoc.Api.Models
         public byte[] FileBase64 { get; set; }
         public int Ordinal { get; set; }
         public int MeetingAgendaId { get; set; }
-
+        public double Ratio { get; set; }
         public MeetingAgenda MeetingAgenda { get; set; }
     }
 }

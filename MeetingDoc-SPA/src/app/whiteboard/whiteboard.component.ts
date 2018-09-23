@@ -6,6 +6,7 @@ import {
 import { AlertifyService } from '../_services/alertify.service';
 import { MeetingNoteService } from '../_services/meeting-note.service';
 import { MeetingNote } from '../_models/meeting-note';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-whiteboard',
@@ -18,6 +19,8 @@ export class WhiteboardComponent implements OnInit {
   image: string;
   @Input()
   contentId: number;
+  @Input()
+  ratio: number;
 
   canvasOptions: CanvasWhiteboardOptions = {
     drawButtonEnabled: false,
@@ -39,7 +42,9 @@ export class WhiteboardComponent implements OnInit {
     lineWidth: 2,
     strokeColor: 'rgb(0,0,0)',
     shouldDownloadDrawing: false,
-    drawingEnabled: true
+    drawingEnabled: true,
+    imageUrl: this.image,
+    aspectRatio: this.ratio
   };
 
   constructor(
@@ -47,11 +52,11 @@ export class WhiteboardComponent implements OnInit {
     protected alertify: AlertifyService
   ) {}
 
-  ngOnInit(): void {}
-
-  sendBatchUpdate(updates: CanvasWhiteboardUpdate[]) {
-    console.log(updates);
+  ngOnInit(): void {
+    this.canvasOptions.aspectRatio = this.ratio;
   }
+
+  sendBatchUpdate(updates: CanvasWhiteboardUpdate[]) {}
   onCanvasClear() {}
   onCanvasUndo(updateUUID: string) {}
   onCanvasRedo(updateUUID: string) {}

@@ -5,4 +5,5 @@ export class MeetingContent extends BaseModel {
   fileBase64: string;
   ordinal: number;
   meetingAgendaId: number;
+  ratio: number;
 }

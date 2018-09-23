@@ -180,7 +180,8 @@ namespace MeetingDoc.Api.Migrations
                     FileName = table.Column<string>(nullable: true),
                     FileBase64 = table.Column<byte[]>(type: "MediumBlob", nullable: true),
                     Ordinal = table.Column<int>(nullable: false),
-                    MeetingAgendaId = table.Column<int>(nullable: false)
+                    MeetingAgendaId = table.Column<int>(nullable: false),
+                    Ratio = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

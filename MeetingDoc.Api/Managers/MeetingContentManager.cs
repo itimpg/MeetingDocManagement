@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
@@ -39,7 +40,8 @@ namespace MeetingDoc.Api.Managers
                 FileName = content[0],
                 FileBase64 = Convert.FromBase64String(content[1]),
                 Ordinal = viewModel.Ordinal,
-                MeetingAgendaId = viewModel.MeetingAgendaId
+                MeetingAgendaId = viewModel.MeetingAgendaId,
+                Ratio = viewModel.Ratio,
             };
         }
 
@@ -51,7 +53,8 @@ namespace MeetingDoc.Api.Managers
                 FileName = entity.FileName,
                 FileBase64 = entity.FileName + "," + Convert.ToBase64String(entity.FileBase64),
                 Ordinal = entity.Ordinal,
-                MeetingAgendaId = entity.MeetingAgendaId
+                MeetingAgendaId = entity.MeetingAgendaId,
+                Ratio = entity.Ratio
             };
         }
 
@@ -85,6 +88,7 @@ namespace MeetingDoc.Api.Managers
                                 FileName = content.FileName,
                                 Ordinal = content.Ordinal,
                                 MeetingAgendaId = content.MeetingAgendaId,
+                                Ratio = content.Ratio,
                                 FileBase64 = note == null ? content.FileBase64 : note.Note
                             };
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingDoc.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180923082226_initdb")]
+    [Migration("20180923141723_initdb")]
     partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,8 @@ namespace MeetingDoc.Api.Migrations
                     b.Property<int>("MeetingAgendaId");
 
                     b.Property<int>("Ordinal");
+
+                    b.Property<double>("Ratio");
 
                     b.Property<int>("UpdatedBy");
 
@@ -289,7 +291,7 @@ namespace MeetingDoc.Api.Migrations
             modelBuilder.Entity("MeetingDoc.Api.Models.MeetingContent", b =>
                 {
                     b.HasOne("MeetingDoc.Api.Models.MeetingAgenda", "MeetingAgenda")
-                        .WithMany()
+                        .WithMany("MeetingContents")
                         .HasForeignKey("MeetingAgendaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

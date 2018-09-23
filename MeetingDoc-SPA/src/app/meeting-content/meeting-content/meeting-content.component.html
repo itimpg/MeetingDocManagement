@@ -9,7 +9,7 @@
     <div class="modal-body"> 
    
       <div *ngIf="model.fileBase64" class="mb-4">
-        <img class="img-fluid mx-auto d-block" [src]="model.fileBase64"/>
+        <img class="img-fluid mx-auto d-block" [src]="model.fileBase64" #myImage/>
       </div>
 
       <label class="label">File:</label>

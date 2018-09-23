@@ -95,6 +95,8 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int>("Ordinal");
 
+                    b.Property<double>("Ratio");
+
                     b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
@@ -287,7 +289,7 @@ namespace MeetingDoc.Api.Migrations
             modelBuilder.Entity("MeetingDoc.Api.Models.MeetingContent", b =>
                 {
                     b.HasOne("MeetingDoc.Api.Models.MeetingAgenda", "MeetingAgenda")
-                        .WithMany()
+                        .WithMany("MeetingContents")
                         .HasForeignKey("MeetingAgendaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -1,4 +1,4 @@
-<div style="height: 300px">
+<div>
   <canvas-whiteboard #canvasWhiteboard [options]="canvasOptions" [imageUrl]="image" (onBatchUpdate)="sendBatchUpdate($event)"
     (onClear)="onCanvasClear()" (onUndo)="onCanvasUndo($event)" (onRedo)="onCanvasRedo($event)" (onSave)="onCanvasSave($event)">
   </canvas-whiteboard>
