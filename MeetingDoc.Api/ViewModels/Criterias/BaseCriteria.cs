@@ -14,6 +14,8 @@ namespace MeetingDoc.Api.ViewModels
             set { _pageSize = (value > MAX_PAGE_SIZE) ? MAX_PAGE_SIZE : value; }
         }
 
+        public int UserId { get; set; }
+
         public BaseCriteria()
         {
             Model = new TViewModel();

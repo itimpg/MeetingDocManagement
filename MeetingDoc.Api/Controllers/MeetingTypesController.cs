@@ -35,6 +35,8 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]MeetingTypeCriteria criteria)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            criteria.UserId = userId;
             var meetingTypes = await _meetingTypeManager.GetAsync(criteria);
             this.Response.AddPagination(
                 meetingTypes.CurrentPage, meetingTypes.PageSize, meetingTypes.TotalCount, meetingTypes.TotalPages);
@@ -86,6 +88,8 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet("{id}/meetingtopics")]
         public async Task<IActionResult> Get(int id, [FromQuery]MeetingTopicCriteria criteria)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            criteria.UserId = userId;
             criteria.Model.MeetingTypeId = id;
 
             var topics = await _meetingTopicManager.GetAsync(criteria);

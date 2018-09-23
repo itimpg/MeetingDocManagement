@@ -18,7 +18,7 @@ namespace MeetingDoc.Api.Managers
 
         protected override IQueryable<MeetingTopic> GetByCriteria(BaseCriteria<MeetingTopicViewModel> criteria)
         {
-            return Repository.GetQuery().Where(x => !x.IsRemoved && x.MeetingTypeId == criteria.Model.MeetingTypeId);
+            return Repository.GetQuery().Where(x => (x.CreatedBy == criteria.UserId || criteria.UserId == 1) && !x.IsRemoved && x.MeetingTypeId == criteria.Model.MeetingTypeId);
         }
 
         protected override MeetingTopic ToEntity(MeetingTopicViewModel viewModel)

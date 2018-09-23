@@ -26,7 +26,7 @@ namespace MeetingDoc.Api.Managers
         {
             return Repository
                 .GetQuery()
-                .Where(x => !x.IsRemoved && x.MeetingAgendaId == criteria.Model.MeetingAgendaId)
+                .Where(x => (x.CreatedBy == criteria.UserId || criteria.UserId == 1) && !x.IsRemoved && x.MeetingAgendaId == criteria.Model.MeetingAgendaId)
                 .OrderBy(x => x.Ordinal);
         }
 

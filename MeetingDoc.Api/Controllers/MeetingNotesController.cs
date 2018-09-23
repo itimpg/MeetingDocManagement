@@ -32,6 +32,8 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]MeetingNoteCriteria criteria)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            criteria.UserId = userId;
             var viewModels = await _meetingNoteManager.GetAsync(criteria);
             this.Response.AddPagination(
                 viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
