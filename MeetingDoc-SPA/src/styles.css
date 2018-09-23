@@ -19,3 +19,9 @@
 .bs-datepicker-container {
   z-index: 3000;
 }
+
+.canvas_whiteboard_buttons {
+  background-color: rgba(155, 155, 155, 0.5);
+  padding: 0px;
+  margin-right: 15px;
+}

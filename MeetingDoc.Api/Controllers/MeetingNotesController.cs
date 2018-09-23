@@ -54,6 +54,7 @@ namespace MeetingDoc.Api.Controllers
         public async Task<IActionResult> Add(MeetingNoteViewModel viewModel)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            viewModel.UserId = userId;
             await _meetingNoteManager.AddAsync(viewModel, userId);
             var user = await _userManager.GetAsync(userId);
             _logger.LogInformation($"{user.Email} Add Note : {JsonConvert.SerializeObject(viewModel)}");
@@ -64,6 +65,7 @@ namespace MeetingDoc.Api.Controllers
         public async Task<IActionResult> Update(MeetingNoteViewModel viewModel)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            viewModel.UserId = userId;
             await _meetingNoteManager.UpdateAsync(viewModel, userId);
             var user = await _userManager.GetAsync(userId);
             _logger.LogInformation($"{user.Email} Edit Note : {JsonConvert.SerializeObject(viewModel)}");

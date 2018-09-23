@@ -15,8 +15,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="col text-center" *ngFor="let item of items">
-      <img class="img-fluid" [src]="item.fileBase64">
+    <div class="col" *ngFor="let item of items">
+      <div id="container">
+          <!-- <img class="col img-fluid" [src]="item.fileBase64" style="position: absolute; z-index: 1"> -->
+          <app-whiteboard [contentId]="item.id" [image]="item.fileBase64"></app-whiteboard>
+      </div>
     </div>
   </div>
   <div class="row mt-3">

@@ -23,8 +23,10 @@ import { MeetingScheduleAgendaComponent } from './meeting-schedule-agenda/meetin
 import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule-agenda-list.resolver';
 import { MeetingReaderResolver } from './_resolvers/meeting-reader.resolver';
 import { MeetingReaderComponent } from './meeting-reader/meeting-reader.component';
+import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 
 export const appRoutes: Routes = [
+  { path: 'test', component: WhiteboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgetpassword', component: ForgetPasswordComponent },
   {

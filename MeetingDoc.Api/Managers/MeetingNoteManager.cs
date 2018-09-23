@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
@@ -22,12 +23,14 @@ namespace MeetingDoc.Api.Managers
 
         protected override MeetingNote ToEntity(MeetingNoteViewModel viewModel)
         {
+            var content = viewModel.Note.Split(',');
             return new MeetingNote
             {
                 Id = viewModel.Id,
                 UserId = viewModel.UserId,
                 MeetingContentId = viewModel.MeetingContentId,
-                Note = viewModel.Note
+                NoteHeader = content[0],
+                Note = Convert.FromBase64String(content[1])
             };
         }
 
@@ -38,7 +41,7 @@ namespace MeetingDoc.Api.Managers
                 Id = entity.Id,
                 UserId = entity.UserId,
                 MeetingContentId = entity.MeetingContentId,
-                Note = entity.Note,
+                Note = entity.NoteHeader + "," + Convert.ToBase64String(entity.Note),
             };
         }
     }

@@ -98,7 +98,9 @@ namespace MeetingDoc.Api.Controllers
         [HttpGet("{id}/schedulecontents")]
         public async Task<IActionResult> GetScheduleContents(int id, [FromQuery]MeetingContentCriteria criteria)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             criteria.Model.MeetingAgendaId = id;
+            criteria.UserId = userId;
 
             var topics = await _meetingContentManager.GetScheduleContentsAsync(criteria);
             this.Response.AddPagination(

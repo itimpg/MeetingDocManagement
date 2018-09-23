@@ -73,6 +73,9 @@ import { MeetingScheduleAgendaListResolver } from './_resolvers/meeting-schedule
 import { MeetingScheduleListResolver } from './_resolvers/meeting-schedule-list.resolver';
 import { MeetingReaderComponent } from './meeting-reader/meeting-reader.component';
 import { MeetingReaderResolver } from './_resolvers/meeting-reader.resolver';
+import { CanvasWhiteboardModule } from 'node_modules/ng2-canvas-whiteboard';
+import { WhiteboardComponent } from './whiteboard/whiteboard.component';
+import { MeetingNoteService } from './_services/meeting-note.service';
 
 defineLocale('th', thLocale);
 
@@ -106,9 +109,11 @@ export function tokenGetter() {
       MeetingScheduleComponent,
       MoveContentComponent,
       MeetingScheduleAgendaComponent,
-      MeetingReaderComponent
+      MeetingReaderComponent,
+      WhiteboardComponent
    ],
    imports: [
+      CanvasWhiteboardModule,
       BrowserModule,
       HttpClientModule,
       FormsModule,
@@ -158,6 +163,7 @@ export function tokenGetter() {
     MeetingAgendaService,
     MeetingContentService,
     MeetingScheduleService,
+    MeetingNoteService,
     ThaiNumberPipe,
     ThaiYearPipe,
     ThaiDatePipe

@@ -31,11 +31,13 @@ namespace MeetingDoc.Api.Managers
 
         protected override MeetingContent ToEntity(MeetingContentViewModel viewModel)
         {
+            var content = viewModel.FileBase64.Split(',');
+
             return new MeetingContent
             {
                 Id = viewModel.Id,
-                FileName = viewModel.FileName,
-                FileBase64 = viewModel.FileBase64,
+                FileName = content[0],
+                FileBase64 = Convert.FromBase64String(content[1]),
                 Ordinal = viewModel.Ordinal,
                 MeetingAgendaId = viewModel.MeetingAgendaId
             };
@@ -47,7 +49,7 @@ namespace MeetingDoc.Api.Managers
             {
                 Id = entity.Id,
                 FileName = entity.FileName,
-                FileBase64 = entity.FileBase64,
+                FileBase64 = entity.FileName + "," + Convert.ToBase64String(entity.FileBase64),
                 Ordinal = entity.Ordinal,
                 MeetingAgendaId = entity.MeetingAgendaId
             };
@@ -65,10 +67,36 @@ namespace MeetingDoc.Api.Managers
 
         public async Task<PagedList<MeetingContentViewModel>> GetScheduleContentsAsync(MeetingContentCriteria criteria)
         {
-            var query = Repository
-                .GetQuery(x => x.MeetingAgendaId == criteria.Model.MeetingAgendaId && !x.IsRemoved)
-                .OrderBy(x => x.Ordinal);
-            return await this.ToPagedListAsync(query, criteria.PageSize, criteria.PageNumber);
+            try
+            {
+                var contents = Repository
+                    .GetQuery(x => x.MeetingAgendaId == criteria.Model.MeetingAgendaId && !x.IsRemoved)
+                    .OrderBy(x => x.Ordinal);
+
+
+                var query = from content in contents
+                            join note in UnitOfWork.MeetingNoteRepository
+                                .GetQuery(x => x.UserId == criteria.UserId && !x.IsRemoved)
+                                on content.Id equals note.MeetingContentId into lj
+                            from note in lj.DefaultIfEmpty()
+                            select new MeetingContent
+                            {
+                                Id = content.Id,
+                                FileName = content.FileName,
+                                Ordinal = content.Ordinal,
+                                MeetingAgendaId = content.MeetingAgendaId,
+                                FileBase64 = note == null ? content.FileBase64 : note.Note
+                            };
+
+                var xx = query.ToList();
+
+                return await this.ToPagedListAsync(query, criteria.PageSize, criteria.PageNumber);
+            }
+            catch (Exception ex)
+            {
+                var a = ex.Message;
+                throw ex;
+            }
         }
     }
 }

@@ -206,7 +206,8 @@ namespace MeetingDoc.Api.Migrations
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     MeetingContentId = table.Column<int>(nullable: false),
-                    Note = table.Column<string>(nullable: true)
+                    NoteHeader = table.Column<string>(nullable: true),
+                    Note = table.Column<byte[]>(type: "MediumBlob", nullable: true)
                 },
                 constraints: table =>
                 {

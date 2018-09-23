@@ -6,6 +6,7 @@ namespace MeetingDoc.Api.Models
         public User User { get; set; }
         public int MeetingContentId { get; set; }
         public MeetingContent MeetingContent { get; set; }
-        public string Note { get; set; }
+        public string NoteHeader { get; internal set; }
+        public byte[] Note { get; set; }
     }
 }

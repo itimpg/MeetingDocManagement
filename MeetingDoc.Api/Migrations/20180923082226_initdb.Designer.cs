@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingDoc.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180922091200_initdb")]
+    [Migration("20180923082226_initdb")]
     partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,7 +121,10 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int>("MeetingContentId");
 
-                    b.Property<string>("Note");
+                    b.Property<byte[]>("Note")
+                        .HasColumnType("MediumBlob");
+
+                    b.Property<string>("NoteHeader");
 
                     b.Property<int>("UpdatedBy");
 

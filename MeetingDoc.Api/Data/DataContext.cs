@@ -20,6 +20,10 @@ namespace MeetingDoc.Api.Data
             modelBuilder
                 .Entity<MeetingContent>().Property(x => x.FileBase64)
                 .HasColumnType("MediumBlob");
+
+            modelBuilder
+                .Entity<MeetingNote>().Property(x => x.Note)
+                .HasColumnType("MediumBlob");
         }
     }
 }

@@ -119,7 +119,10 @@ namespace MeetingDoc.Api.Migrations
 
                     b.Property<int>("MeetingContentId");
 
-                    b.Property<string>("Note");
+                    b.Property<byte[]>("Note")
+                        .HasColumnType("MediumBlob");
+
+                    b.Property<string>("NoteHeader");
 
                     b.Property<int>("UpdatedBy");
 
