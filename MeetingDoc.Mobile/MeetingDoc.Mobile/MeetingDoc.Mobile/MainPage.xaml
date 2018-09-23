@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MeetingDoc.Mobile"
+             x:Class="MeetingDoc.Mobile.MainPage">
+
+    <StackLayout>
+        <WebView 
+            Source="http://123.242.151.147"
+            HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        </WebView>
+    </StackLayout>
+
+</ContentPage>
