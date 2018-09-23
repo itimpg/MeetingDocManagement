@@ -10,5 +10,6 @@ namespace MeetingDoc.Api.Models
         public string Name { get; set; }
         public bool IsDraft { get; set; }
         public IList<MeetingAgendaUser> MeetingAgendaUsers { get; set; }
+        public IList<MeetingContent> MeetingContents { get; set; }
     }
 }

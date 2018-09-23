@@ -70,8 +70,10 @@ namespace MeetingDoc.Api.Managers
             var query = _unitOfWork.MeeitngAgendaUserRepository
                 .GetQuery(x => x.UserId == criteria.UserId && !x.IsRemoved)
                 .Include(x => x.MeetingAgenda)
+                .ThenInclude(x=> x.MeetingContents)
                 .Where(x =>
                     !x.MeetingAgenda.IsDraft
+                    && x.MeetingAgenda.MeetingContents.Any()
                     && !x.MeetingAgenda.IsRemoved
                     && x.MeetingAgenda.MeetingTimeId == criteria.Model.MeetingTimeId);
 

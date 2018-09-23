@@ -48,32 +48,25 @@ namespace MeetingDoc.Api.Managers
 
         public virtual async Task AddAsync(TViewModel viewModel, int operatedBy)
         {
-            try
+            if (viewModel == null)
             {
-                if (viewModel == null)
-                {
-                    throw new ArgumentNullException("viewModel");
-                }
-
-                var validateResult = Validator.ValidateBeforeAdd(viewModel);
-                if (!validateResult.IsValid)
-                {
-                    // TODO: handle invalid case
-                }
-
-                TEntity entity = ToEntity(viewModel);
-                entity.CreatedBy = operatedBy;
-                entity.CreatedDate = DateTime.Now;
-                entity.UpdatedBy = operatedBy;
-                entity.UpdatedDate = DateTime.Now;
-
-                await Repository.InsertAsync(entity);
-                await UnitOfWork.SaveChangeAsync();
+                throw new ArgumentNullException("viewModel");
             }
-            catch (Exception ex)
+
+            var validateResult = Validator.ValidateBeforeAdd(viewModel);
+            if (!validateResult.IsValid)
             {
-var a = "";
+                // TODO: handle invalid case
             }
+
+            TEntity entity = ToEntity(viewModel);
+            entity.CreatedBy = operatedBy;
+            entity.CreatedDate = DateTime.Now;
+            entity.UpdatedBy = operatedBy;
+            entity.UpdatedDate = DateTime.Now;
+
+            await Repository.InsertAsync(entity);
+            await UnitOfWork.SaveChangeAsync();
         }
 
         public virtual async Task UpdateAsync(TViewModel viewModel, int operatedBy)
