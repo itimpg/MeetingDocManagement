@@ -28,7 +28,12 @@ namespace MeetingDoc.Api.Managers
                 Credentials = new NetworkCredential(username, password),
                 EnableSsl = true
             };
-            client.Send(mailFrom, email.EmailTo, email.Subject, email.Body);
+            var mailMessage = new MailMessage(mailFrom, email.EmailTo, email.Subject, email.Body);
+            if (email.Attachment != null)
+            {
+                mailMessage.Attachments.Add(email.Attachment);
+            }
+            client.Send(mailMessage);
         }
     }
 }

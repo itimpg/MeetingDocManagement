@@ -8,5 +8,6 @@ namespace MeetingDoc.Api.Managers.Interfaces
     {
         Task MoveContent(MoveContentViewModel viewModel, int userId);
         Task<PagedList<MeetingContentViewModel>> GetScheduleContentsAsync(MeetingContentCriteria criteria);
+        Task<bool> ShareContentAsync(ShareContentViewModel viewModel);
     }
 }

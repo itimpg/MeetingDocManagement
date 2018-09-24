@@ -16,14 +16,17 @@ namespace MeetingDoc.Api.Controllers
     public class MeetingSchedulesController : ControllerBase
     {
         private readonly IMeetingScheduleManager _meetingScheduleManager;
+        private readonly IMeetingContentManager _meetingContentManager;
         private readonly IUserManager _userManager;
         private readonly ILogger<MeetingSchedulesController> _logger;
         public MeetingSchedulesController(
             IMeetingScheduleManager meetingScheduleManager,
+            IMeetingContentManager meetingContentManager,
             IUserManager userManager,
             ILogger<MeetingSchedulesController> logger)
         {
             _meetingScheduleManager = meetingScheduleManager;
+            _meetingContentManager = meetingContentManager;
             _userManager = userManager;
             _logger = logger;
         }
@@ -52,6 +55,20 @@ namespace MeetingDoc.Api.Controllers
                viewModels.CurrentPage, viewModels.PageSize, viewModels.TotalCount, viewModels.TotalPages);
 
             return Ok(viewModels);
+        }
+
+        [HttpPost("ShareContent")]
+        public async Task<IActionResult> ShareContent(ShareContentViewModel viewModel)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            viewModel.UserId = userId;
+            var isSuccess = await _meetingContentManager.ShareContentAsync(viewModel);
+
+            if (!isSuccess)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
     }
 }

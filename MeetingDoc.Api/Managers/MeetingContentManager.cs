@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Data.Repositories.Interfaces;
@@ -8,18 +9,22 @@ using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingDoc.Api.Managers
 {
     public class MeetingContentManager : BaseManager<MeetingContent, MeetingContentViewModel>, IMeetingContentManager
     {
         protected override IRepository<MeetingContent> Repository => UnitOfWork.MeetingContentRepository;
+        private readonly IEmailManager _emailManager;
 
         public MeetingContentManager(
             IUnitOfWork unitOfWork,
-            IMeetingContentValidator validator)
+            IMeetingContentValidator validator,
+            IEmailManager emailManager)
             : base(unitOfWork, validator)
         {
+            _emailManager = emailManager;
         }
 
         protected override IQueryable<MeetingContent> GetByCriteria(BaseCriteria<MeetingContentViewModel> criteria)
@@ -66,6 +71,49 @@ namespace MeetingDoc.Api.Managers
             content.UpdatedDate = DateTime.Now;
 
             await UnitOfWork.SaveChangeAsync();
+        }
+
+        public async Task<bool> ShareContentAsync(ShareContentViewModel viewModel)
+        {
+            var query = from c in UnitOfWork.MeetingContentRepository
+                            .GetQuery(x => x.Id == viewModel.ContentId)
+                            .Include(x => x.MeetingAgenda)
+                            .ThenInclude(x => x.MeetingTime)
+                            .ThenInclude(x => x.MeetingTopic)
+                            .ThenInclude(x => x.MeetingType)
+                        join note in UnitOfWork.MeetingNoteRepository
+                            .GetQuery(x => x.UserId == viewModel.UserId && !x.IsRemoved)
+                            on c.Id equals note.MeetingContentId into lj
+                        from note in lj.DefaultIfEmpty()
+                        select new
+                        {
+                            Id = c.Id,
+                            Ordinal = c.Ordinal,
+                            FileBase64 = note == null ? c.FileBase64 : note.Note,
+                            AgendaName = c.MeetingAgenda.Name,
+                            Time = c.MeetingAgenda.MeetingTime,
+                            TopicName = c.MeetingAgenda.MeetingTime.MeetingTopic.Name,
+                            TypeName = c.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.Name
+                        };
+
+            var content = await query.FirstOrDefaultAsync();
+            if (content == null)
+            {
+                return false;
+            }
+            var attachment = new Attachment(new MemoryStream(content.FileBase64), $"{content.AgendaName}_{content.Ordinal}.jpg");
+            _emailManager.SendEmail(new EmailViewModel
+            {
+                EmailTo = viewModel.Email,
+                Subject = $"ข้อมูลการประชุม{content.TopicName}",
+                Body = $@"
+                ประเภทการประชุม: {content.TypeName}
+                ชื่อหัวข้อวาระการประชุม: {content.TopicName}
+                ครั้งที่การประชุม: {content.Time.Count}/{content.Time.FiscalYear}
+                ชื่อระเบียบวาระการประชุม​: {content.AgendaName}",
+                Attachment = attachment
+            });
+            return true;
         }
 
         public async Task<PagedList<MeetingContentViewModel>> GetScheduleContentsAsync(MeetingContentCriteria criteria)

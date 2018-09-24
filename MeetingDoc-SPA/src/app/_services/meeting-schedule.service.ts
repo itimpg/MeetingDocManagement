@@ -37,6 +37,14 @@ export class MeetingScheduleService extends BaseService<MeetingSchedule> {
     );
   }
 
+  sendEmail(contentId: number, email: string) {
+    this.authService.renewToken();
+    return this.http.post(`${this.baseUrl}${this.action}/sharecontent`, {
+      contentId: contentId,
+      email: email
+    });
+  }
+
   getItemsByCriteria(
     typeId,
     topicId,
