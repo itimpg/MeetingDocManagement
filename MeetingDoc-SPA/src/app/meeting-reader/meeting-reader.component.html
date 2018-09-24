@@ -20,7 +20,7 @@
       </select>
     </div>
     <div class="col-auto">
-      <h4 class="mt-2">/ {{pagination.totalPages}}</h4>
+      <h5 class="mt-2">/ {{pagination.totalPages}}</h5>
     </div>
     <div class="col">
       <button class="btn btn-primary" (click)="goToNextPage()">
@@ -35,9 +35,12 @@
 
     </div>
     <div class="col-auto">
+      <button class="btn btn-primary mr-1" (click)="print()">
+        <a class="fas fa-print"></a> Print
+      </button>
       <button class="btn btn-primary" (click)="openShareToEmailPopup(template)">
-        <a class="fas fa-envelope"></a>
-        Send Email</button>
+        <a class="fas fa-envelope"></a> Email
+      </button>
     </div>
   </div>
 
@@ -60,7 +63,8 @@
   <form #addEditUserForm="ngForm" (ngSubmit)="shareContent()">
     <div class="modal-body">
       <label class="label">อีเมลล์:</label>
-      <input type="email" class="form-control mb-4" id="emailToShare" name="emailToShare" #emailToShare required [(ngModel)]="email"/>
+      <input type="email" class="form-control mb-4" id="emailToShare" name="emailToShare" #emailToShare required
+        [(ngModel)]="email" />
     </div>
     <div class="modal-footer">
       <div class="form-row">

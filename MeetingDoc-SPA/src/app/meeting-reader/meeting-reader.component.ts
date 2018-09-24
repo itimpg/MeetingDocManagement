@@ -131,7 +131,7 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
     this.bsModalRef = this.modalService.show(template);
   }
 
-  shareContent() { 
+  shareContent() {
     const contentId = this.items[0].id;
     this.scheduleService.sendEmail(contentId, this.email).subscribe(
       success => {
@@ -141,5 +141,13 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
         this.alertify.error(error);
       }
     );
+  }
+
+  print() {
+    const content = this.items[0];
+    const popup = window.open();
+    popup.document.write(`<img src='${content.fileBase64}'/>`);
+    popup.focus();
+    popup.print();
   }
 }
