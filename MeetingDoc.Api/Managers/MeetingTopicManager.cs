@@ -49,7 +49,8 @@ namespace MeetingDoc.Api.Managers
         public async Task<IList<MeetingTopicViewModel>> GetActivesAsync(int typeId)
         {
             var topics = Repository
-                .GetQuery(x => !x.IsRemoved && !x.IsDraft && x.MeetingTypeId == typeId);
+                .GetQuery()
+                .Where(x => !x.IsRemoved && !x.IsDraft && x.MeetingTypeId == typeId);
 
             return await topics.Select(x => ToViewModel(x)).ToListAsync();
         }

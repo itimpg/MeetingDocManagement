@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MeetingAgenda } from '../_models/MeetingAgenda';
 import { BaseListComponent } from '../_components/baselist.component';
 import { MeetingAgendaService } from '../_services/meeting-agenda.service';
@@ -8,6 +8,8 @@ import { BsModalService } from 'ngx-bootstrap';
 import { ShowModalParam } from '../_models/ShowModalParam';
 import { PaginatedResult } from '../_models/pagination';
 import { MeetingScheduleService } from '../_services/meeting-schedule.service';
+import { MeetingTopicService } from '../_services/meetingtopic.service';
+import { MeetingTimeService } from '../_services/meetingtime.service';
 
 @Component({
   selector: 'app-meeting-schedule-agenda',
@@ -20,6 +22,7 @@ export class MeetingScheduleAgendaComponent extends BaseListComponent<
   actionName = 'meetingagenda';
   titleName = 'ระเบียบวาระ การประชุม';
   itemName = 'ระเบียบวาระ การประชุม';
+  title = '';
 
   showModal(initialState: ShowModalParam): void {}
 
@@ -29,9 +32,19 @@ export class MeetingScheduleAgendaComponent extends BaseListComponent<
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected timeService: MeetingTimeService
   ) {
     super(service, alertify, modalService, route, router);
+  }
+
+  InitComponent() {
+    this.timeService.getItem(this.parentId).subscribe(
+      result => {
+        this.title = result.meetingTopicName;
+      },
+      error => this.alertify.error(error)
+    );
   }
 
   viewSubItem(item: MeetingAgenda) {

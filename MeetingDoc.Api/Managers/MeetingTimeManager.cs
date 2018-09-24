@@ -1,9 +1,11 @@
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingDoc.Api.Managers
 {
@@ -35,6 +37,16 @@ namespace MeetingDoc.Api.Managers
             };
         }
 
+        public override async Task<MeetingTimeViewModel> GetAsync(int id)
+        {
+            var entity = await Repository.GetQuery(x => x.Id == id).Include(x => x.MeetingTopic).FirstOrDefaultAsync();
+            if (entity == null)
+            {
+                return null;
+            }
+            return ToViewModel(entity);
+        }
+
         protected override MeetingTimeViewModel ToViewModel(MeetingTime entity)
         {
             return new MeetingTimeViewModel
@@ -45,7 +57,8 @@ namespace MeetingDoc.Api.Managers
                 FiscalYear = entity.FiscalYear,
                 MeetingDate = entity.MeetingDate,
                 Location = entity.Location,
-                IsDraft = entity.IsDraft
+                IsDraft = entity.IsDraft,
+                MeetingTopicName = entity.MeetingTopic?.Name
             };
         }
     }

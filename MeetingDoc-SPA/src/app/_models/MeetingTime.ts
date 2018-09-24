@@ -7,4 +7,5 @@ export class MeetingTime extends BaseModel {
   meetingDate: Date;
   location: string;
   isDraft: boolean;
+  meetingTopicName: string;
 }

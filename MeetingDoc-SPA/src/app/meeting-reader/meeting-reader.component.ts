@@ -9,6 +9,7 @@ import { ShowModalParam } from '../_models/ShowModalParam';
 import { BaseListComponent } from '../_components/baselist.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { PaginatedResult } from '../_models/pagination';
+import { MeetingTimeService } from '../_services/meetingtime.service';
 
 @Component({
   selector: 'app-meeting-reader',
@@ -19,6 +20,7 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
   actionName = 'meetingContent';
   titleName = '';
   itemName = '';
+  title: string;
 
   agendas: MeetingAgenda[];
   selectedAgenda: number;
@@ -31,7 +33,8 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
     protected alertify: AlertifyService,
     protected modalService: BsModalService,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected timeService: MeetingTimeService
   ) {
     super(service, alertify, modalService, route, router);
   }
@@ -49,6 +52,13 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
         }
       );
     });
+
+    this.timeService.getItem(this.parentId).subscribe(
+      result => {
+        this.title = result.meetingTopicName;
+      },
+      error => this.alertify.error(error)
+    );
   }
 
   loadItems() {

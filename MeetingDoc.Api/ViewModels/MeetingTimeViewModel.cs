@@ -10,5 +10,6 @@ namespace MeetingDoc.Api.ViewModels
         public DateTime MeetingDate { get; set; }
         public string Location { get; set; }
         public bool IsDraft { get; set; }
+        public string MeetingTopicName { get; set; }
     }
 }
