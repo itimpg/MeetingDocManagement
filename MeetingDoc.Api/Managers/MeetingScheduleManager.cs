@@ -19,6 +19,9 @@ namespace MeetingDoc.Api.Managers
 
         public async Task<PagedList<MeetingScheduleViewModel>> GetAsync(MeetingScheduleCriteria criteria)
         {
+            var typeId = criteria.MeetingTypeId;
+            var topicId = criteria.MeetingTopicId;
+
             var query = _unitOfWork.MeeitngAgendaUserRepository
                 .GetQuery(x => x.UserId == criteria.Model.UserId && !x.IsRemoved)
                 .Include(x => x.MeetingAgenda)
@@ -33,7 +36,10 @@ namespace MeetingDoc.Api.Managers
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsDraft
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.IsRemoved
                     && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsDraft
-                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsRemoved)
+                    && !x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingType.IsRemoved
+                    && (topicId == 0 || topicId == x.MeetingAgenda.MeetingTime.MeetingTopicId)
+                    && (typeId == 0 || typeId == x.MeetingAgenda.MeetingTime.MeetingTopic.MeetingTypeId)
+                    )
                 .Select(x => new MeetingScheduleViewModel
                 {
                     Id = x.MeetingAgenda.MeetingTime.Id,
@@ -70,7 +76,7 @@ namespace MeetingDoc.Api.Managers
             var query = _unitOfWork.MeeitngAgendaUserRepository
                 .GetQuery(x => x.UserId == criteria.UserId && !x.IsRemoved)
                 .Include(x => x.MeetingAgenda)
-                .ThenInclude(x=> x.MeetingContents)
+                .ThenInclude(x => x.MeetingContents)
                 .Where(x =>
                     !x.MeetingAgenda.IsDraft
                     && x.MeetingAgenda.MeetingContents.Any()

@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MeetingDoc.Api.Data.Interfaces;
 using MeetingDoc.Api.Managers.Interfaces;
 using MeetingDoc.Api.Models;
 using MeetingDoc.Api.Validators.Interfaces;
 using MeetingDoc.Api.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingDoc.Api.Managers
 {
@@ -39,6 +42,15 @@ namespace MeetingDoc.Api.Managers
                 Name = entity.Name,
                 IsDraft = entity.IsDraft,
             };
+        }
+
+
+        public async Task<IList<MeetingTypeViewModel>> GetActivesAsync()
+        {
+            var topics = Repository
+                .GetQuery(x => !x.IsRemoved && !x.IsDraft);
+
+            return await topics.Select(x => ToViewModel(x)).ToListAsync();
         }
     }
 }

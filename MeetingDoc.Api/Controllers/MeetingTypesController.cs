@@ -44,6 +44,20 @@ namespace MeetingDoc.Api.Controllers
             return Ok(meetingTypes);
         }
 
+        [HttpGet("actives")]
+        public async Task<IActionResult> GetActives()
+        {
+            var result = await _meetingTypeManager.GetActivesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/activeTopics")]
+        public async Task<IActionResult> GetActiveTopics(int id)
+        {
+            var result = await _meetingTopicManager.GetActivesAsync(id);
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

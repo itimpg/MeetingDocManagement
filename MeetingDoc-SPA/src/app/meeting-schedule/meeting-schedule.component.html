@@ -18,9 +18,25 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col">
+    <label class="label">ประเภทการประชุม</label>
+    <select class="form-control mb-4" #type [(ngModel)]="typeId" (change)="onMeetingTypeChanged(type.value)">
+      <option value="{{type.id}}" *ngFor="let type of meetingTypes">{{type.name}}</option>
+    </select>
+  </div>
+
+  <div class="col">
+    <label class="label">วาระการประชุม</label>
+    <select class="form-control mb-4" #topic (change)="onMeetingTopicChanged(topic.value)">
+      <option value="{{topic.id}}" *ngFor="let topic of meetingTopics">{{topic.name}}</option>
+    </select>
+  </div>
+</div>
+
 <table class="table pt-5">
   <thead class="thead-light">
-    <tr> 
+    <tr>
       <th>ประเภทการประชุม</th>
       <th>วาระการประชุม</th>
       <th>ครั้งที่ประชุม</th>
