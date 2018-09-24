@@ -35,7 +35,7 @@
 
     </div>
     <div class="col-auto">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="openShareToEmailPopup(template)">
         <a class="fas fa-envelope"></a>
         Send Email</button>
     </div>
@@ -49,3 +49,28 @@
     </div>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">แชร์ผ่านอีเมลล์</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form #addEditUserForm="ngForm" (ngSubmit)="shareContent()">
+    <div class="modal-body">
+      <label class="label">อีเมลล์:</label>
+      <input type="email" class="form-control mb-4" id="emailToShare" name="emailToShare" #emailToShare required [(ngModel)]="email"/>
+    </div>
+    <div class="modal-footer">
+      <div class="form-row">
+        <div class="col">
+          <button class="btn btn-primary btn-block" [disabled]="!addEditUserForm.valid" type="submit">แชร์</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-danger btn-block" (click)="bsModalRef.hide()">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>

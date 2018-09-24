@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { MeetingAgenda } from '../_models/MeetingAgenda';
 import { MeetingScheduleService } from '../_services/meeting-schedule.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { MeetingContentService } from '../_services/meeting-content.service';
 import { MeetingContent } from '../_models/MeetingContent';
 import { ShowModalParam } from '../_models/ShowModalParam';
 import { BaseListComponent } from '../_components/baselist.component';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { PaginatedResult } from '../_models/pagination';
 import { MeetingTimeService } from '../_services/meetingtime.service';
 
@@ -25,6 +25,8 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
 
   agendas: MeetingAgenda[];
   selectedAgenda: number;
+  bsModalRef: BsModalRef;
+  email: string;
 
   showModal(initialState: ShowModalParam): void {}
 
@@ -122,5 +124,22 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
     this.router.navigate([
       `meetingSchedule/${this.parentId}/agendas/${agendaId}/read`
     ]);
+  }
+
+  openShareToEmailPopup(template: TemplateRef<any>) {
+    this.email = '';
+    this.bsModalRef = this.modalService.show(template);
+  }
+
+  shareContent() { 
+    const contentId = this.items[0].id;
+    this.scheduleService.sendEmail(contentId, this.email).subscribe(
+      success => {
+        this.bsModalRef.hide();
+      },
+      error => {
+        this.alertify.error(error);
+      }
+    );
   }
 }
