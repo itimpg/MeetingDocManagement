@@ -7,18 +7,33 @@
       </select>
     </div>
   </div>
+
   <div class="row mb-3">
-    <div class="col d-flex justify-content-center">
-      <pagination [maxSize]="5" *ngIf="pagination != null" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
-        [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-      </pagination>
+    <div class="col">
+      <button class="btn btn-primary float-right" (click)="goToPreviousPage()">
+        <i class="fas fa-chevron-left"></i>
+        Page</button>
+    </div>
+    <div class="col">
+      <select class="form-control" [(ngModel)]="pagination.currentPage" #pageNumber (change)="changePage(pageNumber.value)">
+        <option value="{{page}}" *ngFor="let page of pageArray">{{page}}</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <h4 class="mt-2">/ {{pagination.totalPages}}</h4>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary" (click)="goToNextPage()">
+        Page
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
   </div>
+
   <div class="row">
     <div class="col" *ngFor="let item of items">
       <div id="container">
-          <app-whiteboard #whiteboard [ratio]="item.ratio" [contentId]="item.id" [image]="item.fileBase64"></app-whiteboard>
+        <app-whiteboard #whiteboard [ratio]="item.ratio" [contentId]="item.id" [image]="item.fileBase64"></app-whiteboard>
       </div>
     </div>
   </div>

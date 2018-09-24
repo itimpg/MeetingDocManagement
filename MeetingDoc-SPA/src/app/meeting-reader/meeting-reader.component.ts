@@ -21,6 +21,7 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
   titleName = '';
   itemName = '';
   title: string;
+  pageArray: number[];
 
   agendas: MeetingAgenda[];
   selectedAgenda: number;
@@ -59,6 +60,37 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
       },
       error => this.alertify.error(error)
     );
+
+    this.initPageArray();
+  }
+
+  initPageArray() {
+    this.pageArray = [];
+    for (let i = 0; i < this.pagination.totalPages; i++) {
+      this.pageArray.push(i + 1);
+    }
+  }
+
+  goToPreviousPage() {
+    const newIndex = this.pagination.currentPage - 1;
+    if (newIndex <= 0) {
+      return;
+    }
+
+    this.changePage(newIndex);
+  }
+
+  goToNextPage() {
+    const newIndex = this.pagination.currentPage + 1;
+    if (newIndex > this.pagination.totalPages) {
+      return;
+    }
+    this.changePage(newIndex);
+  }
+
+  changePage(page) {
+    this.pagination.currentPage = page;
+    this.loadItems();
   }
 
   loadItems() {
@@ -72,6 +104,7 @@ export class MeetingReaderComponent extends BaseListComponent<MeetingContent> {
       (res: PaginatedResult<MeetingContent[]>) => {
         this.items = res.result;
         this.pagination = res.pagination;
+        this.initPageArray();
       },
       error => {
         this.alertify.error(error);
