@@ -25,3 +25,19 @@
   padding: 0px;
   margin-right: 15px;
 }
+
+.table-responsive {
+  overflow-y: visible !important;
+}
+
+@media (max-width: 767px) {
+  .table-responsive .dropdown-menu {
+    position: inherit !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .table-responsive {
+    overflow: inherit;
+  }
+}
