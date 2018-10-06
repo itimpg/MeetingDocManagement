@@ -7,20 +7,20 @@
 
 <form #addEditUserForm="ngForm" (ngSubmit)="saveUser()">
   <div class="modal-body">
-    <label class="label">First Name:</label>
+    <label class="label">First Name <span class="asterisk-required">*</span> :</label>
     <input type="text" class="form-control mb-4" id="firstname" name="firstname" #firstname required [(ngModel)]="model.firstName" [disabled]="!isEditable"/>
     
-    <label class="label">Last Name:</label>
+    <label class="label">Last Name <span class="asterisk-required">*</span> :</label>
     <input type="text" class="form-control mb-4" id="lastname" name="lastname" #lastname required [(ngModel)]="model.lastName" [disabled]="!isEditable"/>
     
     <label class="label">Position:</label>
     <input type="text" class="form-control mb-4" id="position" name="position" #position [(ngModel)]="model.position" [disabled]="!isEditable"/>
     
-    <label class="label">Email:</label>
+    <label class="label">Email <span class="asterisk-required">*</span> :</label>
     <input type="email" class="form-control mb-4" id="username" name="email" #email required [(ngModel)]="model.email" [disabled]="!isEditable"/>
     
     <div *ngIf="model.id === 0">
-      <label class="label">Password:</label>
+      <label class="label">Password <span class="asterisk-required">*</span> :</label>
       <input type="password" class="form-control mb-4" id="password" name="password" #password required [(ngModel)]="model.password" [disabled]="!isEditable"/>
     </div>
 
