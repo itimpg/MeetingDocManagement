@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://172.16.105.102/api/',
-  jwtWhiteList: '172.16.105.102'
+  baseUrl: 'http://164.115.44.203/api/',
+  jwtWhiteList: '164.115.44.203'
 };
